@@ -86,5 +86,8 @@
     <ClInclude Include="utils\console.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="game\network\game_packet.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

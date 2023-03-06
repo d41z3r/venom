@@ -48,6 +48,7 @@ void find_addresses() {
 	find_address(gt::set_fps_limit, "e8 ? ? ? ? e8 ? ? ? ? 83 e8", find_mode::call);
 	find_address(gt::log_to_console, "e8 ? ? ? ? 48 8b c8 e8 ? ? ? ? 90 48 8d 4d ? e8 ? ? ? ? e8", find_mode::call, 8);
 	find_address(gt::send_packet, "02 00 00 00 e8 ? ? ? ? 90 48 8d 4c 24 50", find_mode::call, 4);
+	find_address(gt::send_packet_raw, "e8 ? ? ? ? 48 83 c4 ? c3 cc 4c 8b dc 48 83 ec", find_mode::call);
 
 	find_address(gt::renderer, "48 8b 05 ? ? ? ? 75 ? c6 43", find_mode::load);
 }
@@ -74,7 +75,7 @@ void gt::setup() {
 	print_good("patched integrity check\n");
 
 	find_addresses();
-	print_good("found all addresses\n");
+	print_good("found addresses\n");
 
 	set_fps_limit(get_app(), 0.f);
 	print_good("unlocked fps limit\n");

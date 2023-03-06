@@ -176,6 +176,7 @@
     <ClInclude Include="game\app\app.hpp" />
     <ClInclude Include="game\app\base_app.hpp" />
     <ClInclude Include="game\gt.hpp" />
+    <ClInclude Include="game\network\game_packet.hpp" />
     <ClInclude Include="hooks\hooks.hpp" />
     <ClInclude Include="utils\console.hpp" />
     <ClInclude Include="utils\memory.hpp" />
