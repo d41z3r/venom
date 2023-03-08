@@ -170,6 +170,7 @@
     <ClCompile Include="game\gt.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
     <ClCompile Include="menu\menu.cpp" />
+    <ClCompile Include="menu\pages\cheats_page.cpp" />
     <ClCompile Include="utils\memory.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +192,8 @@
     <ClInclude Include="external\minhook\src\trampoline.h" />
     <ClInclude Include="game\app\app.hpp" />
     <ClInclude Include="game\app\base_app.hpp" />
+    <ClInclude Include="game\component\game_logic_component.hpp" />
+    <ClInclude Include="game\component\track_handler_component.hpp" />
     <ClInclude Include="game\gt.hpp" />
     <ClInclude Include="game\network\enet_client.hpp" />
     <ClInclude Include="game\network\game_packet.hpp" />

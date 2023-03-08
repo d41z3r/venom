@@ -1,7 +1,6 @@
 #include <game/gt.hpp>
 #include <menu/menu.hpp>
 #include <hooks/hooks.hpp>
-#include <utils/memory.hpp>
 #include <utils/console.hpp>
 
 #include <stdexcept>

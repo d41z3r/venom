@@ -53,12 +53,12 @@ enum class game_packet_type : std::uint8_t {
 	send_particle_effect_v2,
 	active_arrow_to_item,
 	select_tile_index,
-	send_player_tribute_data,
-	unknown40,
-	unknown41,
-	unknown42,
-	unknown43,
-	unknown44,
+	send_player_tribute_data, 
+	set_quick_slot_item,
+	pve_npc,
+	pvp_card_battle_event,
+	pve_player_damage,
+	pve_unknown,
 	set_extra_mods,
 	on_step_on_tile_mod
 };

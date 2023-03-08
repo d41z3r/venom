@@ -27,11 +27,14 @@ void hooks::install() {
 
 	hook_function(gt::send_packet, send_packet_hook);
 	hook_function(gt::send_packet_raw, send_packet_raw_hook);
+	hook_function(gt::on_text_game_message, on_text_game_message_hook);
+	hook_function(gt::process_tank_update_packet, process_tank_update_packet_hook);
+	hook_function(gt::handle_track_packet, handle_track_packet_hook);
 
 	hook_function(gt::end_scene, end_scene_hook);
 	original_wnd_proc = reinterpret_cast<WNDPROC>(SetWindowLongPtrA(gt::hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(&wnd_proc_hook)));
 
-	console::print_good("installed hooks\n");
+	console::print_good("installed hooks");
 }
 
 void hooks::send_packet_hook(net_message_type type, const std::string& packet, void* peer) {
@@ -39,15 +42,15 @@ void hooks::send_packet_hook(net_message_type type, const std::string& packet, v
 
 	switch (type) {
 	case generic_text:
-		console::print<console::color::cyan>(std::format("sending generic text: {}\n", packet));
+		console::println<console::color::cyan>(std::format("sending generic text: {}", packet));
 		break;
 
 	case game_message:
-		console::print<console::color::blue>(std::format("sending game message: {}\n", packet));
+		console::println<console::color::blue>(std::format("sending game message: {}", packet));
 		break;
 
 	default:
-		console::print<console::color::yellow>(std::format("sending unknown packet: {}\n", packet));
+		console::println<console::color::yellow>(std::format("sending unknown packet: {}", packet));
 		break;
 	}
 
@@ -59,11 +62,42 @@ void hooks::send_packet_raw_hook(net_message_type type, const void* data, std::i
 	if (type != net_message_type::game_packet || data_size != sizeof(game_packet_t)) // this should never happen
 		return;
 
-	const game_packet_t* packet = static_cast<const game_packet_t*>(data);
-	console::print<console::color::magenta>(std::format("sending game packet, type: {}\n", static_cast<int>(packet->type)));
+	game_packet_t* packet = const_cast<game_packet_t*>(static_cast<const game_packet_t*>(data));
+
+	switch (packet->type) {
+	case game_packet_type::state:
+		// i'll add later enum for these visual states
+		if (cheats::anti_damage)
+			packet->flags &= ~(1 << 6);
+
+		if (cheats::fake_lag)
+			packet->flags |= (1 << 2);
+		break;
+
+	default:
+		break;
+	}
+
+	console::println<console::color::magenta>(std::format("sending game packet, type: {}", static_cast<int>(packet->type)));
 
 	gt::send_packet_raw(type, data, data_size, unk1, peer, flags);
 }
+
+void hooks::process_tank_update_packet_hook(game_logic_component_t* _this, game_packet_t* packet) {
+
+	gt::process_tank_update_packet(_this, packet);
+}
+
+void hooks::on_text_game_message_hook(game_logic_component_t* _this, const char* packet) {
+
+	gt::on_text_game_message(_this, packet);
+}
+
+void hooks::handle_track_packet_hook(track_handler_component_t* _this, const char* packet) {
+
+	gt::handle_track_packet(_this, packet);
+}
+
 
 HRESULT hooks::end_scene_hook(IDirect3DDevice9* _this) {
 	menu::render();

@@ -46,11 +46,15 @@ void find_address(auto& dest, std::string_view pattern, find_mode mode = find_mo
 void find_addresses() {
 	find_address(gt::get_app, "c3 e8 ? ? ? ? 48 8b c8 33 d2", find_mode::call, 1);
 	find_address(gt::get_client, "75 ? e8 ? ? ? ? 48 83 b8", find_mode::call, 2);
+	find_address(gt::get_game_logic, "e8 ? ? ? ? 8b 17 48 8d ? ? ? ? ? e8 ? ? ? ? 48 8b", find_mode::call);
 
 	find_address(gt::set_fps_limit, "e8 ? ? ? ? e8 ? ? ? ? 83 e8", find_mode::call);
 	find_address(gt::log_to_console, "e8 ? ? ? ? 48 8b c8 e8 ? ? ? ? 90 48 8d 4d ? e8 ? ? ? ? e8", find_mode::call, 8);
 	find_address(gt::send_packet, "02 00 00 00 e8 ? ? ? ? 90 48 8d 4c 24 50", find_mode::call, 4);
 	find_address(gt::send_packet_raw, "e8 ? ? ? ? 48 83 c4 ? c3 cc 4c 8b dc 48 83 ec", find_mode::call);
+	find_address(gt::on_text_game_message, "48 8b d3 e8 ? ? ? ? eb ? 49 8b 4f", find_mode::call, 3);
+	find_address(gt::process_tank_update_packet, "48 8b d3 e8 ? ? ? ? eb ? 48 8d 0d", find_mode::call, 3);
+	find_address(gt::handle_track_packet, "48 8b 88 ? ? ? ? e8 ? ? ? ? eb ? 48 8d 0d", find_mode::call, 7);
 
 	find_address(gt::renderer, "48 8b 05 ? ? ? ? 75 ? c6 43", find_mode::load);
 
@@ -77,13 +81,13 @@ void gt::setup() {
 	if (!patch_integrity_check())
 		throw std::runtime_error("failed to patch integrity check");
 
-	print_good("patched integrity check\n");
+	print_good("patched integrity check");
 
 	find_addresses();
-	print_good("found addresses\n");
+	print_good("found addresses");
 
 	set_fps_limit(get_app(), 0.f);
-	print_good("unlocked fps limit\n");
+	print_good("unlocked fps limit");
 }
 
 void gt::send_generic_text(const std::string& packet) noexcept {
@@ -111,4 +115,22 @@ void gt::send_game_packet(const game_packet_t& packet) noexcept {
 		return;
 
 	send_packet_raw(net_message_type::game_packet, &packet, sizeof(game_packet_t), nullptr, client->peer, 0x1);
+}
+
+void gt::process_game_message(const std::string& packet) noexcept {
+	game_logic_component_t* game_logic = gt::get_game_logic();
+
+	if (game_logic == nullptr)
+		return;
+
+	on_text_game_message(game_logic, packet.c_str());
+}
+
+void gt::process_game_packet(const game_packet_t& packet) noexcept {
+	game_logic_component_t* game_logic = gt::get_game_logic();
+
+	if (game_logic == nullptr)
+		return;
+
+	process_tank_update_packet(game_logic, const_cast<game_packet_t*>(&packet));
 }

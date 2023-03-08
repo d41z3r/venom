@@ -8,5 +8,12 @@ namespace menu {
 	void setup();
 	void render() noexcept;
 
+	void cheats_page() noexcept;
+
 	inline bool show = true;
+}
+
+namespace cheats {
+	inline bool anti_damage = false;
+	inline bool fake_lag = false;
 }

@@ -2,6 +2,8 @@
 #include <game/app/app.hpp>
 #include <game/network/enet_client.hpp>
 #include <game/network/game_packet.hpp>
+#include <game/component/game_logic_component.hpp>
+#include <game/component/track_handler_component.hpp>
 #include <game/renderer/renderer_context.hpp>
 
 #include <cstdint>
@@ -17,17 +19,25 @@ namespace gt {
 	void send_game_message(const std::string& packet) noexcept;
 	void send_game_packet(const game_packet_t& packet) noexcept;
 
+	void process_game_message(const std::string& packet) noexcept;
+	void process_game_packet(const game_packet_t& packet) noexcept;
+	//void process_track_packet(const std::string& packet) noexcept;
+
 	inline std::uintptr_t base_address = 0;
 	inline std::uintptr_t end_address = 0;
 	inline HWND hwnd = nullptr;
 
 	inline app_t* (*get_app)() = nullptr;
 	inline enet_client_t* (*get_client)() = nullptr;
+	inline game_logic_component_t* (*get_game_logic)() = nullptr;
 
 	inline void (*set_fps_limit)(base_app_t* _this, float fps) = nullptr;
 	inline void (*log_to_console)(const std::string& text) = nullptr;
 	inline void (*send_packet)(net_message_type type, const std::string& packet, void* peer) = nullptr;
 	inline void (*send_packet_raw)(net_message_type type, const void* data, std::int32_t data_size, std::uint8_t* unk1, void* peer, std::uint32_t flags) = nullptr;
+	inline void (*on_text_game_message)(game_logic_component_t* _this, const char* packet) = nullptr;
+	inline void (*process_tank_update_packet)(game_logic_component_t* _this, game_packet_t* packet) = nullptr;
+	inline void (*handle_track_packet)(track_handler_component_t* _this, const char* packet) = nullptr;
 
 	inline HRESULT(*end_scene)(IDirect3DDevice9* _this) = nullptr;
 

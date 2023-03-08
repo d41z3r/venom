@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string_view>
+#include <format>
 
 namespace console {
     enum class color {
@@ -20,19 +21,24 @@ namespace console {
         white = 97
     };
 
-	template <color color = color::white>
+	template <color c = color::white>
     inline void print(std::string_view text) noexcept { // todo: add formatting
-		std::cout << "\x1b[" << static_cast<int>(color) << "m" << text << "\x1b[0m";
+		std::cout << "\x1b[" << static_cast<int>(c) << "m" << text << "\x1b[0m";
 	}
+
+    template <color c = color::white>
+    inline void println(std::string_view text) noexcept {
+        print<c>(std::format("{}\n", text));
+    }
 
     inline void print_good(std::string_view text) noexcept {
         print<color::dark_cyan> ("[+] ");
-        print<color::white>(text);
+        println<color::white>(text);
     }
     
     inline void print_error(std::string_view text) noexcept {
         print<color::red>("error: ");
-        print<color::white>(text);
+        println<color::white>(text);
     }
 
     inline void setup() noexcept {
