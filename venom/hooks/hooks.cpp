@@ -1,10 +1,12 @@
 #include <hooks/hooks.hpp>
+#include <menu/menu.hpp>
 #include <game/gt.hpp>
 #include <external/minhook/include/MinHook.h>
 #include <utils/console.hpp>
 
 #include <stdexcept>
 #include <format>
+#include <sstream>
 
 void hook_function(auto& function, const auto& hook_function) {
 	void* address = function;
@@ -25,6 +27,9 @@ void hooks::install() {
 
 	hook_function(gt::send_packet, send_packet_hook);
 	hook_function(gt::send_packet_raw, send_packet_raw_hook);
+
+	hook_function(gt::end_scene, end_scene_hook);
+	original_wnd_proc = reinterpret_cast<WNDPROC>(SetWindowLongPtrA(gt::hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(&wnd_proc_hook)));
 
 	console::print_good("installed hooks\n");
 }
@@ -58,4 +63,33 @@ void hooks::send_packet_raw_hook(net_message_type type, const void* data, std::i
 	console::print<console::color::magenta>(std::format("sending game packet, type: {}\n", static_cast<int>(packet->type)));
 
 	gt::send_packet_raw(type, data, data_size, unk1, peer, flags);
+}
+
+HRESULT hooks::end_scene_hook(IDirect3DDevice9* _this) {
+	menu::render();
+	return gt::end_scene(_this);
+}
+
+IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
+
+LRESULT hooks::wnd_proc_hook(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
+	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
+		return TRUE;
+
+	if (msg == WM_KEYUP && wparam == VK_INSERT)
+		menu::show = !menu::show;
+
+	const ImGuiIO& io = ImGui::GetIO();
+
+	bool mouse =
+		msg == WM_LBUTTONDOWN ||
+		msg == WM_RBUTTONDOWN ||
+		msg == WM_LBUTTONDBLCLK ||
+		msg == WM_RBUTTONDBLCLK ||
+		msg == WM_MOUSEWHEEL;
+
+	if (io.WantTextInput || (io.WantCaptureMouse && mouse))
+		return TRUE;
+
+	return original_wnd_proc(hwnd, msg, wparam, lparam);
 }

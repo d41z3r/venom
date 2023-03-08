@@ -155,6 +155,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="external\imgui\imgui.cpp" />
+    <ClCompile Include="external\imgui\imgui_demo.cpp" />
+    <ClCompile Include="external\imgui\imgui_draw.cpp" />
+    <ClCompile Include="external\imgui\imgui_impl_dx9.cpp" />
+    <ClCompile Include="external\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="external\imgui\imgui_tables.cpp" />
+    <ClCompile Include="external\imgui\imgui_widgets.cpp" />
     <ClCompile Include="external\minhook\src\buffer.c" />
     <ClCompile Include="external\minhook\src\hde\hde32.c" />
     <ClCompile Include="external\minhook\src\hde\hde64.c" />
@@ -162,9 +169,18 @@
     <ClCompile Include="external\minhook\src\trampoline.c" />
     <ClCompile Include="game\gt.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
+    <ClCompile Include="menu\menu.cpp" />
     <ClCompile Include="utils\memory.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="external\imgui\imconfig.h" />
+    <ClInclude Include="external\imgui\imgui.h" />
+    <ClInclude Include="external\imgui\imgui_impl_dx9.h" />
+    <ClInclude Include="external\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="external\imgui\imgui_internal.h" />
+    <ClInclude Include="external\imgui\imstb_rectpack.h" />
+    <ClInclude Include="external\imgui\imstb_textedit.h" />
+    <ClInclude Include="external\imgui\imstb_truetype.h" />
     <ClInclude Include="external\minhook\include\MinHook.h" />
     <ClInclude Include="external\minhook\src\buffer.h" />
     <ClInclude Include="external\minhook\src\hde\hde32.h" />
@@ -176,8 +192,11 @@
     <ClInclude Include="game\app\app.hpp" />
     <ClInclude Include="game\app\base_app.hpp" />
     <ClInclude Include="game\gt.hpp" />
+    <ClInclude Include="game\network\enet_client.hpp" />
     <ClInclude Include="game\network\game_packet.hpp" />
+    <ClInclude Include="game\renderer\renderer_context.hpp" />
     <ClInclude Include="hooks\hooks.hpp" />
+    <ClInclude Include="menu\menu.hpp" />
     <ClInclude Include="utils\console.hpp" />
     <ClInclude Include="utils\memory.hpp" />
   </ItemGroup>

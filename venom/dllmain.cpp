@@ -1,4 +1,5 @@
 #include <game/gt.hpp>
+#include <menu/menu.hpp>
 #include <hooks/hooks.hpp>
 #include <utils/memory.hpp>
 #include <utils/console.hpp>
@@ -12,6 +13,7 @@ void on_injected() noexcept {
 
 	try {
 		gt::setup();
+		menu::setup();
 		hooks::install();
 	}
 	catch (const std::runtime_error& error) { 

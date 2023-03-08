@@ -45,12 +45,17 @@ void find_address(auto& dest, std::string_view pattern, find_mode mode = find_mo
 
 void find_addresses() {
 	find_address(gt::get_app, "c3 e8 ? ? ? ? 48 8b c8 33 d2", find_mode::call, 1);
+	find_address(gt::get_client, "75 ? e8 ? ? ? ? 48 83 b8", find_mode::call, 2);
+
 	find_address(gt::set_fps_limit, "e8 ? ? ? ? e8 ? ? ? ? 83 e8", find_mode::call);
 	find_address(gt::log_to_console, "e8 ? ? ? ? 48 8b c8 e8 ? ? ? ? 90 48 8d 4d ? e8 ? ? ? ? e8", find_mode::call, 8);
 	find_address(gt::send_packet, "02 00 00 00 e8 ? ? ? ? 90 48 8d 4c 24 50", find_mode::call, 4);
 	find_address(gt::send_packet_raw, "e8 ? ? ? ? 48 83 c4 ? c3 cc 4c 8b dc 48 83 ec", find_mode::call);
 
 	find_address(gt::renderer, "48 8b 05 ? ? ? ? 75 ? c6 43", find_mode::load);
+
+	// get end_scene from d3d9 device's vftable
+	gt::end_scene = reinterpret_cast<decltype(gt::end_scene)>((*reinterpret_cast<void***>(gt::renderer->device_ex))[42]);
 }
 
 void gt::setup() {
@@ -79,4 +84,31 @@ void gt::setup() {
 
 	set_fps_limit(get_app(), 0.f);
 	print_good("unlocked fps limit\n");
+}
+
+void gt::send_generic_text(const std::string& packet) noexcept {
+	enet_client_t* client = gt::get_client();
+
+	if (client == nullptr || client->peer == nullptr)
+		return;
+
+	send_packet(net_message_type::generic_text, packet, client->peer);
+}
+
+void gt::send_game_message(const std::string& packet) noexcept {
+	enet_client_t* client = gt::get_client();
+
+	if (client == nullptr || client->peer == nullptr)
+		return;
+
+	send_packet(net_message_type::game_message, packet, client->peer);
+}
+
+void gt::send_game_packet(const game_packet_t& packet) noexcept {
+	enet_client_t* client = gt::get_client();
+
+	if (client == nullptr || client->peer == nullptr)
+		return;
+
+	send_packet_raw(net_message_type::game_packet, &packet, sizeof(game_packet_t), nullptr, client->peer, 0x1);
 }
