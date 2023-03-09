@@ -169,7 +169,6 @@
     <ClCompile Include="external\minhook\src\trampoline.c" />
     <ClCompile Include="game\gt.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
-    <ClCompile Include="menu\imgui_extra.cpp" />
     <ClCompile Include="menu\menu.cpp" />
     <ClCompile Include="menu\pages\cheats_page.cpp" />
     <ClCompile Include="utils\memory.cpp" />
@@ -203,7 +202,6 @@
     <ClInclude Include="game\utils\math.hpp" />
     <ClInclude Include="game\world\world_tile_map.hpp" />
     <ClInclude Include="hooks\hooks.hpp" />
-    <ClInclude Include="menu\imgui_extra.hpp" />
     <ClInclude Include="menu\menu.hpp" />
     <ClInclude Include="utils\console.hpp" />
     <ClInclude Include="utils\memory.hpp" />

@@ -2,10 +2,7 @@
 #include <game/gt.hpp>
 #include <utils/memory.hpp>
 
-#include <format>
-#include <array>
-
-void main_page() noexcept {
+void menu::cheats_page() noexcept {
 	ImGui::Columns(3, "cheat columns", false);
 	ImGui::Checkbox("anti damage", &cheats::anti_damage);
 	ImGui::Checkbox("anti zombie", &cheats::anti_zombie);
@@ -27,22 +24,4 @@ void main_page() noexcept {
 		memory::patch_bytes(gt::touch_bypass_address, cheats::touch_bypass ? "eb" : "72");
 
 	ImGui::EndColumns();
-}
-
-void menu::cheats_page() noexcept {
-	static constinit std::size_t current_tab = 0;
-
-	ImExtra::HorizontalTabs({
-		"main",
-		"testpage1",
-		"testpage2"
-		}, current_tab);
-
-	switch (current_tab) {
-	case 0: main_page(); break;
-
-	default:
-		ImGui::TextColored({ 1.f, 0.f, 0.f, 1.f }, "this page doesn't exist");
-		break;
-	}
 }

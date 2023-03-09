@@ -3,7 +3,6 @@
 #include <external/imgui/imgui_internal.h>
 #include <external/imgui/imgui_impl_dx9.h>
 #include <external/imgui/imgui_impl_win32.h>
-#include <menu/imgui_extra.hpp>
 
 namespace menu {
 	void setup();
