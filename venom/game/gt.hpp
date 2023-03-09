@@ -17,6 +17,7 @@
 
 namespace gt {
 	void setup();
+	void close_mutexes();
 
 	void send_generic_text(const std::string& packet) noexcept;
 	void send_game_message(const std::string& packet) noexcept;

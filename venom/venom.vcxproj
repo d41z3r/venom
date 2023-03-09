@@ -167,6 +167,7 @@
     <ClCompile Include="external\minhook\src\hde\hde64.c" />
     <ClCompile Include="external\minhook\src\hook.c" />
     <ClCompile Include="external\minhook\src\trampoline.c" />
+    <ClCompile Include="game\close_mutexes.cpp" />
     <ClCompile Include="game\gt.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
     <ClCompile Include="menu\menu.cpp" />

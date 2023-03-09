@@ -94,6 +94,9 @@ void gt::setup() {
 
 	print_good("patched integrity check");
 
+	close_mutexes();
+	print_good("closed mutexes");
+
 	find_addresses();
 	print_good("found addresses");
 
