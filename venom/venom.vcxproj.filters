@@ -155,5 +155,14 @@
     <ClInclude Include="game\component\track_handler_component.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="game\player\net_avatar.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\utils\math.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\world\world_tile_map.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

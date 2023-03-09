@@ -18,7 +18,8 @@ bool patch_integrity_check() noexcept {
 enum class find_mode {
 	normal,
 	call,
-	load
+	load,
+	function_start
 };
 
 void find_address(auto& dest, std::string_view pattern, find_mode mode = find_mode::normal, std::intptr_t offset = 0) {
@@ -31,6 +32,10 @@ void find_address(auto& dest, std::string_view pattern, find_mode mode = find_mo
 
 	case find_mode::load:
 		address = memory::get_address_from_load(address);
+		break;
+
+	case find_mode::function_start:
+		address = memory::find_function_start(address);
 		break;
 
 	default:
@@ -55,6 +60,10 @@ void find_addresses() {
 	find_address(gt::on_text_game_message, "48 8b d3 e8 ? ? ? ? eb ? 49 8b 4f", find_mode::call, 3);
 	find_address(gt::process_tank_update_packet, "48 8b d3 e8 ? ? ? ? eb ? 48 8d 0d", find_mode::call, 3);
 	find_address(gt::handle_track_packet, "48 8b 88 ? ? ? ? e8 ? ? ? ? eb ? 48 8d 0d", find_mode::call, 7);
+	find_address(gt::on_punched, "b8 ? ? ? ? 66 39 83 ? ? ? ? 75 ? 48 8d 83", find_mode::function_start);
+	find_address(gt::is_darkened, "e8 ? ? ? ? 84 c0 74 ? 48 8b d6 49 8b cd", find_mode::call);
+	find_address(gt::is_anzu_platform, "e8 ? ? ? ? 84 c0 0f 84 ? ? ? ? 80 be", find_mode::call);
+	find_address(gt::collide, "e8 ? ? ? ? 48 85 c0 74 ? 48 89 07 48 8b cb", find_mode::call);
 
 	find_address(gt::renderer, "48 8b 05 ? ? ? ? 75 ? c6 43", find_mode::load);
 

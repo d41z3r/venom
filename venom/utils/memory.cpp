@@ -88,3 +88,13 @@ std::uintptr_t memory::get_address_from_load(std::uintptr_t address) noexcept {
 
 	return *reinterpret_cast<std::uintptr_t*>(address + relative_address + 7);
 }
+
+std::uintptr_t memory::find_function_start(std::uintptr_t address) noexcept {
+	if (address == 0)
+		return 0;
+
+	while (*reinterpret_cast<std::uint16_t*>(address - 2) != 0xCCCC) // check if there is 2x int3's, not 100% reliable but works pretty well
+		address--;
+
+	return address;
+}

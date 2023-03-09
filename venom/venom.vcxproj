@@ -197,7 +197,10 @@
     <ClInclude Include="game\gt.hpp" />
     <ClInclude Include="game\network\enet_client.hpp" />
     <ClInclude Include="game\network\game_packet.hpp" />
+    <ClInclude Include="game\player\net_avatar.hpp" />
     <ClInclude Include="game\renderer\renderer_context.hpp" />
+    <ClInclude Include="game\utils\math.hpp" />
+    <ClInclude Include="game\world\world_tile_map.hpp" />
     <ClInclude Include="hooks\hooks.hpp" />
     <ClInclude Include="menu\menu.hpp" />
     <ClInclude Include="utils\console.hpp" />

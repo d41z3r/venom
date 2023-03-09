@@ -78,7 +78,7 @@ void menu::render() noexcept {
 
 			const ImVec2 pos = ImGui::GetCursorScreenPos();
 			ImGui::GetWindowDrawList()->AddRectFilled(pos, { pos.x + 5.f, pos.y - 40.f },
-				is_current_page ? ImColor(0.35f, 0.10f, 0.78f, 1.00f) : ImColor(0.18f, 0.05f, 0.39f, 1.00f));
+				is_current_page ? ImColor(0.45f, 0.00f, 1.00f, 1.00f) : ImColor(0.18f, 0.05f, 0.39f, 1.00f));
 
 			if (is_current_page)
 				ImGui::PopStyleColor(3);

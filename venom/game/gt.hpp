@@ -4,6 +4,9 @@
 #include <game/network/game_packet.hpp>
 #include <game/component/game_logic_component.hpp>
 #include <game/component/track_handler_component.hpp>
+#include <game/player/net_avatar.hpp>
+#include <game/world/world_tile_map.hpp>
+#include <game/utils/math.hpp>
 #include <game/renderer/renderer_context.hpp>
 
 #include <cstdint>
@@ -38,6 +41,10 @@ namespace gt {
 	inline void (*on_text_game_message)(game_logic_component_t* _this, const char* packet) = nullptr;
 	inline void (*process_tank_update_packet)(game_logic_component_t* _this, game_packet_t* packet) = nullptr;
 	inline void (*handle_track_packet)(track_handler_component_t* _this, const char* packet) = nullptr;
+	inline void (*on_punched)(net_avatar_t* _this, vec2f_t unk1, net_avatar_t* puncher) = nullptr;
+	inline std::int32_t (*is_darkened)(std::int32_t item_id) = nullptr;
+	inline bool (*is_anzu_platform)() = nullptr;
+	inline bool (*collide)(world_tile_map_t* _this, float unk1, float unk2, float unk3, float unk4, int unk5, bool unk6) = nullptr;
 
 	inline HRESULT(*end_scene)(IDirect3DDevice9* _this) = nullptr;
 

@@ -3,6 +3,7 @@
 #include <game/gt.hpp>
 #include <external/minhook/include/MinHook.h>
 #include <utils/console.hpp>
+#include <utils/memory.hpp>
 
 #include <stdexcept>
 #include <format>
@@ -30,6 +31,10 @@ void hooks::install() {
 	hook_function(gt::on_text_game_message, on_text_game_message_hook);
 	hook_function(gt::process_tank_update_packet, process_tank_update_packet_hook);
 	hook_function(gt::handle_track_packet, handle_track_packet_hook);
+	hook_function(gt::on_punched, on_punched_hook);
+	hook_function(gt::is_darkened, is_darkened_hook);
+	hook_function(gt::is_anzu_platform, is_anzu_platform_hook);
+	hook_function(gt::collide, collide_hook);
 
 	hook_function(gt::end_scene, end_scene_hook);
 	original_wnd_proc = reinterpret_cast<WNDPROC>(SetWindowLongPtrA(gt::hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(&wnd_proc_hook)));
@@ -66,12 +71,33 @@ void hooks::send_packet_raw_hook(net_message_type type, const void* data, std::i
 
 	switch (packet->type) {
 	case game_packet_type::state:
-		// i'll add later enum for these visual states
-		if (cheats::anti_damage)
-			packet->flags &= ~(1 << 6);
+		if (cheats::anti_damage) {
+			memory::remove_bit(packet->flags, visual_state::on_fire_damage);
+			memory::remove_bit(packet->flags, visual_state::on_damage);
+			memory::remove_bit(packet->flags, visual_state::on_acid_damage);
+		}
 
 		if (cheats::fake_lag)
-			packet->flags |= (1 << 2);
+			memory::set_bit(packet->flags, visual_state::on_spawn);
+
+		if (cheats::super_punch && memory::has_bit(packet->flags, visual_state::on_punched))
+			memory::set_bit(packet->flags, visual_state::on_power_up_punch_end);
+
+		// if you send walk packets in air you will get banned so lets set player velocity as 0 so server thinks we are not walking
+		if (cheats::walk_in_air)
+			packet->vec2 = {0.f, 0.f};
+
+		break;
+
+	case game_packet_type::got_punched:
+		// this also blocks rapier effect and game generator game damage
+		if (cheats::anti_zombie)
+			return;
+		break;
+
+	case game_packet_type::app_integrity_fail:
+		gt::log_to_console(std::format("`4venom:`` `oblocking client hack report `5(type {})````", packet->int3));
+		return;
 		break;
 
 	default:
@@ -98,6 +124,33 @@ void hooks::handle_track_packet_hook(track_handler_component_t* _this, const cha
 	gt::handle_track_packet(_this, packet);
 }
 
+void hooks::on_punched_hook(net_avatar_t* _this, vec2f_t unk1, net_avatar_t* puncher) {
+	if (cheats::anti_knockback)
+		return;
+
+	gt::on_punched(_this, unk1, puncher);
+}
+
+std::int32_t hooks::is_darkened_hook(std::int32_t item_id) {
+	if (cheats::night_vision)
+		return 0;
+
+	return gt::is_darkened(item_id);
+}
+
+bool hooks::is_anzu_platform_hook() {
+	if (cheats::block_ads)
+		return false;
+
+	return gt::is_anzu_platform();
+}
+
+bool hooks::collide_hook(world_tile_map_t* _this, float unk1, float unk2, float unk3, float unk4, int unk5, bool unk6) {
+	if (cheats::walk_in_air)
+		return true;
+
+	return gt::collide(_this, unk1, unk2, unk3, unk4, unk5, unk6);
+}
 
 HRESULT hooks::end_scene_hook(IDirect3DDevice9* _this) {
 	menu::render();

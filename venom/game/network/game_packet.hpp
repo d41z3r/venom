@@ -1,4 +1,5 @@
 #pragma once
+#include <game/utils/math.hpp>
 #include <cstdint>
 
 enum class net_message_type : std::uint32_t {
@@ -64,7 +65,7 @@ enum class game_packet_type : std::uint8_t {
 };
 
 struct game_packet_t {
-	std::uint8_t* get_extra_data() noexcept {
+	inline std::uint8_t* get_extra_data() noexcept {
 		return reinterpret_cast<std::uint8_t*>(this) + sizeof(game_packet_t);
 	}
 
@@ -77,11 +78,9 @@ struct game_packet_t {
 	std::uint32_t flags;
 	float float1;
 	std::int32_t int3;
+	vec2f_t vec1;
+	vec2f_t vec2;
 	float float2;
-	float float3;
-	float float4;
-	float float5;
-	float float6;
 	std::int32_t int4;
 	std::int32_t int5;
 	std::uint32_t extra_data_size;
