@@ -51,49 +51,25 @@ void menu::render() noexcept {
 
 		ImGui::SetNextWindowPos({ 10.f, 10.f }, ImGuiCond_Once);
 		ImGui::SetNextWindowSize({ 550.f, 350.f }, ImGuiCond_Once);
-
 		ImGui::Begin("venom", &show, ImGuiWindowFlags_NoCollapse);
 
-		ImGui::Columns(2, 0, false);
-		ImGui::SetColumnWidth(0, 100.f);
+		ImGui::Columns(2, "main columns", true);
+		ImGui::SetColumnWidth(0, 135.f);
 
-		static constexpr std::array pages = { "cheats", "testpage1", "testpage2" };
-		static constinit std::size_t current_page = 0;
-
-		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, { 0.f, 0.f });
-		ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, { 0.4f, 0.5f });
-		ImGui::PushStyleColor(ImGuiCol_Button, { 0.18f, 0.18f, 0.18f, 1.00f });
-
-		for (std::size_t i = 0; i < pages.size(); ++i) {
-			const bool is_current_page = current_page == i;
-
-			if (is_current_page) {
-				ImGui::PushStyleColor(ImGuiCol_Button, { 0.27f, 0.27f, 0.27f, 1.00f });
-				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.27f, 0.27f, 0.27f, 1.00f });
-				ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.27f, 0.27f, 0.27f, 1.00f });
-			}
-
-			if (ImGui::Button(pages[i], { 100.f, 40.f }))
-				current_page = i;
-
-			const ImVec2 pos = ImGui::GetCursorScreenPos();
-			ImGui::GetWindowDrawList()->AddRectFilled(pos, { pos.x + 5.f, pos.y - 40.f },
-				is_current_page ? ImColor(0.45f, 0.00f, 1.00f, 1.00f) : ImColor(0.18f, 0.05f, 0.39f, 1.00f));
-
-			if (is_current_page)
-				ImGui::PopStyleColor(3);
-		}
-
-		ImGui::PopStyleColor();
-		ImGui::PopStyleVar(2);
+		static constinit std::size_t current_tab = 0;
+		ImExtra::VerticalTabs({
+			"cheats", 
+			"testpage1",
+			"testpage2"
+			}, current_tab, {120.f, 40.f});
 
 		ImGui::NextColumn();
-		ImGui::BeginChild("page", { 0.f, 0.f }, true);
+		ImGui::BeginChild("page", { 0.f, 0.f }, false);
 
-		switch (current_page) {
+		switch (current_tab) {
 		case 0: cheats_page(); break;
 
-		default:
+		default: 
 			ImGui::TextColored({ 1.f, 0.f, 0.f, 1.f }, "this page doesn't exist");
 			break;
 		}

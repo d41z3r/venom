@@ -69,6 +69,9 @@
     <ClCompile Include="menu\pages\cheats_page.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="menu\imgui_extra.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils\memory.hpp">
@@ -162,6 +165,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\world\world_tile_map.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="menu\imgui_extra.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

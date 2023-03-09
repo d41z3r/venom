@@ -47,6 +47,8 @@ namespace gt {
 	inline bool (*collide)(world_tile_map_t* _this, float unk1, float unk2, float unk3, float unk4, int unk5, bool unk6) = nullptr;
 
 	inline HRESULT(*end_scene)(IDirect3DDevice9* _this) = nullptr;
-
 	inline renderer_context_d3d9_t* renderer = nullptr;
+
+	inline std::uintptr_t touch_bypass_address = 0;
 }
+

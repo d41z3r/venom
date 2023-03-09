@@ -65,6 +65,8 @@ void find_addresses() {
 	find_address(gt::is_anzu_platform, "e8 ? ? ? ? 84 c0 0f 84 ? ? ? ? 80 be", find_mode::call);
 	find_address(gt::collide, "e8 ? ? ? ? 48 85 c0 74 ? 48 89 07 48 8b cb", find_mode::call);
 
+	find_address(gt::touch_bypass_address, "3d ? ? ? ? 72 ? c6 83", find_mode::normal, 5);
+
 	find_address(gt::renderer, "48 8b 05 ? ? ? ? 75 ? c6 43", find_mode::load);
 
 	// get end_scene from d3d9 device's vftable
