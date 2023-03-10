@@ -26,6 +26,18 @@ void menu::render() noexcept {
 
 		cheats_page();
 
+		ImGui::SeparatorText("texture test");
+		static int texture_id = 0;
+		ImGui::InputInt("texture id", &texture_id);
+
+		const auto& texture = gt::renderer->textures[texture_id];
+		ImGui::Image(
+			texture.ptr, 
+			{ static_cast<float>(texture.width), static_cast<float>(texture.height) },
+			{ 0.f, 1.f },
+			{ 1.f, 0.f }
+		);
+
 		ImGui::End();
 	}
 

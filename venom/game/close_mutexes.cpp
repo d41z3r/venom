@@ -59,7 +59,7 @@ typedef struct _PROCESS_BASIC_INFORMATION {
 	ULONG_PTR UniqueProcessId;
 	PVOID Reserved3;
 } PROCESS_BASIC_INFORMATION, * PPROCESS_BASIC_INFORMATION;
-#include <iostream>
+
 void gt::close_mutexes() {
 	std::uintptr_t mutex_check = memory::find_pattern("0f 84 ? ? ? ? 48 8b c8 e8 ? ? ? ? 90");
 

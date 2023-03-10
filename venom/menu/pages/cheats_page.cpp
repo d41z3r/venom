@@ -3,6 +3,8 @@
 #include <utils/memory.hpp>
 
 void menu::cheats_page() noexcept {
+	ImGui::SeparatorText("cheats");
+
 	ImGui::Columns(3, "cheat columns", false);
 	ImGui::Checkbox("anti damage", &cheats::anti_damage);
 	ImGui::Checkbox("anti zombie", &cheats::anti_zombie);

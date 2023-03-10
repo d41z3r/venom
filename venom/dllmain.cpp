@@ -17,7 +17,7 @@ void on_injected() noexcept {
 	}
 	catch (const std::runtime_error& error) { 
 		console::print_error(error.what()); 
-		return; 
+		return;
 	}
 
 	console::print<console::color::green>("\ncheat loaded successfully\n\n");
