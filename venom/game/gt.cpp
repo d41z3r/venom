@@ -6,13 +6,14 @@
 #include <string>
 #include <format>
 
-bool patch_integrity_check() noexcept {
+void patch_integrity_check() {
 	std::uintptr_t integrity_check = memory::find_pattern("00 3b c1 75 08 85 c9", 3);
 
 	if (integrity_check == 0)
-		return memory::find_pattern("00 3b c1 90 90 85 c9") != 0; // check if it's already patched
+		throw std::runtime_error("integrity check pattern not found");
 
-	return memory::patch_bytes(integrity_check, "90 90");
+	if (!memory::patch_bytes(integrity_check, "90 90"))
+		throw std::runtime_error("failed to patch integrity check");
 }
 
 enum class find_mode {
@@ -89,9 +90,7 @@ void gt::setup() {
 	if (hwnd == nullptr)
 		throw std::runtime_error("growtopia window not found");
 
-	if (!patch_integrity_check())
-		throw std::runtime_error("failed to patch integrity check");
-
+	patch_integrity_check();
 	print_good("patched integrity check");
 
 	close_mutexes();

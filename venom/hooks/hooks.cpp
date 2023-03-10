@@ -96,7 +96,7 @@ void hooks::send_packet_raw_hook(net_message_type type, const void* data, std::i
 		break;
 
 	case game_packet_type::app_integrity_fail:
-		gt::log_to_console(std::format("`4venom:`` `oblocking client hack report `5(type {})````", packet->int3));
+		gt::log_to_console(std::format("`4venom:`` `oblocking client hack report`` `5(type {})``", packet->int3));
 		return;
 		break;
 

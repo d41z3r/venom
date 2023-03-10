@@ -61,11 +61,13 @@ typedef struct _PROCESS_BASIC_INFORMATION {
 
 void gt::close_mutexes() {
 	std::uintptr_t mutex_check = memory::find_pattern("0f 84 ? ? ? ? 48 8b c8 e8 ? ? ? ? 90");
+
 	if (mutex_check == 0)
 		throw std::runtime_error("mutex check pattern not found");
 
 	if (!memory::patch_bytes(mutex_check, "90 90 90 90 90 90"))
 		throw std::runtime_error("failed to patch mutex check");
+
 
 	HMODULE ntdll = LoadLibraryA("ntdll.dll");
 	_ZwQueryInformationProcess ZwQueryInformationProcess = (_ZwQueryInformationProcess)GetProcAddress(ntdll, "ZwQueryInformationProcess");
