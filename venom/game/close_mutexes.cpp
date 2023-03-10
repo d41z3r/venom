@@ -1,6 +1,7 @@
 #include <game/gt.hpp>
 #include <utils/memory.hpp>
 
+#include <string>
 #include <stdexcept>
 #include <windows.h>
 
@@ -58,7 +59,7 @@ typedef struct _PROCESS_BASIC_INFORMATION {
 	ULONG_PTR UniqueProcessId;
 	PVOID Reserved3;
 } PROCESS_BASIC_INFORMATION, * PPROCESS_BASIC_INFORMATION;
-
+#include <iostream>
 void gt::close_mutexes() {
 	std::uintptr_t mutex_check = memory::find_pattern("0f 84 ? ? ? ? 48 8b c8 e8 ? ? ? ? 90");
 
@@ -114,9 +115,9 @@ void gt::close_mutexes() {
 		} while (bytes_needed >= poni_size);
 
 		// if it's "Growtopia" mutex, close it
-		if (poni->Name.Length > 0 && std::wcsstr(poni->Name.Buffer, L"\\Sessions\\13\\BaseNamedObjects\\Growtopia") != nullptr) {
-			CloseHandle((HANDLE)handle.Handle);
-		}
+		if (poni->Name.Buffer != nullptr)
+			if (std::wstring{ poni->Name.Buffer }.ends_with(L"Growtopia"))
+				CloseHandle((HANDLE)handle.Handle);
 
 		std::free(poni);
 	}
