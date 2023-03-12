@@ -100,7 +100,7 @@ void gt::close_mutexes() {
 		if (handle.ProcessId != process_id) // check if it's in gt process
 			continue;
 
-		if (handle.ObjectTypeNumber != 17) // check if it's the mutex type
+		if (handle.ObjectTypeNumber != 17 && handle.ObjectTypeNumber != 20) // check if it's the mutex type
 			continue;
 
 		// get name information
@@ -115,8 +115,8 @@ void gt::close_mutexes() {
 		} while (bytes_needed >= poni_size);
 
 		// if it's "Growtopia" mutex, close it
-		if (poni->Name.Buffer != nullptr)
-			if (std::wstring{ poni->Name.Buffer }.ends_with(L"Growtopia"))
+		if (poni->Name.Buffer != nullptr) 
+			if (std::wstring{ poni->Name.Buffer }.ends_with(L"BaseNamedObjects\\Growtopia")) 
 				CloseHandle((HANDLE)handle.Handle);
 
 		std::free(poni);
