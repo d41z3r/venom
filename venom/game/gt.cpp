@@ -74,6 +74,20 @@ void find_addresses() {
 	gt::end_scene = reinterpret_cast<decltype(gt::end_scene)>((*reinterpret_cast<void***>(gt::renderer->device_ex))[42]);
 }
 
+void GetAllWindowsFromProcessID(DWORD dwProcessID, std::vector <HWND>& vhWnds)
+{
+	HWND hCurWnd = nullptr;
+	do
+	{
+		hCurWnd = FindWindowEx(nullptr, hCurWnd, nullptr, nullptr);
+		DWORD checkProcessID = 0;
+		GetWindowThreadProcessId(hCurWnd, &checkProcessID);
+		if (checkProcessID == dwProcessID)
+			vhWnds.push_back(hCurWnd);
+
+	} while (hCurWnd != nullptr);
+}
+
 void gt::setup() {
 	using namespace console;
 
@@ -85,8 +99,19 @@ void gt::setup() {
 	end_address = base_address + module_info.SizeOfImage;
 	if (base_address == 0 || end_address == 0)
 		throw std::runtime_error("invalid module address");
+	
+	std::vector <HWND> hwnds;
+	GetAllWindowsFromProcessID(GetCurrentProcessId(), hwnds);
+	for (auto it : hwnds) {
+		std::wstring title(GetWindowTextLength(it) + 1, L'\0');
+		GetWindowTextW(it, &title[0], title.size());
+		if (title.find(L"Growtopia") != string::npos)
+		{
+			hwnd = it;
+			break;
+		}
+	}
 
-	hwnd = FindWindow(nullptr, "Growtopia");
 	if (hwnd == nullptr)
 		throw std::runtime_error("growtopia window not found");
 
