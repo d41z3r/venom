@@ -105,7 +105,7 @@ void gt::setup() {
 	for (auto it : hwnds) {
 		std::wstring title(GetWindowTextLength(it) + 1, L'\0');
 		GetWindowTextW(it, &title[0], title.size());
-		if (title.find(L"Growtopia") != string::npos)
+		if (title.find(L"Growtopia") != std::string::npos)
 		{
 			hwnd = it;
 			break;
