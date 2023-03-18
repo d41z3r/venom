@@ -1,5 +1,5 @@
 # venom
-internal growtopia cheat
+growtopia internal
 
 ### special thanks to [aname](https://www.youtube.com/@aname0) for VirtualProtect fix
 
@@ -7,7 +7,7 @@ internal growtopia cheat
 * open solution
 * set mode to release
 * build all
-* go to build/ folder
+* go to build folder
 * drop venom.dll on top of loader.exe
 
 ## image
