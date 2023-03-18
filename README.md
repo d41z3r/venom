@@ -6,7 +6,7 @@ growtopia internal
 ## usage
 * open solution
 * set mode to release
-* build all
+* build solution
 * go to build folder
 * drop venom.dll on top of loader.exe
 
