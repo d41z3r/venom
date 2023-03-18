@@ -61,7 +61,7 @@ typedef struct _PROCESS_BASIC_INFORMATION {
 } PROCESS_BASIC_INFORMATION, * PPROCESS_BASIC_INFORMATION;
 
 void gt::close_mutexes() {
-	std::uintptr_t mutex_check = memory::find_pattern("0f 84 ? ? ? ? 48 8b c8 e8 ? ? ? ? 90");
+	std::uintptr_t mutex_check = memory::find_pattern("0f 84 ? ? ? ? 48 8b c8 ff 15");
 
 	if (mutex_check == 0)
 		throw std::runtime_error("mutex check pattern not found");

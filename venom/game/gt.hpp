@@ -7,6 +7,7 @@
 #include <game/player/net_avatar.hpp>
 #include <game/world/world_tile_map.hpp>
 #include <game/utils/math.hpp>
+#include <game/utils/variant.hpp>
 #include <game/renderer/renderer_context.hpp>
 
 #include <cstdint>
@@ -46,6 +47,9 @@ namespace gt {
 	inline std::int32_t (*is_darkened)(std::int32_t item_id) = nullptr;
 	inline bool (*is_anzu_platform)() = nullptr;
 	inline bool (*collide)(world_tile_map_t* _this, float unk1, float unk2, float unk3, float unk4, int unk5, bool unk6) = nullptr;
+	inline void (*server_info_http_finish)(variant_list_t* var_list) = nullptr;
+	inline float(*get_fruit_bloom_progress_percent)(tile_t* _this) = nullptr;
+	inline bool (*can_see_ghosts)(std::int32_t item_id) = nullptr;
 
 	inline HRESULT(*end_scene)(IDirect3DDevice9* _this) = nullptr;
 	inline renderer_context_d3d9_t* renderer = nullptr;

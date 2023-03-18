@@ -17,6 +17,9 @@ namespace hooks {
 	std::int32_t is_darkened_hook(std::int32_t item_id);
 	bool is_anzu_platform_hook();
 	bool collide_hook(world_tile_map_t* _this, float unk1, float unk2, float unk3, float unk4, int unk5, bool unk6);
+	void server_info_http_finish_hook(variant_list_t* var_list);
+	float get_fruit_bloom_progress_percent_hook(tile_t* _this);
+	bool can_see_ghosts_hook(std::int32_t item_id);
 
 	HRESULT end_scene_hook(IDirect3DDevice9* _this);
 	LRESULT wnd_proc_hook(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);

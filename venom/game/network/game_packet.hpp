@@ -55,11 +55,11 @@ enum class game_packet_type : std::uint8_t {
 	active_arrow_to_item,
 	select_tile_index,
 	send_player_tribute_data, 
-	set_quick_slot_item,
+	fture_set_item_to_quick_inventory,
 	pve_npc,
-	pvp_card_battle_event,
-	pve_player_damage,
-	pve_unknown,
+	pvpcard_battle,
+	pve_apply_player_damage,
+	pve_npc_position_update,
 	set_extra_mods,
 	on_step_on_tile_mod
 };

@@ -15,8 +15,8 @@ void on_injected() noexcept {
 		menu::setup();
 		hooks::install();
 	}
-	catch (const std::runtime_error& error) { 
-		console::print_error(error.what()); 
+	catch (const std::runtime_error& error) {
+		console::print_error(error.what());
 		return;
 	}
 

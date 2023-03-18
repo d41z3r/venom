@@ -52,12 +52,12 @@ void find_address(auto& dest, std::string_view pattern, find_mode mode = find_mo
 void find_addresses() {
 	find_address(gt::get_app, "c3 e8 ? ? ? ? 48 8b c8 33 d2", find_mode::call, 1);
 	find_address(gt::get_client, "75 ? e8 ? ? ? ? 48 83 b8", find_mode::call, 2);
-	find_address(gt::get_game_logic, "e8 ? ? ? ? 8b 17 48 8d ? ? ? ? ? e8 ? ? ? ? 48 8b", find_mode::call);
+	find_address(gt::get_game_logic, "48 8b 80 ? ? ? ? eb", find_mode::function_start);
 
 	find_address(gt::set_fps_limit, "e8 ? ? ? ? e8 ? ? ? ? 83 e8", find_mode::call);
 	find_address(gt::log_to_console, "e8 ? ? ? ? 48 8b c8 e8 ? ? ? ? 90 48 8d 4d ? e8 ? ? ? ? e8", find_mode::call, 8);
 	find_address(gt::send_packet, "02 00 00 00 e8 ? ? ? ? 90 48 8d 4c 24 50", find_mode::call, 4);
-	find_address(gt::send_packet_raw, "e8 ? ? ? ? 48 83 c4 ? c3 cc 4c 8b dc 48 83 ec", find_mode::call);
+	find_address(gt::send_packet_raw, "7e ? 8b 94 24", find_mode::function_start);
 	find_address(gt::on_text_game_message, "48 8b d3 e8 ? ? ? ? eb ? 49 8b 4f", find_mode::call, 3);
 	find_address(gt::process_tank_update_packet, "48 8b d3 e8 ? ? ? ? eb ? 48 8d 0d", find_mode::call, 3);
 	find_address(gt::handle_track_packet, "48 8b 88 ? ? ? ? e8 ? ? ? ? eb ? 48 8d 0d", find_mode::call, 7);
@@ -65,6 +65,9 @@ void find_addresses() {
 	find_address(gt::is_darkened, "e8 ? ? ? ? 84 c0 74 ? 48 8b d6 49 8b cd", find_mode::call);
 	find_address(gt::is_anzu_platform, "e8 ? ? ? ? 84 c0 0f 84 ? ? ? ? 80 be", find_mode::call);
 	find_address(gt::collide, "e8 ? ? ? ? 48 85 c0 74 ? 48 89 07 48 8b cb", find_mode::call);
+	find_address(gt::server_info_http_finish, "48 8d 45 ? 48 89 44 24 ? 44 8d 4b ? 4c 8d 45", find_mode::function_start);
+	find_address(gt::get_fruit_bloom_progress_percent, "e8 ? ? ? ? 0f b6 47 ? 44 0f 28 c0", find_mode::call);
+	find_address(gt::can_see_ghosts, "0f b6 44 24 ? eb ? e8", find_mode::function_start);
 
 	find_address(gt::touch_bypass_address, "3d ? ? ? ? 72 ? c6 83", find_mode::normal, 5);
 

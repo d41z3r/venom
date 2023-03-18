@@ -1,9 +1,10 @@
 #include <hooks/hooks.hpp>
 #include <menu/menu.hpp>
 #include <game/gt.hpp>
-#include <external/minhook/include/MinHook.h>
 #include <utils/console.hpp>
 #include <utils/memory.hpp>
+#include <external/minhook/include/MinHook.h>
+#include <external/magic_enum/magic_enum.hpp>
 
 #include <stdexcept>
 #include <format>
@@ -35,6 +36,9 @@ void hooks::install() {
 	hook_function(gt::is_darkened, is_darkened_hook);
 	hook_function(gt::is_anzu_platform, is_anzu_platform_hook);
 	hook_function(gt::collide, collide_hook);
+	hook_function(gt::server_info_http_finish, server_info_http_finish_hook);
+	hook_function(gt::get_fruit_bloom_progress_percent, get_fruit_bloom_progress_percent_hook);
+	hook_function(gt::can_see_ghosts, can_see_ghosts_hook);
 
 	hook_function(gt::end_scene, end_scene_hook);
 	original_wnd_proc = reinterpret_cast<WNDPROC>(SetWindowLongPtrA(gt::hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(&wnd_proc_hook)));
@@ -104,12 +108,14 @@ void hooks::send_packet_raw_hook(net_message_type type, const void* data, std::i
 		break;
 	}
 
-	console::println<console::color::magenta>(std::format("sending game packet, type: {}", static_cast<int>(packet->type)));
+	console::println<console::color::green>(std::format("sending game packet '{}'", magic_enum::enum_name(packet->type)));
 
 	gt::send_packet_raw(type, data, data_size, unk1, peer, flags);
 }
 
 void hooks::process_tank_update_packet_hook(game_logic_component_t* _this, game_packet_t* packet) {
+
+	console::println<console::color::red>(std::format("incoming game packet '{}'", magic_enum::enum_name(packet->type)));
 
 	gt::process_tank_update_packet(_this, packet);
 }
@@ -150,6 +156,25 @@ bool hooks::collide_hook(world_tile_map_t* _this, float unk1, float unk2, float 
 		return true;
 
 	return gt::collide(_this, unk1, unk2, unk3, unk4, unk5, unk6);
+}
+
+void hooks::server_info_http_finish_hook(variant_list_t* var_list) {
+	console::println(var_list->get(1).string_value);
+	gt::server_info_http_finish(var_list);
+}
+
+float hooks::get_fruit_bloom_progress_percent_hook(tile_t* _this) {
+	if (cheats::see_fruits)
+		return 1.0f;
+
+	return gt::get_fruit_bloom_progress_percent(_this);
+}
+
+bool hooks::can_see_ghosts_hook(std::int32_t item_id) {
+	if (cheats::see_ghosts)
+		return true;
+
+	return gt::can_see_ghosts(item_id);
 }
 
 HRESULT hooks::end_scene_hook(IDirect3DDevice9* _this) {
