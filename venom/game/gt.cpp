@@ -23,7 +23,7 @@ enum class find_mode {
 	function_start
 };
 
-void find_address(auto& dest, std::string_view pattern, find_mode mode = find_mode::normal, std::intptr_t offset = 0) {
+void find_address(auto& dest, std::string_view pattern, find_mode mode, std::intptr_t offset = 0) {
 	std::uintptr_t address = memory::find_pattern(pattern, offset);
 
 	switch (mode) {
@@ -68,8 +68,15 @@ void find_addresses() {
 	find_address(gt::server_info_http_finish, "48 8d 45 ? 48 89 44 24 ? 44 8d 4b ? 4c 8d 45", find_mode::function_start);
 	find_address(gt::get_fruit_bloom_progress_percent, "e8 ? ? ? ? 0f b6 47 ? 44 0f 28 c0", find_mode::call);
 	find_address(gt::can_see_ghosts, "0f b6 44 24 ? eb ? e8", find_mode::function_start);
+	find_address(gt::on_touched_deadly, "e8 ? ? ? ? 32 c0 eb ? cc", find_mode::call);
+	find_address(gt::update_from_net_avatar, "e8 ? ? ? ? 49 8b ce e8 ? ? ? ? 48 8b d8", find_mode::call);
+	find_address(gt::bumped_bouncy, "e8 ? ? ? ? 32 c0 e9 ? ? ? ? bd", find_mode::call);
+	find_address(gt::handle_tile_damage_vertically, "e8 ? ? ? ? 32 c0 e9 ? ? ? ? 83 f9 ? 75 ? 4d 8b ce", find_mode::call);
+	find_address(gt::handle_tile_damage_horizontally, "e8 ? ? ? ? 32 c0 e9 ? ? ? ? 83 f9 ? 75 ? 4d 8b cf", find_mode::call);
+	find_address(gt::is_checkpoint, "e8 ? ? ? ? 84 c0 74 ? 0f b7 46", find_mode::call);
 
 	find_address(gt::touch_bypass_address, "3d ? ? ? ? 72 ? c6 83", find_mode::normal, 5);
+	find_address(gt::enable_pasting_address, "74 ? 83 f9 ? 0f 85 ? ? ? ? 83 7f", find_mode::normal);
 
 	find_address(gt::renderer, "48 8b 05 ? ? ? ? 75 ? c6 43", find_mode::load);
 

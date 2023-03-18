@@ -176,5 +176,11 @@
     <ClInclude Include="external\magic_enum\magic_enum.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="game\player\avatar_render_data.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\utils\lock_float.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

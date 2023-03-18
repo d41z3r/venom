@@ -39,6 +39,12 @@ void hooks::install() {
 	hook_function(gt::server_info_http_finish, server_info_http_finish_hook);
 	hook_function(gt::get_fruit_bloom_progress_percent, get_fruit_bloom_progress_percent_hook);
 	hook_function(gt::can_see_ghosts, can_see_ghosts_hook);
+	hook_function(gt::on_touched_deadly, on_touched_deadly_hook);
+	hook_function(gt::bumped_bouncy, bumped_bouncy_hook);
+	hook_function(gt::handle_tile_damage_vertically, handle_tile_damage_vertically_hook);
+	hook_function(gt::handle_tile_damage_horizontally, handle_tile_damage_horizontally_hook);
+	hook_function(gt::update_from_net_avatar, update_from_net_avatar_hook);
+	hook_function(gt::is_checkpoint, is_checkpoint_hook);
 
 	hook_function(gt::end_scene, end_scene_hook);
 	original_wnd_proc = reinterpret_cast<WNDPROC>(SetWindowLongPtrA(gt::hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(&wnd_proc_hook)));
@@ -75,13 +81,14 @@ void hooks::send_packet_raw_hook(net_message_type type, const void* data, std::i
 
 	switch (packet->type) {
 	case game_packet_type::state:
-		if (cheats::anti_damage) {
-			memory::remove_bit(packet->flags, visual_state::on_fire_damage);
-			memory::remove_bit(packet->flags, visual_state::on_damage);
-			memory::remove_bit(packet->flags, visual_state::on_acid_damage);
-		}
+		if (cheats::ghost_mode)
+			return;
 
-		if (cheats::fake_lag)
+		// if u are standing on spike for too long u get ban, this bypasses it
+		if (cheats::anti_deadly)
+			memory::remove_bit(packet->flags, visual_state::on_solid);
+
+		if (cheats::fake_lag) 
 			memory::set_bit(packet->flags, visual_state::on_spawn);
 
 		if (cheats::super_punch && memory::has_bit(packet->flags, visual_state::on_punched))
@@ -91,6 +98,10 @@ void hooks::send_packet_raw_hook(net_message_type type, const void* data, std::i
 		if (cheats::walk_in_air)
 			packet->vec2 = {0.f, 0.f};
 
+		break;
+
+	case game_packet_type::ping_reply:
+		packet->int1 = 0;
 		break;
 
 	case game_packet_type::got_punched:
@@ -152,7 +163,7 @@ bool hooks::is_anzu_platform_hook() {
 }
 
 bool hooks::collide_hook(world_tile_map_t* _this, float unk1, float unk2, float unk3, float unk4, int unk5, bool unk6) {
-	if (cheats::walk_in_air)
+	if (cheats::walk_in_air && !gt::get_game_logic()->local_player->down_key_state)
 		return true;
 
 	return gt::collide(_this, unk1, unk2, unk3, unk4, unk5, unk6);
@@ -175,6 +186,59 @@ bool hooks::can_see_ghosts_hook(std::int32_t item_id) {
 		return true;
 
 	return gt::can_see_ghosts(item_id);
+}
+
+void hooks::on_touched_deadly_hook(net_avatar_t* _this, tile_t* tile) {
+	if (cheats::anti_deadly)
+		return; // todo: use player_state::spikeproof instead of this hook
+
+	gt::on_touched_deadly(_this, tile);
+}
+
+void hooks::bumped_bouncy_hook(net_avatar_t* _this, tile_t* unk1, float* unk2, float* unk3) {
+	if (cheats::anti_bouncy)
+		return;
+
+	gt::bumped_bouncy(_this, unk1, unk2, unk3);
+}
+
+void hooks::handle_tile_damage_vertically_hook(net_avatar_t* _this, float* unk1, float* unk2, bool unk3, bool unk4) {
+	if (cheats::anti_damage)
+		return;
+
+	gt::handle_tile_damage_vertically(_this, unk1, unk2, unk3, unk4);
+}
+
+void hooks::handle_tile_damage_horizontally_hook(net_avatar_t* _this, float* unk1, float* unk2, bool unk3, bool unk4) {
+	if (cheats::anti_damage)
+		return;
+
+	gt::handle_tile_damage_horizontally(_this, unk1, unk2, unk3, unk4);
+}
+
+void hooks::update_from_net_avatar_hook(avatar_render_data_t* _this, net_avatar_t* net_avatar) {
+	if (cheats::ghost_mode && net_avatar == gt::get_game_logic()->local_player)
+		return;
+
+	//float original_velocity_x = net_avatar->velocity.x.get();
+	//float original_velocity_y = net_avatar->velocity.y.get();
+
+	//net_avatar->velocity.x.set(0.f);
+	//net_avatar->velocity.y.set(0.f);
+
+	//gt::update_from_net_avatar(_this, net_avatar);
+
+	//net_avatar->velocity.x.set(original_velocity_x);
+	//net_avatar->velocity.y.set(original_velocity_y);
+
+	gt::update_from_net_avatar(_this, net_avatar);
+}
+
+bool hooks::is_checkpoint_hook(tile_t* _this) {
+	if (cheats::anti_checkpoint)
+		return false;
+
+	return gt::is_checkpoint(_this);
 }
 
 HRESULT hooks::end_scene_hook(IDirect3DDevice9* _this) {

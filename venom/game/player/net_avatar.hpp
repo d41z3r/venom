@@ -1,5 +1,9 @@
 #pragma once
+#include <game/utils/math.hpp>
+#include <game/utils/lock_float.hpp>
+
 #include <cstdint>
+#include <memory>
 
 enum class visual_state : std::uint32_t {
 	// 0x1: unknown
@@ -33,6 +37,47 @@ enum class visual_state : std::uint32_t {
 	on_acid_damage = 0x10000000, // (1 << 28)
 };
 
-struct net_avatar_t /*: public net_moving_t*/ {
+enum class player_flag : std::uint32_t {
 
 };
+
+#pragma pack(push, 1)
+struct net_avatar_t /*: public net_moving_t*/ {
+	void* vftable;
+	vec2f_t pos;
+	vec2f_t size;
+	vec2f_t encrypted_pos;
+	vec2f_t encrypted_size;
+	std::string name;
+	std::int32_t net_id;
+	std::uint8_t pad1[21];
+	bool facing_left;
+	std::uint8_t pad2[122];
+	bool can_jump;
+	std::uint8_t pad3[7];
+	vec2_t<lock_float_t> velocity;
+	std::uint8_t pad4[52];
+	std::uint32_t freeze_state;
+	std::uint32_t user_id;
+	std::uint8_t pad5[16];
+	std::string country;
+	std::uint8_t pad6[8];
+	bool is_invis;
+	bool is_mod;
+	bool is_smod;
+	std::uint8_t pad7[9];
+	std::uint32_t bubble_state;
+	player_flag flags;
+	std::uint8_t pad8[20];
+	bool down_key_state;
+	std::uint8_t pad9[4];
+	std::uint32_t punch_effect;
+	std::uint8_t pad10[28];
+	lock_float_t gravity;
+	lock_float_t acceleration;
+	lock_float_t speed;
+	float water_speed;
+};
+#pragma pack(pop)
+
+constexpr int aaaaa = offsetof(net_avatar_t, can_jump);

@@ -199,8 +199,10 @@
     <ClInclude Include="game\gt.hpp" />
     <ClInclude Include="game\network\enet_client.hpp" />
     <ClInclude Include="game\network\game_packet.hpp" />
+    <ClInclude Include="game\player\avatar_render_data.hpp" />
     <ClInclude Include="game\player\net_avatar.hpp" />
     <ClInclude Include="game\renderer\renderer_context.hpp" />
+    <ClInclude Include="game\utils\lock_float.hpp" />
     <ClInclude Include="game\utils\math.hpp" />
     <ClInclude Include="game\utils\variant.hpp" />
     <ClInclude Include="game\world\tile.hpp" />

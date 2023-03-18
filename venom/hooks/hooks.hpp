@@ -20,6 +20,12 @@ namespace hooks {
 	void server_info_http_finish_hook(variant_list_t* var_list);
 	float get_fruit_bloom_progress_percent_hook(tile_t* _this);
 	bool can_see_ghosts_hook(std::int32_t item_id);
+	void on_touched_deadly_hook(net_avatar_t* _this, tile_t* tile);
+	void bumped_bouncy_hook(net_avatar_t* _this, tile_t* unk1, float* unk2, float* unk3);
+	void handle_tile_damage_vertically_hook(net_avatar_t* _this, float* unk1, float* unk2, bool unk3, bool unk4);
+	void handle_tile_damage_horizontally_hook(net_avatar_t* _this, float* unk1, float* unk2, bool unk3, bool unk4);
+	void update_from_net_avatar_hook(avatar_render_data_t* _this, net_avatar_t* net_avatar);
+	bool is_checkpoint_hook(tile_t* _this);
 
 	HRESULT end_scene_hook(IDirect3DDevice9* _this);
 	LRESULT wnd_proc_hook(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);

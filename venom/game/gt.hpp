@@ -4,6 +4,7 @@
 #include <game/network/game_packet.hpp>
 #include <game/component/game_logic_component.hpp>
 #include <game/component/track_handler_component.hpp>
+#include <game/player/avatar_render_data.hpp>
 #include <game/player/net_avatar.hpp>
 #include <game/world/world_tile_map.hpp>
 #include <game/utils/math.hpp>
@@ -50,10 +51,17 @@ namespace gt {
 	inline void (*server_info_http_finish)(variant_list_t* var_list) = nullptr;
 	inline float(*get_fruit_bloom_progress_percent)(tile_t* _this) = nullptr;
 	inline bool (*can_see_ghosts)(std::int32_t item_id) = nullptr;
+	inline void (*on_touched_deadly)(net_avatar_t* _this, tile_t* tile) = nullptr;
+	inline void (*bumped_bouncy)(net_avatar_t* _this, tile_t* unk1, float* unk2, float* unk3) = nullptr;
+	inline void (*handle_tile_damage_vertically)(net_avatar_t* _this, float* unk1, float* unk2, bool unk3, bool unk4) = nullptr;
+	inline void (*handle_tile_damage_horizontally)(net_avatar_t* _this,float* unk1, float* unk2, bool unk3, bool unk4) = nullptr;
+	inline void (*update_from_net_avatar)(avatar_render_data_t* _this, net_avatar_t* net_avatar) = nullptr;
+	inline bool (*is_checkpoint)(tile_t* _this) = nullptr;
 
 	inline HRESULT(*end_scene)(IDirect3DDevice9* _this) = nullptr;
 	inline renderer_context_d3d9_t* renderer = nullptr;
 
 	inline std::uintptr_t touch_bypass_address = 0;
+	inline std::uintptr_t enable_pasting_address = 0;
 }
 
