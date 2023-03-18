@@ -1,6 +1,8 @@
 # venom
 growtopia internal
 
+[discord server](https://discord.gg/K3VW9VtTtc) for reporting bugs, suggesting features and more
+
 ### special thanks to [aname](https://www.youtube.com/@aname0) for VirtualProtect fix
 
 ## usage
