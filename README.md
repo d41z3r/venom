@@ -11,7 +11,7 @@ growtopia internal
 * drop venom.dll on top of loader.exe
 
 ## image
-![image](https://user-images.githubusercontent.com/73388513/226145698-ccc8223d-4424-47ba-854d-9914b57e8ecf.png)
+![image](https://user-images.githubusercontent.com/73388513/226196324-1f2d8746-b14d-4447-95d8-a7dafe85ca50.png)
 
 ## external libraries
 * [imgui](https://github.com/ocornut/imgui)
