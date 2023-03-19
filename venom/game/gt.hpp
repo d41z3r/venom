@@ -37,6 +37,7 @@ namespace gt {
 	inline enet_client_t* (*get_client)() = nullptr;
 	inline game_logic_component_t* (*get_game_logic)() = nullptr;
 
+	inline void (*update)(app_t* _this) = nullptr;
 	inline void (*set_fps_limit)(base_app_t* _this, float fps) = nullptr;
 	inline void (*log_to_console)(const std::string& text) = nullptr;
 	inline void (*send_packet)(net_message_type type, const std::string& packet, void* peer) = nullptr;

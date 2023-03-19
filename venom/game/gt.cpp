@@ -54,6 +54,7 @@ void find_addresses() {
 	find_address(gt::get_client, "75 ? e8 ? ? ? ? 48 83 b8", find_mode::call, 2);
 	find_address(gt::get_game_logic, "48 8b 80 ? ? ? ? eb", find_mode::function_start);
 
+	find_address(gt::update, "90 48 8d 8f ? ? ? ? 45 33 c9", find_mode::function_start);
 	find_address(gt::set_fps_limit, "e8 ? ? ? ? e8 ? ? ? ? 83 e8", find_mode::call);
 	find_address(gt::log_to_console, "e8 ? ? ? ? 48 8b c8 e8 ? ? ? ? 90 48 8d 4d ? e8 ? ? ? ? e8", find_mode::call, 8);
 	find_address(gt::send_packet, "02 00 00 00 e8 ? ? ? ? 90 48 8d 4c 24 50", find_mode::call, 4);
@@ -115,7 +116,6 @@ void gt::setup() {
 
 void gt::send_generic_text(const std::string& packet) noexcept {
 	enet_client_t* client = gt::get_client();
-
 	if (client == nullptr || client->peer == nullptr)
 		return;
 
@@ -124,7 +124,6 @@ void gt::send_generic_text(const std::string& packet) noexcept {
 
 void gt::send_game_message(const std::string& packet) noexcept {
 	enet_client_t* client = gt::get_client();
-
 	if (client == nullptr || client->peer == nullptr)
 		return;
 
@@ -133,7 +132,6 @@ void gt::send_game_message(const std::string& packet) noexcept {
 
 void gt::send_game_packet(const game_packet_t& packet) noexcept {
 	enet_client_t* client = gt::get_client();
-
 	if (client == nullptr || client->peer == nullptr)
 		return;
 
@@ -142,7 +140,6 @@ void gt::send_game_packet(const game_packet_t& packet) noexcept {
 
 void gt::process_game_message(const std::string& packet) noexcept {
 	game_logic_component_t* game_logic = gt::get_game_logic();
-
 	if (game_logic == nullptr)
 		return;
 
@@ -151,7 +148,6 @@ void gt::process_game_message(const std::string& packet) noexcept {
 
 void gt::process_game_packet(const game_packet_t& packet) noexcept {
 	game_logic_component_t* game_logic = gt::get_game_logic();
-
 	if (game_logic == nullptr)
 		return;
 

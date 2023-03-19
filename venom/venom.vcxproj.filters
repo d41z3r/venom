@@ -72,6 +72,12 @@
     <ClCompile Include="game\close_mutexes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="menu\pages\debug_page.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hooks\update_hook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils\memory.hpp">
@@ -180,6 +186,36 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\utils\lock_float.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\world\world.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\world\world_object_map.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\world\world_object.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\manager\net_object_manager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\world\world_renderer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\player\player_items.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\utils\boost.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\manager\game_timer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\manager\console.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\gui\rt_font.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

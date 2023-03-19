@@ -3,8 +3,6 @@
 #include <utils/memory.hpp>
 
 void menu::cheats_page() noexcept {
-	ImGui::SeparatorText("cheats");
-
 	ImGui::Columns(3, "cheat columns", false);
 	ImGui::Checkbox("anti deadly", &cheats::anti_deadly);
 	ImGui::Checkbox("anti bouncy", &cheats::anti_bouncy);
@@ -20,10 +18,12 @@ void menu::cheats_page() noexcept {
 	ImGui::Checkbox("see ghosts", &cheats::see_ghosts);
 	ImGui::Checkbox("fake lag", &cheats::fake_lag); // todo: make this show to our client aswell
 	ImGui::Checkbox("ghost mode", &cheats::ghost_mode);
+	ImGui::Checkbox("mod zoom", &cheats::mod_zoom);
 
 	ImGui::NextColumn();
 
 	ImGui::Checkbox("walk in air", &cheats::walk_in_air); // todo: set save.dat move_down hotkeys on startup
+	ImGui::Checkbox("unlimited jumps", &cheats::unlimited_jumps);
 	ImGui::Checkbox("super punch", &cheats::super_punch);
 	ImGui::Checkbox("block ads", &cheats::block_ads);
 

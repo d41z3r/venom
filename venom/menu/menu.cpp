@@ -24,19 +24,17 @@ void menu::render() noexcept {
 		ImGui::SetNextWindowSize({ 550.f, 350.f }, ImGuiCond_Once);
 		ImGui::Begin("venom", &show, ImGuiWindowFlags_NoCollapse);
 
-		cheats_page();
+		ImGui::BeginTabBar("tabs");
 
-		ImGui::SeparatorText("texture test");
-		static int texture_id = 0;
-		ImGui::InputInt("texture id", &texture_id);
+		if (ImGui::BeginTabItem("cheats")) {
+			cheats_page();
+			ImGui::EndTabItem();
+		}
 
-		const auto& texture = gt::renderer->textures[texture_id];
-		ImGui::Image(
-			texture.ptr, 
-			{ static_cast<float>(texture.width), static_cast<float>(texture.height) },
-			{ 0.f, 1.f },
-			{ 1.f, 0.f }
-		);
+		if (ImGui::BeginTabItem("debug")) {
+			debug_page();
+			ImGui::EndTabItem();
+		}
 
 		ImGui::End();
 	}

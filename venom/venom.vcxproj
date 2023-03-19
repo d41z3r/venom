@@ -170,8 +170,10 @@
     <ClCompile Include="game\close_mutexes.cpp" />
     <ClCompile Include="game\gt.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
+    <ClCompile Include="hooks\update_hook.cpp" />
     <ClCompile Include="menu\menu.cpp" />
     <ClCompile Include="menu\pages\cheats_page.cpp" />
+    <ClCompile Include="menu\pages\debug_page.cpp" />
     <ClCompile Include="utils\memory.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -195,17 +197,27 @@
     <ClInclude Include="game\app\app.hpp" />
     <ClInclude Include="game\app\base_app.hpp" />
     <ClInclude Include="game\component\game_logic_component.hpp" />
+    <ClInclude Include="game\gui\rt_font.hpp" />
+    <ClInclude Include="game\manager\console.hpp" />
+    <ClInclude Include="game\manager\game_timer.hpp" />
+    <ClInclude Include="game\manager\net_object_manager.hpp" />
     <ClInclude Include="game\component\track_handler_component.hpp" />
     <ClInclude Include="game\gt.hpp" />
     <ClInclude Include="game\network\enet_client.hpp" />
     <ClInclude Include="game\network\game_packet.hpp" />
     <ClInclude Include="game\player\avatar_render_data.hpp" />
     <ClInclude Include="game\player\net_avatar.hpp" />
+    <ClInclude Include="game\player\player_items.hpp" />
     <ClInclude Include="game\renderer\renderer_context.hpp" />
+    <ClInclude Include="game\utils\boost.hpp" />
     <ClInclude Include="game\utils\lock_float.hpp" />
     <ClInclude Include="game\utils\math.hpp" />
     <ClInclude Include="game\utils\variant.hpp" />
     <ClInclude Include="game\world\tile.hpp" />
+    <ClInclude Include="game\world\world.hpp" />
+    <ClInclude Include="game\world\world_object.hpp" />
+    <ClInclude Include="game\world\world_object_map.hpp" />
+    <ClInclude Include="game\world\world_renderer.hpp" />
     <ClInclude Include="game\world\world_tile_map.hpp" />
     <ClInclude Include="hooks\hooks.hpp" />
     <ClInclude Include="menu\menu.hpp" />

@@ -6,6 +6,7 @@
 #include <memory>
 
 enum class visual_state : std::uint32_t {
+	none = 0x0,
 	// 0x1: unknown
 	// 0x2: unknown
 	on_spawn = 0x4, // (1 << 2)
@@ -38,7 +39,7 @@ enum class visual_state : std::uint32_t {
 };
 
 enum class player_flag : std::uint32_t {
-
+	none = 0x0,
 };
 
 #pragma pack(push, 1)

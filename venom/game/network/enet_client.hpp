@@ -1,11 +1,17 @@
 #pragma once
+#include <game/utils/boost.hpp>
+
 #include <cstdint>
 #include <string>
 
 #pragma pack(push, 1)
 struct enet_client_t {
 	void* vftable;
-	std::uint8_t boost_signals[152]; // 4 boost signals
+	boost_signal_t sig_unk1;
+	boost_signal_t sig_unk2;
+	boost_signal_t sig_unk3;
+	boost_signal_t sig_unk4;
+	std::uint8_t pad1[24];
 	void* host; // 0xa0
 	void* peer; // 0xa8
 	std::uint32_t timed_out_timestamp;
@@ -23,3 +29,5 @@ struct enet_client_t {
 	std::string uuid_token; // 0x118
 };
 #pragma pack(pop)
+
+constexpr int aaaaaaaaa = 0xa0 - offsetof(enet_client_t, host);

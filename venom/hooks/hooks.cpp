@@ -1,6 +1,5 @@
 #include <hooks/hooks.hpp>
 #include <menu/menu.hpp>
-#include <game/gt.hpp>
 #include <utils/console.hpp>
 #include <utils/memory.hpp>
 #include <external/minhook/include/MinHook.h>
@@ -27,6 +26,7 @@ void hooks::install() {
 	if (MH_Initialize() != MH_OK)
 		throw std::runtime_error("failed to initialize minhook");
 
+	hook_function(gt::update, update_hook);
 	hook_function(gt::send_packet, send_packet_hook);
 	hook_function(gt::send_packet_raw, send_packet_raw_hook);
 	hook_function(gt::on_text_game_message, on_text_game_message_hook);
@@ -88,7 +88,7 @@ void hooks::send_packet_raw_hook(net_message_type type, const void* data, std::i
 		if (cheats::anti_deadly)
 			memory::remove_bit(packet->flags, visual_state::on_solid);
 
-		if (cheats::fake_lag) 
+		if (cheats::fake_lag)
 			memory::set_bit(packet->flags, visual_state::on_spawn);
 
 		if (cheats::super_punch && memory::has_bit(packet->flags, visual_state::on_punched))
@@ -96,12 +96,14 @@ void hooks::send_packet_raw_hook(net_message_type type, const void* data, std::i
 
 		// if you send walk packets in air you will get banned so lets set player velocity as 0 so server thinks we are not walking
 		if (cheats::walk_in_air)
-			packet->vec2 = {0.f, 0.f};
+			packet->vec2 = { 0.f, 0.f };
 
 		break;
 
-	case game_packet_type::ping_reply:
-		packet->int1 = 0;
+	case game_packet_type::ping_reply: // todo: better spoofing
+		packet->byte2 = 0; // jump count
+		packet->int1 = 0; // local player state
+		gt::log_to_console("`4venom:`` `ospoofing ping reply``");
 		break;
 
 	case game_packet_type::got_punched:
