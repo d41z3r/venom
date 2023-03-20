@@ -221,9 +221,6 @@
     <ClInclude Include="game\utils\text_scanner.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\world\world_object.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game\manager\text_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -231,6 +228,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\manager\effect_manager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\manager\item_info_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

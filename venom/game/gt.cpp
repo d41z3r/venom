@@ -53,6 +53,7 @@ void find_addresses() {
 	find_address(gt::get_app, "c3 e8 ? ? ? ? 48 8b c8 33 d2", find_mode::call, 1);
 	find_address(gt::get_client, "75 ? e8 ? ? ? ? 48 83 b8", find_mode::call, 2);
 	find_address(gt::get_game_logic, "48 8b 80 ? ? ? ? eb", find_mode::function_start);
+	find_address(gt::get_item_info_manager, "e8 ? ? ? ? 48 8b c8 8b 57 ? e8 ? ? ? ? 33 f6", find_mode::call);
 
 	find_address(gt::update, "90 48 8d 8f ? ? ? ? 45 33 c9", find_mode::function_start);
 	find_address(gt::set_fps_limit, "e8 ? ? ? ? e8 ? ? ? ? 83 e8", find_mode::call);

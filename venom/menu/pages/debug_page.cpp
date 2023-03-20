@@ -16,12 +16,19 @@ void debug_button(const char* name, auto address) {
 
 void menu::debug_page() noexcept {
 	app_t* app = gt::get_app();
-	game_logic_component_t* game_logic = gt::get_game_logic();
 	enet_client_t* client = gt::get_client();
+	item_info_manager_t* item_info_manager = gt::get_item_info_manager();
+	game_logic_component_t* game_logic = gt::get_game_logic();
 
 	debug_button("app", app);
 	debug_button("enet client", client);
+	debug_button("item info manager", item_info_manager);
 	debug_button("game logic", game_logic);
+
+	if (item_info_manager != nullptr) {
+		if (!item_info_manager->items.empty())
+			debug_button("first item info", &item_info_manager->items[0]);
+	}
 
 	if (game_logic != nullptr) {
 		debug_button("world", game_logic->world);

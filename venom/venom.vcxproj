@@ -203,6 +203,7 @@
     <ClInclude Include="game\manager\effect_manager.hpp" />
     <ClInclude Include="game\manager\game_timer.hpp" />
     <ClInclude Include="game\manager\hud_indicator_manager.hpp" />
+    <ClInclude Include="game\manager\item_info_manager.hpp" />
     <ClInclude Include="game\manager\net_object_manager.hpp" />
     <ClInclude Include="game\component\track_handler_component.hpp" />
     <ClInclude Include="game\gt.hpp" />
@@ -220,7 +221,6 @@
     <ClInclude Include="game\utils\variant.hpp" />
     <ClInclude Include="game\world\tile.hpp" />
     <ClInclude Include="game\world\world.hpp" />
-    <ClInclude Include="game\world\world_object.hpp" />
     <ClInclude Include="game\world\world_object_map.hpp" />
     <ClInclude Include="game\world\world_renderer.hpp" />
     <ClInclude Include="game\world\world_tile_map.hpp" />

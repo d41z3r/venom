@@ -4,6 +4,7 @@
 #include <game/network/game_packet.hpp>
 #include <game/component/game_logic_component.hpp>
 #include <game/component/track_handler_component.hpp>
+#include <game/manager/item_info_manager.hpp>
 #include <game/player/avatar_render_data.hpp>
 #include <game/player/net_avatar.hpp>
 #include <game/world/world_tile_map.hpp>
@@ -36,6 +37,7 @@ namespace gt {
 	inline app_t* (*get_app)() = nullptr;
 	inline enet_client_t* (*get_client)() = nullptr;
 	inline game_logic_component_t* (*get_game_logic)() = nullptr;
+	inline item_info_manager_t* (*get_item_info_manager)() = nullptr;
 
 	inline void (*update)(app_t* _this) = nullptr;
 	inline void (*set_fps_limit)(base_app_t* _this, float fps) = nullptr;
