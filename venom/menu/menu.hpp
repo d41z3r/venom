@@ -4,6 +4,9 @@
 #include <external/imgui/imgui_impl_dx9.h>
 #include <external/imgui/imgui_impl_win32.h>
 
+#include <cstdint>
+#include <string_view>
+
 namespace menu {
 	void setup();
 	void render() noexcept;
@@ -19,6 +22,7 @@ namespace cheats {
 	inline bool anti_bouncy = false;
 	inline bool anti_damage = false;
 	inline bool anti_checkpoint = false;
+	inline bool anti_slide = false;
 	inline bool anti_zombie = false;
 	inline bool anti_knockback = false;
 
@@ -35,4 +39,8 @@ namespace cheats {
 	inline bool block_ads = false;
 	inline bool touch_bypass = false;
 	inline bool enable_pasting = false;
+}
+
+namespace ImGui {
+	bool Checkbox(const char* label, bool* v, std::uintptr_t address, std::string_view patch, std::string_view original);
 }

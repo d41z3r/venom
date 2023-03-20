@@ -72,11 +72,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)build\</OutDir>
-    <IntDir>$(SolutionDir)build\obj\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)build\obj\venom\$(Platform)\$(Configuration)\</IntDir>
     <IncludePath>$(SolutionDir)venom;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IntDir>$(SolutionDir)build\obj\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)build\obj\venom\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)build\</OutDir>
     <TargetName>$(ProjectName)-debug</TargetName>
     <IncludePath>$(SolutionDir)venom;$(IncludePath)</IncludePath>
@@ -171,6 +171,7 @@
     <ClCompile Include="game\gt.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
     <ClCompile Include="hooks\update_hook.cpp" />
+    <ClCompile Include="menu\imgui_extra.cpp" />
     <ClCompile Include="menu\menu.cpp" />
     <ClCompile Include="menu\pages\cheats_page.cpp" />
     <ClCompile Include="menu\pages\debug_page.cpp" />
@@ -199,10 +200,13 @@
     <ClInclude Include="game\component\game_logic_component.hpp" />
     <ClInclude Include="game\gui\rt_font.hpp" />
     <ClInclude Include="game\manager\console.hpp" />
+    <ClInclude Include="game\manager\effect_manager.hpp" />
     <ClInclude Include="game\manager\game_timer.hpp" />
+    <ClInclude Include="game\manager\hud_indicator_manager.hpp" />
     <ClInclude Include="game\manager\net_object_manager.hpp" />
     <ClInclude Include="game\component\track_handler_component.hpp" />
     <ClInclude Include="game\gt.hpp" />
+    <ClInclude Include="game\manager\text_manager.hpp" />
     <ClInclude Include="game\network\enet_client.hpp" />
     <ClInclude Include="game\network\game_packet.hpp" />
     <ClInclude Include="game\player\avatar_render_data.hpp" />
@@ -212,6 +216,7 @@
     <ClInclude Include="game\utils\boost.hpp" />
     <ClInclude Include="game\utils\lock_float.hpp" />
     <ClInclude Include="game\utils\math.hpp" />
+    <ClInclude Include="game\utils\text_scanner.hpp" />
     <ClInclude Include="game\utils\variant.hpp" />
     <ClInclude Include="game\world\tile.hpp" />
     <ClInclude Include="game\world\world.hpp" />

@@ -1,5 +1,6 @@
 #pragma once
 
-struct avatar_render_data_t {
+class avatar_render_data_t {
+public:
 
 };

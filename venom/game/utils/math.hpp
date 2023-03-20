@@ -1,17 +1,20 @@
 #pragma once
 
 template <typename T>
-struct vec2_t {
+class vec2_t {
+public:
 	T x, y;
 };
 
 template <typename T>
-struct vec3_t {
+class vec3_t {
+public:
 	T x, y, z;
 };
 
 template <typename T>
-struct vec4_t {
+class vec4_t {
+public:
 	T x, y, z, w;
 };
 

@@ -43,7 +43,8 @@ enum class player_flag : std::uint32_t {
 };
 
 #pragma pack(push, 1)
-struct net_avatar_t /*: public net_moving_t*/ {
+class net_avatar_t /*: public net_moving_t*/ {
+public:
 	void* vftable;
 	vec2f_t pos;
 	vec2f_t size;
@@ -80,5 +81,3 @@ struct net_avatar_t /*: public net_moving_t*/ {
 	float water_speed;
 };
 #pragma pack(pop)
-
-constexpr int aaaaa = offsetof(net_avatar_t, can_jump);

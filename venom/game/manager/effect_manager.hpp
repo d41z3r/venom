@@ -2,8 +2,9 @@
 #include <cstdint>
 
 #pragma pack(push, 1)
-class boost_signal_t {
+class effect_manager_t {
 public:
-	std::uint8_t pad[32];
+	void* vftable;
+	// more
 };
 #pragma pack(pop)

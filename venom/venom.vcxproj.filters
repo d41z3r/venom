@@ -78,6 +78,9 @@
     <ClCompile Include="hooks\update_hook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="menu\imgui_extra.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils\memory.hpp">
@@ -194,9 +197,6 @@
     <ClInclude Include="game\world\world_object_map.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\world\world_object.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game\manager\net_object_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -216,6 +216,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\gui\rt_font.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\utils\text_scanner.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\world\world_object.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\manager\text_manager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\manager\hud_indicator_manager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\manager\effect_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

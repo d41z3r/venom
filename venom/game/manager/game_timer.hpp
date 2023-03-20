@@ -3,7 +3,8 @@
 #include <deque>
 
 #pragma pack(push, 1)
-struct game_timer_t {
+class game_timer_t {
+public:
 	void* vftable;
 	std::uint32_t last_time_ms;
 	std::uint32_t time_ms;
@@ -20,5 +21,3 @@ struct game_timer_t {
 	std::uint8_t pad1[7];
 };
 #pragma pack(pop)
-
-constexpr int aaaaaa = sizeof(game_timer_t);

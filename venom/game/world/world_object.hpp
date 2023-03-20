@@ -12,7 +12,8 @@ public:
     std::uint8_t count;
     std::uint8_t flags;
     std::uint32_t object_id;
-    std::uint8_t pad1[24];
+    std::uint32_t insert_timestamp;
+    std::uint8_t pad1[20];
 };
 #pragma pack(pop)
 

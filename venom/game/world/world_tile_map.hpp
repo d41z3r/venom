@@ -5,10 +5,11 @@
 #include <vector>
 #include <cstdint>
 
-struct world_t;
+class world_t;
 
 #pragma pack(push, 1)
-struct world_tile_map_t {
+class world_tile_map_t {
+public:
 	void* vftable;
 	vec2i_t size;
 	std::uint8_t pad1[8];

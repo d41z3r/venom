@@ -6,7 +6,8 @@
 #include <string>
 
 #pragma pack(push, 1)
-struct world_t {
+class world_t {
+public:
 	void* vftable;
 	std::uint8_t pad1[2];
 	std::uint16_t version;

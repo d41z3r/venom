@@ -18,7 +18,8 @@ enum class variant_type : std::uint32_t {
 };
 
 #pragma pack(push, 1)
-struct variant_t {
+class variant_t {
+public:
 	variant_type type;
 	std::uint8_t unk1[4];
 	void* pvoid;
@@ -37,7 +38,8 @@ struct variant_t {
 	std::uint8_t sig_onchanged[16];
 };
 
-struct variant_list_t {
+class variant_list_t {
+public:
 	void serialize_from_mem(std::uint8_t* data) noexcept {
 
 	}

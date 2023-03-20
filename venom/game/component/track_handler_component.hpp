@@ -1,5 +1,6 @@
 #pragma once
 
-struct track_handler_component_t {
+class track_handler_component_t {
+public:
 
 };

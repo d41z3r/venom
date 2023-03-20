@@ -1,6 +1,6 @@
 #pragma once
 
-class world_renderer_t {
+class text_scanner_t {
 public:
 
 };

@@ -5,7 +5,8 @@
 #include <string>
 
 #pragma pack(push, 1)
-struct enet_client_t {
+class enet_client_t {
+public:
 	void* vftable;
 	boost_signal_t sig_unk1;
 	boost_signal_t sig_unk2;
@@ -29,5 +30,3 @@ struct enet_client_t {
 	std::string uuid_token; // 0x118
 };
 #pragma pack(pop)
-
-constexpr int aaaaaaaaa = 0xa0 - offsetof(enet_client_t, host);

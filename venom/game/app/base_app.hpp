@@ -7,7 +7,8 @@
 #include <cstdint>
 
 #pragma pack(push, 1)
-struct base_app_t {
+class base_app_t {
+public:
 	void* vftable;
 	boost_signal_t sig_input;
 	boost_signal_t sig_input_move;

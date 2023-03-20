@@ -8,7 +8,8 @@ enum class tile_flag : std::uint16_t {
 };
 
 #pragma pack(push, 1)
-struct tile_t {
+class tile_t {
+public:
 	std::uint8_t pad1[4];
 	std::uint16_t foreground;
 	std::uint16_t background;

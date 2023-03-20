@@ -1,7 +1,8 @@
 #pragma once
 
 #pragma pack(push, 1)
-struct lock_float_t {
+class lock_float_t {
+public:
 	inline float get() const noexcept {
 		return encrypted1 - weight * 0.5f;
 	}
@@ -16,6 +17,7 @@ struct lock_float_t {
 		encrypted2 = value + weight;
 	}
 
+private:
 	float encrypted1;
 	float unk1;
 	float encrypted2;
