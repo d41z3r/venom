@@ -286,7 +286,7 @@ bool hooks::is_checkpoint_hook(tile_t* _this) {
 }
 
 void hooks::handle_touch_at_world_coordinates_hook(level_touch_component_t* _this, vec2f_t* pos, bool unk1) {
-	if (cheats::click_tp && GetKeyState(VK_CONTROL)) {
+	if (cheats::click_tp && GetAsyncKeyState(VK_CONTROL)) {
 		net_avatar_t* local_player = gt::get_game_logic()->local_player;
 		local_player->pos.x = pos->x - 10.f;
 		local_player->pos.y = pos->y - 15.f;
