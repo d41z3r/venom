@@ -3,6 +3,11 @@ growtopia internal
 
 ### special thanks to [aname](https://www.youtube.com/@aname0) for VirtualProtect fix
 
+## [discord server](https://discord.gg/g2GghbRDKx)
+* suggest features
+* report bugs
+* and more!
+
 ## usage
 * open solution
 * set mode to release
