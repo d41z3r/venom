@@ -40,6 +40,38 @@ enum class visual_state : std::uint32_t {
 
 enum class player_flag : std::uint32_t {
 	none = 0x0,
+	no_clip = 0x1,
+	double_jump = 0x2,
+	invisible = 0x4,
+	no_hands = 0x8,
+	no_face = 0x10,
+	no_body = 0x20,
+	devil_horns = 0x40,
+	golden_halo = 0x80,
+	// something
+	// something, got when consumed spike juice
+	spikeproof = 0x400,
+	frozen = 0x800,
+	cursed = 0x1000,
+	duct_taped = 0x2000,
+	bad_smell = 0x4000,
+	shiny = 0x8000,
+	zombie = 0x10000,
+	// something
+	shadows = 0x40000,
+	irradiated = 0x80000,
+	spotlight = 0x100000,
+	pineapple_skin_and_flag = 0x200000,
+	pineapple_flag = 0x400000,
+	// something
+	super_supporter = 0x1000000,
+	pineapple_aura = 0x2000000,
+	bubble = 0x4000000,
+	wet = 0x8000000,
+	mask1 = 0x10000000,
+	mask2 = 0x20000000,
+	mask3 = 0x40000000,
+	mask4 = 0x80000000
 };
 
 #pragma pack(push, 1)

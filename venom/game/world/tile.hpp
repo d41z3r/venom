@@ -4,7 +4,23 @@
 #include <cstdint>
 
 enum class tile_flag : std::uint16_t {
-	none = 0x0
+	none = 0x0,
+	tile_extra = 0x1,
+	locked = 0x2,
+	// something
+	// something
+	seed = 0x10,
+	flipped = 0x20,
+	open = 0x40,
+	public_ = 0x80,
+	// something
+	silenced = 0x200,
+	water = 0x400,
+	glue = 0x800,
+	fire = 0x1000,
+	red = 0x2000,
+	green = 0x4000,
+	blue = 0x8000
 };
 
 #pragma pack(push, 1)

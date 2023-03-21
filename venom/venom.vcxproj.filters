@@ -233,5 +233,8 @@
     <ClInclude Include="game\manager\item_info_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="game\component\level_touch_component.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

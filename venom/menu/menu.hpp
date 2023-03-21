@@ -23,7 +23,9 @@ namespace cheats {
 	inline bool anti_damage = false;
 	inline bool anti_checkpoint = false;
 	inline bool anti_slide = false;
+	inline bool anti_water = false;
 	inline bool anti_zombie = false;
+	inline bool anti_ghost = false;
 	inline bool anti_knockback = false;
 
 	inline bool night_vision = false;
@@ -33,6 +35,7 @@ namespace cheats {
 	inline bool ghost_mode = false;
 	inline bool mod_zoom = false;
 
+	inline bool click_tp = false;
 	inline bool walk_in_air = false;
 	inline bool unlimited_jumps = false;
 	inline bool super_punch = false;
@@ -42,5 +45,5 @@ namespace cheats {
 }
 
 namespace ImGui {
-	bool Checkbox(const char* label, bool* v, std::uintptr_t address, std::string_view patch, std::string_view original);
+	bool Checkbox(const char* label, bool* v, std::uintptr_t address, std::string_view new_bytes, std::string_view original_bytes);
 }

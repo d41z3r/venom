@@ -4,6 +4,7 @@
 #include <game/network/game_packet.hpp>
 #include <game/component/game_logic_component.hpp>
 #include <game/component/track_handler_component.hpp>
+#include <game/component/level_touch_component.hpp>
 #include <game/manager/item_info_manager.hpp>
 #include <game/player/avatar_render_data.hpp>
 #include <game/player/net_avatar.hpp>
@@ -60,12 +61,31 @@ namespace gt {
 	inline void (*handle_tile_damage_horizontally)(net_avatar_t* _this,float* unk1, float* unk2, bool unk3, bool unk4) = nullptr;
 	inline void (*update_from_net_avatar)(avatar_render_data_t* _this, net_avatar_t* net_avatar) = nullptr;
 	inline bool (*is_checkpoint)(tile_t* _this) = nullptr;
+	inline void (*handle_touch_at_world_coordinates)(level_touch_component_t* _this, vec2f_t* pos, bool unk1) = nullptr;
 
 	inline HRESULT (*end_scene)(IDirect3DDevice9* _this) = nullptr;
 	inline renderer_context_d3d9_t* renderer = nullptr;
 
 	inline std::uintptr_t anti_slide_address = 0;
+	inline std::uintptr_t anti_water_address = 0;
 	inline std::uintptr_t touch_bypass_address = 0;
 	inline std::uintptr_t enable_pasting_address = 0;
 }
 
+// this for storing the real values gt server sends us
+namespace real_state {
+	inline player_flag flags = player_flag::none;
+
+	inline std::uint8_t build_range = 2;
+	inline std::uint8_t punch_range = 2;
+
+	inline float speed = 250.f;
+	inline float gravity = 1000.f;
+	inline float water_speed = 125.f;
+	inline float acceleration_speed = 0.f;
+
+	inline std::uint8_t punch_effect = 0;
+	inline std::uint32_t pupil_color = 0;
+	inline std::uint32_t hair_color = 0;
+	inline std::uint32_t eye_color = 0;
+};

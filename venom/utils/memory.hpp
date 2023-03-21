@@ -4,20 +4,38 @@
 #include <type_traits>
 
 namespace memory {
-	inline void remove_bit(auto& value, auto bit) noexcept {
-		value &= ~(static_cast<std::underlying_type_t<decltype(bit)>>(bit));
+	template <typename T, typename = void>
+	struct get_underlying {
+		using type = T;
+	};
+
+	template <typename T>
+	struct get_underlying<T, std::enable_if_t<std::is_enum_v<T>>> {
+		using type = std::underlying_type_t<T>;
+	};
+
+	template <typename value_type, typename bit_type>
+	inline void remove_bit(value_type& value, bit_type bit) noexcept {
+		using type = get_underlying<bit_type>::type;
+		value = static_cast<value_type>(static_cast<type>(value) & ~(static_cast<type>(bit)));
 	}
 
-	inline void set_bit(auto& value, auto bit) noexcept {
-		value |= static_cast<std::underlying_type_t<decltype(bit)>>(bit);
+	template <typename value_type, typename bit_type>
+	inline void set_bit(value_type& value, bit_type bit) noexcept {
+		using type = get_underlying<bit_type>::type;
+		value = static_cast<value_type>(static_cast<type>(value) | (static_cast<type>(bit)));
 	}
 
-	inline void toggle_bit(auto& value, auto bit) noexcept {
-		value ^= static_cast<std::underlying_type_t<decltype(bit)>>(bit);
+	template <typename value_type, typename bit_type>
+	inline void toggle_bit(value_type& value, bit_type bit) noexcept {
+		using type = get_underlying<bit_type>::type;
+		value = static_cast<value_type>(static_cast<type>(value) ^ (static_cast<type>(bit)));
 	}
 
-	inline bool has_bit(auto value, auto bit) noexcept {
-		return (value & static_cast<std::underlying_type_t<decltype(bit)>>(bit)) != 0;
+	template <typename value_type, typename bit_type>
+	inline bool has_bit(value_type value, bit_type bit) noexcept {
+		using type = get_underlying<bit_type>::type;
+		return (static_cast<type>(value) & static_cast<type>(bit)) != 0;
 	}
 
 	bool patch_bytes(std::uintptr_t address, std::string_view bytes) noexcept;

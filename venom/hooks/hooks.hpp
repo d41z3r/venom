@@ -27,6 +27,7 @@ namespace hooks {
 	void handle_tile_damage_horizontally_hook(net_avatar_t* _this, float* unk1, float* unk2, bool unk3, bool unk4);
 	void update_from_net_avatar_hook(avatar_render_data_t* _this, net_avatar_t* net_avatar);
 	bool is_checkpoint_hook(tile_t* _this);
+	void handle_touch_at_world_coordinates_hook(level_touch_component_t* _this, vec2f_t* pos, bool unk1);
 
 	HRESULT end_scene_hook(IDirect3DDevice9* _this);
 	LRESULT wnd_proc_hook(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);

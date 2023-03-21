@@ -171,7 +171,7 @@ enum class item_element_type : std::uint32_t {
 enum class item_material_type : std::uint32_t {
 	wood = 0,
 	glass = 1,
-	rock =2,
+	rock = 2,
 	metal = 3
 };
 
@@ -322,7 +322,7 @@ enum class item_type : std::uint32_t {
 	phased_block2,
 	bomb,
 	pve,
-	infinityWeather,
+	infinity_weather,
 	slime,
 	acid,
 	completionist,
@@ -352,7 +352,7 @@ public:
 	tile_storage_type storage;
 	std::uint32_t compute_value; // used in ItemInfo::ComputeSomething(), only has values on items 'stripey wallpaper' and 'totally harmless doll'
 	tile_collision_type collision;
-	std::uint16_t hits_to_destroy; 
+	std::uint16_t hits_to_destroy;
 	item_flag flags;
 	std::uint8_t pad4[68];
 	std::uint32_t heal_time;

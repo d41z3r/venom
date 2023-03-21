@@ -45,6 +45,7 @@ void hooks::install() {
 	hook_function(gt::handle_tile_damage_horizontally, handle_tile_damage_horizontally_hook);
 	hook_function(gt::update_from_net_avatar, update_from_net_avatar_hook);
 	hook_function(gt::is_checkpoint, is_checkpoint_hook);
+	hook_function(gt::handle_touch_at_world_coordinates, handle_touch_at_world_coordinates_hook);
 
 	hook_function(gt::end_scene, end_scene_hook);
 	original_wnd_proc = reinterpret_cast<WNDPROC>(SetWindowLongPtrA(gt::hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(&wnd_proc_hook)));
@@ -100,9 +101,19 @@ void hooks::send_packet_raw_hook(net_message_type type, const void* data, std::i
 
 		break;
 
-	case game_packet_type::ping_reply: // todo: better spoofing
+	case game_packet_type::ping_reply:
 		packet->byte2 = 0; // jump count
-		packet->int1 = 0; // local player state
+		packet->byte3 = 0; // unknown, when set to 1 we get autoban
+		packet->vec1.x = real_state::punch_range * 32.f;
+		packet->vec1.y = real_state::build_range * 32.f;
+
+		// local player check because if u are in exit it won't send player speed, gravity, etc.
+		if (gt::get_game_logic()->local_player != nullptr) {
+			packet->int1 = static_cast<std::int32_t>(real_state::flags);
+			packet->vec2.x = real_state::gravity;
+			packet->vec2.y = real_state::speed;
+		}
+
 		gt::log_to_console("`4venom:`` `ospoofing ping reply``");
 		break;
 
@@ -127,6 +138,38 @@ void hooks::send_packet_raw_hook(net_message_type type, const void* data, std::i
 }
 
 void hooks::process_tank_update_packet_hook(game_logic_component_t* _this, game_packet_t* packet) {
+
+	switch (packet->type) {
+	case game_packet_type::set_character_state:
+		if (packet->int1 == gt::get_game_logic()->local_player->net_id) {
+			vec2f_t old_vec2 = { real_state::speed, real_state::gravity };
+
+			real_state::flags = static_cast<player_flag>(packet->int3);
+			
+			real_state::build_range = packet->byte2 - 126;
+			real_state::punch_range = packet->byte3 - 126;
+
+			real_state::water_speed = packet->float1;
+			real_state::acceleration_speed = packet->vec1.x;
+			real_state::speed = packet->vec2.x;
+			real_state::gravity = packet->vec2.y;
+
+			real_state::punch_effect = packet->byte1;
+			real_state::pupil_color = packet->int2;
+			real_state::hair_color = packet->int4;
+			real_state::eye_color = packet->int5;
+
+			if (cheats::anti_ghost) {
+				memory::remove_bit(packet->flags, 0x800); // mind control
+				if (packet->vec2.x == old_vec2.x - 150.f && packet->vec2.y != old_vec2.y)
+					packet->vec2 = old_vec2;
+			}
+		}
+		break;
+
+	default:
+		break;
+	}
 
 	console::println<console::color::red>(std::format("incoming game packet '{}'", magic_enum::enum_name(packet->type)));
 
@@ -219,9 +262,8 @@ void hooks::handle_tile_damage_horizontally_hook(net_avatar_t* _this, float* unk
 }
 
 void hooks::update_from_net_avatar_hook(avatar_render_data_t* _this, net_avatar_t* net_avatar) {
-	if (cheats::ghost_mode && net_avatar == gt::get_game_logic()->local_player)
-		return;
-
+	// todo: client sided visual local player state things
+	
 	//float original_velocity_x = net_avatar->velocity.x.get();
 	//float original_velocity_y = net_avatar->velocity.y.get();
 
@@ -241,6 +283,17 @@ bool hooks::is_checkpoint_hook(tile_t* _this) {
 		return false;
 
 	return gt::is_checkpoint(_this);
+}
+
+void hooks::handle_touch_at_world_coordinates_hook(level_touch_component_t* _this, vec2f_t* pos, bool unk1) {
+	if (cheats::click_tp && GetKeyState(VK_CONTROL)) {
+		net_avatar_t* local_player = gt::get_game_logic()->local_player;
+		local_player->pos.x = pos->x - 10.f;
+		local_player->pos.y = pos->y - 15.f;
+		return;
+	}
+
+	gt::handle_touch_at_world_coordinates(_this, pos, unk1);
 }
 
 HRESULT hooks::end_scene_hook(IDirect3DDevice9* _this) {

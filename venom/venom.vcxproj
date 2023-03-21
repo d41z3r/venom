@@ -198,6 +198,7 @@
     <ClInclude Include="game\app\app.hpp" />
     <ClInclude Include="game\app\base_app.hpp" />
     <ClInclude Include="game\component\game_logic_component.hpp" />
+    <ClInclude Include="game\component\level_touch_component.hpp" />
     <ClInclude Include="game\gui\rt_font.hpp" />
     <ClInclude Include="game\manager\console.hpp" />
     <ClInclude Include="game\manager\effect_manager.hpp" />
