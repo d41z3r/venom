@@ -36,6 +36,7 @@ void menu::render() noexcept {
 			ImGui::EndTabItem();
 		}
 
+		ImGui::EndTabBar();
 		ImGui::End();
 	}
 

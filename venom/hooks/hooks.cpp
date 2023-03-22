@@ -161,7 +161,7 @@ void hooks::process_tank_update_packet_hook(game_logic_component_t* _this, game_
 			vec2f_t old_vec2 = { real_state::speed, real_state::gravity };
 
 			real_state::flags = static_cast<player_flag>(packet->int3);
-			
+
 			real_state::build_range = packet->byte2 - 126;
 			real_state::punch_range = packet->byte3 - 126;
 
@@ -279,7 +279,7 @@ void hooks::handle_tile_damage_horizontally_hook(net_avatar_t* _this, float* unk
 
 void hooks::update_from_net_avatar_hook(avatar_render_data_t* _this, net_avatar_t* net_avatar) {
 	// todo: client sided visual local player state things
-	
+
 	//float original_velocity_x = net_avatar->velocity.x.get();
 	//float original_velocity_y = net_avatar->velocity.y.get();
 
@@ -304,8 +304,27 @@ bool hooks::is_checkpoint_hook(tile_t* _this) {
 void hooks::handle_touch_at_world_coordinates_hook(level_touch_component_t* _this, vec2f_t* pos, bool unk1) {
 	if (cheats::click_tp && (GetKeyState(VK_CONTROL) & 0x8000)) {
 		net_avatar_t* local_player = gt::get_game_logic()->local_player;
-		local_player->pos.x = pos->x - 10.f;
-		local_player->pos.y = pos->y - 15.f;
+
+		vec2i_t start = local_player->get_tile_pos();
+		vec2i_t goal = { static_cast<std::int32_t>(pos->x / 32.f), static_cast<std::int32_t>(pos->y / 32.f) };
+		if (start == goal)
+			return;
+
+		auto path = gt::find_path(start, goal);
+		if (path.empty())
+			return;
+
+		std::size_t count = 0;
+		for (vec2i_t pos : path) {
+			if (++count % 7 == 0 || count == path.size()) {
+				game_packet_t packet = {};
+				packet.type = game_packet_type::state;
+				packet.vec1 = { static_cast<float>(pos.x) * 32.f, static_cast<float>(pos.y) * 32.f };
+				gt::send_game_packet(packet);
+			}
+		}
+
+		local_player->set_pos_at_tile(goal);
 		return;
 	}
 

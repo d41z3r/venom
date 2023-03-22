@@ -15,6 +15,7 @@
 
 #include <cstdint>
 #include <string>
+#include <vector>
 #include <functional>
 #include <windows.h>
 #include <psapi.h>
@@ -31,6 +32,8 @@ namespace gt {
 	void process_game_packet(const game_packet_t& packet) noexcept;
 	//void process_call_function(const variant_list_t& var_list, std::int32_t net_id = -1, std::int32_t delay = 0) noexcept;
 	//void process_track_packet(const std::string& packet) noexcept;
+
+	std::vector<vec2i_t> find_path(vec2i_t start, vec2i_t goal) noexcept;
 
 	inline std::uintptr_t base_address = 0;
 	inline std::uintptr_t end_address = 0;
@@ -64,6 +67,7 @@ namespace gt {
 	inline bool (*is_checkpoint)(tile_t* _this) = nullptr;
 	inline void (*handle_touch_at_world_coordinates)(level_touch_component_t* _this, vec2f_t* pos, bool unk1) = nullptr;
 	inline void (*camera_on_update)(world_camera_t* _this, vec2f_t unk1, vec2f_t unk2) = nullptr;
+	inline bool (*is_collidable)(tile_t* _this, std::int32_t user_id, world_t* world, bool unk1) = nullptr;
 
 	inline HRESULT (*end_scene)(IDirect3DDevice9* _this) = nullptr;
 	inline renderer_context_d3d9_t* renderer = nullptr;

@@ -78,6 +78,7 @@ void find_addresses() {
 	find_address(gt::is_checkpoint, "e8 ? ? ? ? 84 c0 74 ? 0f b7 46", find_mode::call);
 	find_address(gt::handle_touch_at_world_coordinates, "66 39 48 ? 0f 84 ? ? ? ? c6 05", find_mode::function_start);
 	find_address(gt::camera_on_update, "f3 0f 10 02 f3 41 0f 5e 00", find_mode::function_start);
+	find_address(gt::is_collidable, "e8 ? ? ? ? 84 c0 0f 84 ? ? ? ? 0f b7 5e", find_mode::call);
 
 	find_address(gt::anti_slide_address, "74 4d 48 8b 45 ? 0f b7 58", find_mode::normal);
 	find_address(gt::anti_portal_address, "74 ? 41 89 8e", find_mode::normal);

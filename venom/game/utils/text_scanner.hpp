@@ -17,7 +17,7 @@ std::vector<std::string> split_string(const std::string& str, char delim) noexce
 class text_scanner_t {
 public:
 	text_scanner_t() noexcept = default;
-	text_scanner_t(const std::string& text) noexcept { load(text); }
+	explicit text_scanner_t(const std::string& text) noexcept { load(text); }
 
 	void load(const std::string& text) noexcept {
 		std::istringstream ss(text);
@@ -44,7 +44,12 @@ public:
 				continue;
 
 			if (data[0] == key) {
-				line.replace(line.find(data[1 + index]), data[1 + index].size(), value);
+				data[1 + index] = value;
+
+				line = data[0];
+				for (std::size_t i = 1; i < data.size(); ++i)
+					line += '|' + data[i];
+
 				return;
 			}
 		}
@@ -60,7 +65,7 @@ public:
 	//			continue;
 
 	//		if (data[0] == key) {
-	//			line.replace(line.find(data[1 + index]), data[1 + index].size(), std::to_string(value));
+	// 
 	//			return;
 	//		}
 	//	}

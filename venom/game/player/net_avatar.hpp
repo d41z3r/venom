@@ -77,6 +77,18 @@ enum class player_flag : std::uint32_t {
 #pragma pack(push, 1)
 class net_avatar_t /*: public net_moving_t*/ {
 public:
+	vec2i_t get_tile_pos() const noexcept {
+		return { 
+			static_cast<std::int32_t>((pos.x + size.x / 2.f) / 32.f), 
+			static_cast<std::int32_t>((pos.y + size.y / 2.f) / 32.f) 
+		};
+	}
+
+	void set_pos_at_tile(vec2i_t tile_pos) noexcept {
+		pos.x = static_cast<float>(tile_pos.x) * 32.f + 6.f;
+		pos.y = static_cast<float>(tile_pos.y) * 32.f + 2.f;
+	}
+
 	void* vftable;
 	vec2f_t pos;
 	vec2f_t size;
@@ -92,7 +104,7 @@ public:
 	vec2_t<lock_float_t> velocity;
 	std::uint8_t pad4[52];
 	std::uint32_t freeze_state;
-	std::uint32_t user_id;
+	std::int32_t user_id;
 	std::uint8_t pad5[16];
 	std::string country;
 	std::uint8_t pad6[8];

@@ -169,6 +169,7 @@
     <ClCompile Include="external\minhook\src\trampoline.c" />
     <ClCompile Include="game\close_mutexes.cpp" />
     <ClCompile Include="game\gt.cpp" />
+    <ClCompile Include="game\pathfinder.cpp" />
     <ClCompile Include="hooks\hooks.cpp" />
     <ClCompile Include="hooks\update_hook.cpp" />
     <ClCompile Include="menu\imgui_extra.cpp" />

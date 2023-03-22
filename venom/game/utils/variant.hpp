@@ -135,7 +135,7 @@ private:
 class variant_list_t {
 public:
 	variant_list_t() noexcept = default;
-	variant_list_t(std::uint8_t* data) noexcept { serialize_from_mem(data); }
+	explicit variant_list_t(std::uint8_t* data) noexcept { serialize_from_mem(data); }
 
 	void serialize_from_mem(std::uint8_t* data) noexcept {
 		using enum variant_type;

@@ -81,6 +81,9 @@
     <ClCompile Include="menu\imgui_extra.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\pathfinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils\memory.hpp">

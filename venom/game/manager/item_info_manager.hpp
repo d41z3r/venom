@@ -409,6 +409,13 @@ static_assert(sizeof(item_info_t) == 0x6d8);
 
 class item_info_manager_t {
 public:
+	item_info_t* get_item(std::uint32_t item_id) noexcept {
+		if (item_id < items.size())
+			return &items[item_id];
+
+		return nullptr;
+	}
+
 	void* vftable;
 	std::vector<item_info_t> items;
 	std::uint8_t pad1[24];

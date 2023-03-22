@@ -3,9 +3,33 @@
 template <typename T>
 class vec2_t {
 public:
+	inline bool operator==(vec2_t<T> other) const noexcept {
+		return x == other.x && y == other.y;
+	}
+	inline bool operator!=(vec2_t<T> other) const noexcept {
+		return x != other.x || y != other.y;
+	}
+
+	inline vec2_t<T> operator+(vec2_t<T> other) const noexcept {
+		return { x + other.x, y + other.y };
+	}
+
+	inline vec2_t<T> operator-(vec2_t<T> other) const noexcept {
+		return { x - other.x, y - other.y };
+	}
+
+	inline vec2_t<T> operator/(auto val) const noexcept {
+		return { x / val, y / val };
+	}
+
+	inline vec2_t<T> operator*(auto val) const noexcept {
+		return { x * val, y * val };
+	}
+
 	T x, y;
 };
 
+// todo: add operators to other vecs too
 template <typename T>
 class vec3_t {
 public:
