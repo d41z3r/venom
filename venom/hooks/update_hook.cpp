@@ -20,8 +20,8 @@ void hooks::update_hook(app_t* _this) {
 		local_player->can_jump = true;
 
 	if (cheats::ghost_mode)
-		memory::set_bit(local_player->flags, player_flag::no_clip);
-	else if (!memory::has_bit(real_state::flags, player_flag::no_clip))
-		memory::remove_bit(local_player->flags, player_flag::no_clip);
+		memory::set_flag(local_player->flags, player_flag::no_clip);
+	else if (!memory::has_flag(real_state::flags, player_flag::no_clip))
+		memory::remove_flag(local_player->flags, player_flag::no_clip);
 		
 }

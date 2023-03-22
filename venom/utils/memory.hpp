@@ -14,28 +14,28 @@ namespace memory {
 		using type = std::underlying_type_t<T>;
 	};
 
-	template <typename value_type, typename bit_type>
-	inline void remove_bit(value_type& value, bit_type bit) noexcept {
-		using type = get_underlying<bit_type>::type;
-		value = static_cast<value_type>(static_cast<type>(value) & ~(static_cast<type>(bit)));
+	template <typename value_type, typename flag_type>
+	inline void remove_flag(value_type& value, flag_type flag) noexcept {
+		using type = get_underlying<flag_type>::type;
+		value = static_cast<value_type>(static_cast<type>(value) & ~(static_cast<type>(flag)));
 	}
 
-	template <typename value_type, typename bit_type>
-	inline void set_bit(value_type& value, bit_type bit) noexcept {
-		using type = get_underlying<bit_type>::type;
-		value = static_cast<value_type>(static_cast<type>(value) | (static_cast<type>(bit)));
+	template <typename value_type, typename flag_type>
+	inline void set_flag(value_type& value, flag_type flag) noexcept {
+		using type = get_underlying<flag_type>::type;
+		value = static_cast<value_type>(static_cast<type>(value) | (static_cast<type>(flag)));
 	}
 
-	template <typename value_type, typename bit_type>
-	inline void toggle_bit(value_type& value, bit_type bit) noexcept {
-		using type = get_underlying<bit_type>::type;
-		value = static_cast<value_type>(static_cast<type>(value) ^ (static_cast<type>(bit)));
+	template <typename value_type, typename flag_type>
+	inline void toggle_flag(value_type& value, flag_type flag) noexcept {
+		using type = get_underlying<flag_type>::type;
+		value = static_cast<value_type>(static_cast<type>(value) ^ (static_cast<type>(flag)));
 	}
 
-	template <typename value_type, typename bit_type>
-	inline bool has_bit(value_type value, bit_type bit) noexcept {
-		using type = get_underlying<bit_type>::type;
-		return (static_cast<type>(value) & static_cast<type>(bit)) != 0;
+	template <typename value_type, typename flag_type>
+	inline bool has_flag(value_type value, flag_type flag) noexcept {
+		using type = get_underlying<flag_type>::type;
+		return (static_cast<type>(value) & static_cast<type>(flag)) != 0;
 	}
 
 	template <typename value_type>

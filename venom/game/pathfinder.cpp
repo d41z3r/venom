@@ -76,29 +76,6 @@ std::vector<vec2i_t> gt::find_path(vec2i_t start, vec2i_t goal) noexcept {
 			if (find_node(closed_set, neighbor_pos) != nullptr)
 				continue;
 
-			tile_t* neighbor_tile = world->tile_map.get_tile(neighbor_pos);
-			if (neighbor_tile == nullptr || is_collidable(neighbor_tile, local_player->user_id, world, true))
-				continue;
-
-			item_info_t* neighbor_info = gt::get_item_info_manager()->get_item(neighbor_tile->foreground);
-			if (neighbor_info == nullptr)
-				continue;
-
-			// these checks are reverted because we are finding the path from end to start
-			if (neighbor_info->collision == tile_collision_type::jump_through && current_node->pos.y > neighbor_pos.y)
-				continue;
-
-			if (neighbor_info->collision == tile_collision_type::jump_down && current_node->pos.y < neighbor_pos.y)
-				continue;
-
-			if (neighbor_info->collision == tile_collision_type::one_way &&
-				!memory::has_bit(neighbor_tile->flags, tile_flag::flipped) && current_node->pos.x < neighbor_pos.x)
-				continue;
-
-			if (neighbor_info->collision == tile_collision_type::one_way &&
-				memory::has_bit(neighbor_tile->flags, tile_flag::flipped) && current_node->pos.x > neighbor_pos.x)
-				continue;
-
 			if (current_info->collision == tile_collision_type::jump_through && current_node->pos.y > neighbor_pos.y)
 				continue;
 
@@ -106,11 +83,11 @@ std::vector<vec2i_t> gt::find_path(vec2i_t start, vec2i_t goal) noexcept {
 				continue;
 
 			if (current_info->collision == tile_collision_type::one_way &&
-				!memory::has_bit(current_tile->flags, tile_flag::flipped) && current_node->pos.x < neighbor_pos.x)
+				!memory::has_flag(current_tile->flags, tile_flag::flipped) && current_node->pos.x < neighbor_pos.x)
 				continue;
 
 			if (current_info->collision == tile_collision_type::one_way &&
-				memory::has_bit(current_tile->flags, tile_flag::flipped) && current_node->pos.x > neighbor_pos.x)
+				memory::has_flag(current_tile->flags, tile_flag::flipped) && current_node->pos.x > neighbor_pos.x)
 				continue;
 
 			std::uint32_t cost = current_node->g_cost + 1;
