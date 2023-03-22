@@ -76,6 +76,10 @@ std::vector<vec2i_t> gt::find_path(vec2i_t start, vec2i_t goal) noexcept {
 			if (find_node(closed_set, neighbor_pos) != nullptr)
 				continue;
 
+			tile_t* neighbor_tile = world->tile_map.get_tile(neighbor_pos);
+			if (neighbor_tile == nullptr || is_collidable(neighbor_tile, local_player->user_id, world, true))
+				continue;
+
 			if (current_info->collision == tile_collision_type::jump_through && current_node->pos.y > neighbor_pos.y)
 				continue;
 
