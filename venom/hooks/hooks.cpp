@@ -2,6 +2,7 @@
 #include <menu/menu.hpp>
 #include <utils/console.hpp>
 #include <utils/memory.hpp>
+#include <game/utils/text_scanner.hpp>
 #include <external/minhook/include/MinHook.h>
 #include <external/magic_enum/magic_enum.hpp>
 
@@ -46,6 +47,7 @@ void hooks::install() {
 	hook_function(gt::update_from_net_avatar, update_from_net_avatar_hook);
 	hook_function(gt::is_checkpoint, is_checkpoint_hook);
 	hook_function(gt::handle_touch_at_world_coordinates, handle_touch_at_world_coordinates_hook);
+	hook_function(gt::camera_on_update, camera_on_update_hook);
 
 	hook_function(gt::end_scene, end_scene_hook);
 	original_wnd_proc = reinterpret_cast<WNDPROC>(SetWindowLongPtrA(gt::hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(&wnd_proc_hook)));
@@ -53,13 +55,21 @@ void hooks::install() {
 	console::print_good("installed hooks");
 }
 
-void hooks::send_packet_hook(net_message_type type, const std::string& packet, void* peer) {
+void hooks::send_packet_hook(net_message_type type, std::string packet, void* peer) {
 	using enum net_message_type;
 
 	switch (type) {
-	case generic_text:
+	case generic_text: {
+		text_scanner_t data(packet);
+
+		if (data.has("game_version")) { // todo: spoof login values
+			data.set("country", "ly");
+			packet = data.build();
+		}
+
 		console::println<console::color::cyan>(std::format("sending generic text: {}", packet));
 		break;
+	}
 
 	case game_message:
 		console::println<console::color::blue>(std::format("sending game message: {}", packet));
@@ -140,6 +150,12 @@ void hooks::send_packet_raw_hook(net_message_type type, const void* data, std::i
 void hooks::process_tank_update_packet_hook(game_logic_component_t* _this, game_packet_t* packet) {
 
 	switch (packet->type) {
+	case game_packet_type::call_function: {
+		variant_list_t var_list(packet->get_extra_data());
+		console::println(std::format("incoming call function '{}'", var_list.get(0).get_string()));
+		break;
+	}
+
 	case game_packet_type::set_character_state:
 		if (packet->int1 == gt::get_game_logic()->local_player->net_id) {
 			vec2f_t old_vec2 = { real_state::speed, real_state::gravity };
@@ -215,7 +231,7 @@ bool hooks::collide_hook(world_tile_map_t* _this, float unk1, float unk2, float 
 }
 
 void hooks::server_info_http_finish_hook(variant_list_t* var_list) {
-	console::println(var_list->get(1).string_value);
+	console::println(var_list->get(1).get_string());
 	gt::server_info_http_finish(var_list);
 }
 
@@ -286,7 +302,7 @@ bool hooks::is_checkpoint_hook(tile_t* _this) {
 }
 
 void hooks::handle_touch_at_world_coordinates_hook(level_touch_component_t* _this, vec2f_t* pos, bool unk1) {
-	if (cheats::click_tp && GetAsyncKeyState(VK_CONTROL)) {
+	if (cheats::click_tp && (GetKeyState(VK_CONTROL) & 0x8000)) {
 		net_avatar_t* local_player = gt::get_game_logic()->local_player;
 		local_player->pos.x = pos->x - 10.f;
 		local_player->pos.y = pos->y - 15.f;
@@ -294,6 +310,13 @@ void hooks::handle_touch_at_world_coordinates_hook(level_touch_component_t* _thi
 	}
 
 	gt::handle_touch_at_world_coordinates(_this, pos, unk1);
+}
+
+void hooks::camera_on_update_hook(world_camera_t* _this, vec2f_t unk1, vec2f_t unk2) {
+	if (cheats::click_tp && (GetKeyState(VK_CONTROL) & 0x8000))
+		return;
+
+	gt::camera_on_update(_this, unk1, unk2);
 }
 
 HRESULT hooks::end_scene_hook(IDirect3DDevice9* _this) {

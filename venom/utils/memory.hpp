@@ -38,6 +38,20 @@ namespace memory {
 		return (static_cast<type>(value) & static_cast<type>(bit)) != 0;
 	}
 
+	template <typename value_type>
+	inline void append_read(value_type& value, std::uint8_t*& data) noexcept {
+		value = *reinterpret_cast<value_type*>(data);
+		data += sizeof(value_type);
+	}
+
+	template <typename size_type = std::uint32_t>
+	inline void append_read_string(std::string& str, std::uint8_t*& data) noexcept {
+		size_type size;
+		append_read(size, data);
+		str = std::string{ reinterpret_cast<char*>(data), size };
+		data += size;
+	}
+
 	bool patch_bytes(std::uintptr_t address, std::string_view bytes) noexcept;
 	std::uintptr_t find_pattern(std::string_view pattern, std::intptr_t offset = 0) noexcept;
 	std::uintptr_t get_address_from_call(std::uintptr_t address) noexcept;

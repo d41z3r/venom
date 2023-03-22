@@ -22,6 +22,7 @@ namespace cheats {
 	inline bool anti_bouncy = false;
 	inline bool anti_damage = false;
 	inline bool anti_checkpoint = false;
+	inline bool anti_portal = false;
 	inline bool anti_slide = false;
 	inline bool anti_water = false;
 	inline bool anti_zombie = false;
@@ -31,6 +32,7 @@ namespace cheats {
 	inline bool night_vision = false;
 	inline bool see_fruits = false;
 	inline bool see_ghosts = false;
+	inline bool see_locked_doors = false;
 	inline bool fake_lag = false;
 	inline bool ghost_mode = false;
 	inline bool mod_zoom = false;

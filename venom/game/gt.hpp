@@ -29,6 +29,7 @@ namespace gt {
 
 	void process_game_message(const std::string& packet) noexcept;
 	void process_game_packet(const game_packet_t& packet) noexcept;
+	//void process_call_function(const variant_list_t& var_list, std::int32_t net_id = -1, std::int32_t delay = 0) noexcept;
 	//void process_track_packet(const std::string& packet) noexcept;
 
 	inline std::uintptr_t base_address = 0;
@@ -43,7 +44,7 @@ namespace gt {
 	inline void (*update)(app_t* _this) = nullptr;
 	inline void (*set_fps_limit)(base_app_t* _this, float fps) = nullptr;
 	inline void (*log_to_console)(const std::string& text) = nullptr;
-	inline void (*send_packet)(net_message_type type, const std::string& packet, void* peer) = nullptr;
+	inline void (*send_packet)(net_message_type type, const std::string& packet, void* peer) = nullptr; 
 	inline void (*send_packet_raw)(net_message_type type, const void* data, std::int32_t data_size, std::uint8_t* unk1, void* peer, std::uint32_t flags) = nullptr;
 	inline void (*on_text_game_message)(game_logic_component_t* _this, const char* packet) = nullptr;
 	inline void (*process_tank_update_packet)(game_logic_component_t* _this, game_packet_t* packet) = nullptr;
@@ -62,12 +63,15 @@ namespace gt {
 	inline void (*update_from_net_avatar)(avatar_render_data_t* _this, net_avatar_t* net_avatar) = nullptr;
 	inline bool (*is_checkpoint)(tile_t* _this) = nullptr;
 	inline void (*handle_touch_at_world_coordinates)(level_touch_component_t* _this, vec2f_t* pos, bool unk1) = nullptr;
+	inline void (*camera_on_update)(world_camera_t* _this, vec2f_t unk1, vec2f_t unk2) = nullptr;
 
 	inline HRESULT (*end_scene)(IDirect3DDevice9* _this) = nullptr;
 	inline renderer_context_d3d9_t* renderer = nullptr;
 
 	inline std::uintptr_t anti_slide_address = 0;
+	inline std::uintptr_t anti_portal_address = 0;
 	inline std::uintptr_t anti_water_address = 0;
+	inline std::uintptr_t see_locked_doors_address = 0;
 	inline std::uintptr_t touch_bypass_address = 0;
 	inline std::uintptr_t enable_pasting_address = 0;
 }

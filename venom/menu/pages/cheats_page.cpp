@@ -8,6 +8,7 @@ void menu::cheats_page() noexcept {
 	ImGui::Checkbox("anti bouncy", &cheats::anti_bouncy);
 	ImGui::Checkbox("anti damage", &cheats::anti_damage);
 	ImGui::Checkbox("anti checkpoint", &cheats::anti_checkpoint);
+	ImGui::Checkbox("anti portal", &cheats::anti_portal, gt::anti_portal_address, "eb", "74");
 	ImGui::Checkbox("anti slide", &cheats::anti_slide, gt::anti_slide_address, "90 90", "74 4d");
 	ImGui::Checkbox("anti water", &cheats::anti_water, gt::anti_water_address, "e9 e7 00 00 00 90", "0f 84 e6 00 00 00");
 	ImGui::Checkbox("anti zombie", &cheats::anti_zombie);
@@ -19,6 +20,7 @@ void menu::cheats_page() noexcept {
 	ImGui::Checkbox("night vision", &cheats::night_vision);
 	ImGui::Checkbox("see fruits", &cheats::see_fruits);
 	ImGui::Checkbox("see ghosts", &cheats::see_ghosts);
+	ImGui::Checkbox("see locked doors", &cheats::see_locked_doors, gt::see_locked_doors_address, "eb", "74");
 	ImGui::Checkbox("fake lag", &cheats::fake_lag); // todo: make this show to our client aswell
 	ImGui::Checkbox("ghost mode", &cheats::ghost_mode);
 	ImGui::Checkbox("mod zoom", &cheats::mod_zoom);

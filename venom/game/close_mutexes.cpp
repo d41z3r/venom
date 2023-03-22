@@ -100,6 +100,7 @@ void gt::close_mutexes() {
 		if (handle.ProcessId != process_id) // check if it's in gt process
 			continue;
 
+		// mutex objectypenumber is different in different windows versions, todo: figure out how to make it work for all
 		if (handle.ObjectTypeNumber != 17 && handle.ObjectTypeNumber != 20) // check if it's the mutex type
 			continue;
 

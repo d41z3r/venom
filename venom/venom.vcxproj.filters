@@ -236,5 +236,8 @@
     <ClInclude Include="game\component\level_touch_component.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="game\world\world_camera.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

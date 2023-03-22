@@ -77,9 +77,12 @@ void find_addresses() {
 	find_address(gt::handle_tile_damage_horizontally, "e8 ? ? ? ? 32 c0 e9 ? ? ? ? 83 f9 ? 75 ? 4d 8b cf", find_mode::call);
 	find_address(gt::is_checkpoint, "e8 ? ? ? ? 84 c0 74 ? 0f b7 46", find_mode::call);
 	find_address(gt::handle_touch_at_world_coordinates, "66 39 48 ? 0f 84 ? ? ? ? c6 05", find_mode::function_start);
+	find_address(gt::camera_on_update, "f3 0f 10 02 f3 41 0f 5e 00", find_mode::function_start);
 
 	find_address(gt::anti_slide_address, "74 4d 48 8b 45 ? 0f b7 58", find_mode::normal);
+	find_address(gt::anti_portal_address, "74 ? 41 89 8e", find_mode::normal);
 	find_address(gt::anti_water_address, "0f 84 ? ? ? ? 80 be ? ? ? ? ? bf", find_mode::normal);
+	find_address(gt::see_locked_doors_address, "40 84 ff 74 ? 4c 89 7d", find_mode::normal, 3);
 	find_address(gt::touch_bypass_address, "3d ? ? ? ? 72 ? c6 83", find_mode::normal, 5);
 	find_address(gt::enable_pasting_address, "74 ? 83 f9 ? 0f 85 ? ? ? ? 83 7f", find_mode::normal);
 
