@@ -27,7 +27,7 @@ void hooks::install() {
 	if (MH_Initialize() != MH_OK)
 		throw std::runtime_error("failed to initialize minhook");
 
-	hook_function(gt::update, update_hook);
+	hook_function(gt::app_update, app_update_hook);
 	hook_function(gt::send_packet, send_packet_hook);
 	hook_function(gt::send_packet_raw, send_packet_raw_hook);
 	hook_function(gt::on_text_game_message, on_text_game_message_hook);

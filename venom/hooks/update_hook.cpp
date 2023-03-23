@@ -2,8 +2,8 @@
 #include <menu/menu.hpp>
 #include <utils/memory.hpp>
 
-void hooks::update_hook(app_t* _this) {
-	gt::update(_this);
+void hooks::app_update_hook(app_t* _this) {
+	gt::app_update(_this);
 
 	game_logic_component_t* game_logic = gt::get_game_logic();
 	if (game_logic == nullptr)

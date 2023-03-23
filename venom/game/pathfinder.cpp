@@ -80,6 +80,18 @@ std::vector<vec2i_t> gt::find_path(vec2i_t start, vec2i_t goal) noexcept {
 			if (neighbor_tile == nullptr || is_collidable(neighbor_tile, local_player->user_id, world, true))
 				continue;
 
+			item_info_t* neighbor_info = gt::get_item_info_manager()->get_item(neighbor_tile->foreground);
+			if (neighbor_info == nullptr)
+				continue;
+
+			if (neighbor_info->collision == tile_collision_type::one_way &&
+				!memory::has_flag(neighbor_tile->flags, tile_flag::flipped) && current_node->pos.x < neighbor_pos.x)
+				continue;
+
+			if (neighbor_info->collision == tile_collision_type::one_way &&
+				memory::has_flag(neighbor_tile->flags, tile_flag::flipped) && current_node->pos.x > neighbor_pos.x)
+				continue;
+
 			if (current_info->collision == tile_collision_type::jump_through && current_node->pos.y > neighbor_pos.y)
 				continue;
 
