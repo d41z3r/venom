@@ -1,5 +1,7 @@
 #pragma once
 #include <game/app/app.hpp>
+#include <game/entity/entity.hpp>
+#include <game/entity/component.hpp>
 #include <game/network/enet_client.hpp>
 #include <game/network/game_packet.hpp>
 #include <game/component/game_logic_component.hpp>
@@ -33,6 +35,10 @@ namespace gt {
 	//void process_call_function(const variant_list_t& var_list, std::int32_t net_id = -1, std::int32_t delay = 0) noexcept;
 	//void process_track_packet(const std::string& packet) noexcept;
 
+	std::uint32_t hash_data(std::uint8_t* data, std::size_t data_size) noexcept;
+	std::uint32_t hash_string(const std::string& str) noexcept;
+	std::uint32_t get_file_hash(const std::string& filename) noexcept;
+
 	std::vector<vec2i_t> find_path(vec2i_t start, vec2i_t goal) noexcept;
 
 	inline std::uintptr_t base_address = 0;
@@ -41,6 +47,7 @@ namespace gt {
 
 	// globals
 	inline app_t* (*get_app)() = nullptr;
+	inline entity_t* (*get_entity_root)() = nullptr;
 	inline enet_client_t* (*get_client)() = nullptr;
 	inline game_logic_component_t* (*get_game_logic)() = nullptr;
 	inline item_info_manager_t* (*get_item_info_manager)() = nullptr;
@@ -78,6 +85,7 @@ namespace gt {
 	inline void (*camera_on_update)(world_camera_t* _this, vec2f_t unk1, vec2f_t unk2) = nullptr;
 	inline bool (*collide)(world_tile_map_t* _this, float unk1, float unk2, float unk3, float unk4, int unk5, bool unk6) = nullptr;
 	inline void (*update_from_net_avatar)(avatar_render_data_t* _this, net_avatar_t* net_avatar) = nullptr;
+	inline void (*check_item_for_updates)(item_info_t* _this, std::vector<int/*file_update_t*/>* file_updates) = nullptr;
 	inline HRESULT (*end_scene)(IDirect3DDevice9* _this) = nullptr;
 
 	// just addresses

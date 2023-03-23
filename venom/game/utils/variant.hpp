@@ -111,7 +111,17 @@ public:
 		type = variant_type::int32;
 	}
 
-private:
+	void operator=(float value) noexcept { set(value); }
+	void operator=(const std::string& value) noexcept { set(value); }
+	void operator=(vec2f_t value) noexcept { set(value); }
+	void operator=(vec3f_t value) noexcept { set(value); }
+	void operator=(std::uint32_t value) noexcept { set(value); }
+	void operator=(entity_t* value) noexcept { set(value); }
+	void operator=(entity_component_t* value) noexcept { set(value); }
+	void operator=(vec4f_t value) noexcept { set(value); }
+	void operator=(std::int32_t value) noexcept { set(value); }
+
+//private:
 	variant_type type;
 	std::uint8_t unk1[7];
 	void* pvoid;

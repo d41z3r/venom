@@ -31,6 +31,11 @@ void menu::render() noexcept {
 			ImGui::EndTabItem();
 		}
 
+		if (ImGui::BeginTabItem("entity tree")) {
+			entity_tree_page();
+			ImGui::EndTabItem();
+		}
+
 		if (ImGui::BeginTabItem("debug")) {
 			debug_page();
 			ImGui::EndTabItem();

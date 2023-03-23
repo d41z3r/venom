@@ -1,4 +1,5 @@
 #pragma once
+#include <game/entity/component.hpp>
 #include <game/world/world.hpp>
 #include <game/world/world_renderer.hpp>
 #include <game/player/net_avatar.hpp>
@@ -9,10 +10,9 @@
 #include <game/manager/effect_manager.hpp>
 
 #pragma pack(push, 1)
-class game_logic_component_t { // real size is 1184
+class game_logic_component_t : public entity_component_t { // real size is 1184
 public:
-	void* vftable;
-	std::uint8_t pad1[256];
+	std::uint8_t pad1[80];
 	world_t* world; // 0x108
 	world_renderer_t* world_renderer; // 0x110
 	std::uint8_t pad2[72];
@@ -24,3 +24,4 @@ public:
 	effect_manager_t effect_manager; // 0x288
 };
 #pragma pack(pop)
+

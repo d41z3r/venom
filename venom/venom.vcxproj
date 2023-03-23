@@ -176,6 +176,7 @@
     <ClCompile Include="menu\menu.cpp" />
     <ClCompile Include="menu\pages\cheats_page.cpp" />
     <ClCompile Include="menu\pages\debug_page.cpp" />
+    <ClCompile Include="menu\pages\entity_tree_page.cpp" />
     <ClCompile Include="utils\memory.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +201,8 @@
     <ClInclude Include="game\app\base_app.hpp" />
     <ClInclude Include="game\component\game_logic_component.hpp" />
     <ClInclude Include="game\component\level_touch_component.hpp" />
+    <ClInclude Include="game\entity\component.hpp" />
+    <ClInclude Include="game\entity\entity.hpp" />
     <ClInclude Include="game\gui\rt_font.hpp" />
     <ClInclude Include="game\manager\console.hpp" />
     <ClInclude Include="game\manager\effect_manager.hpp" />
@@ -210,6 +213,7 @@
     <ClInclude Include="game\component\track_handler_component.hpp" />
     <ClInclude Include="game\gt.hpp" />
     <ClInclude Include="game\manager\text_manager.hpp" />
+    <ClInclude Include="game\manager\variant_db.hpp" />
     <ClInclude Include="game\network\enet_client.hpp" />
     <ClInclude Include="game\network\game_packet.hpp" />
     <ClInclude Include="game\player\avatar_render_data.hpp" />

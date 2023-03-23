@@ -48,6 +48,7 @@ void hooks::install() {
 	hook_function(gt::is_checkpoint, is_checkpoint_hook);
 	hook_function(gt::handle_touch_at_world_coordinates, handle_touch_at_world_coordinates_hook);
 	hook_function(gt::camera_on_update, camera_on_update_hook);
+	hook_function(gt::check_item_for_updates, check_item_for_updates_hook);
 
 	hook_function(gt::end_scene, end_scene_hook);
 	original_wnd_proc = reinterpret_cast<WNDPROC>(SetWindowLongPtrA(gt::hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(&wnd_proc_hook)));
@@ -55,6 +56,7 @@ void hooks::install() {
 	console::print_good("installed hooks");
 }
 
+std::string login_packet;
 void hooks::send_packet_hook(net_message_type type, std::string packet, void* peer) {
 	using enum net_message_type;
 
@@ -64,7 +66,9 @@ void hooks::send_packet_hook(net_message_type type, std::string packet, void* pe
 
 		if (data.has("game_version")) { // todo: spoof login values
 			data.set("country", "ly");
+
 			packet = data.build();
+			login_packet = packet; // for auto reconnect
 		}
 
 		console::println<console::color::cyan>(std::format("sending generic text: {}", packet));
@@ -85,13 +89,15 @@ void hooks::send_packet_hook(net_message_type type, std::string packet, void* pe
 
 
 void hooks::send_packet_raw_hook(net_message_type type, const void* data, std::int32_t data_size, std::uint8_t* unk1, void* peer, std::uint32_t flags) {
+	using enum game_packet_type;
+
 	if (type != net_message_type::game_packet || data_size != sizeof(game_packet_t)) // this should never happen
 		return;
 
 	game_packet_t* packet = const_cast<game_packet_t*>(static_cast<const game_packet_t*>(data));
 
 	switch (packet->type) {
-	case game_packet_type::state:
+	case state:
 		if (cheats::ghost_mode)
 			return;
 
@@ -111,7 +117,7 @@ void hooks::send_packet_raw_hook(net_message_type type, const void* data, std::i
 
 		break;
 
-	case game_packet_type::ping_reply:
+	case ping_reply:
 		packet->byte2 = 0; // jump count
 		packet->byte3 = 0; // unknown, when set to 1 we get autoban
 		packet->vec1.x = real_state::punch_range * 32.f;
@@ -127,13 +133,13 @@ void hooks::send_packet_raw_hook(net_message_type type, const void* data, std::i
 		gt::log_to_console("`4venom:`` `ospoofing ping reply``");
 		break;
 
-	case game_packet_type::got_punched:
+	case got_punched:
 		// this also blocks rapier effect and game generator game damage
 		if (cheats::anti_zombie)
 			return;
 		break;
 
-	case game_packet_type::app_integrity_fail:
+	case app_integrity_fail:
 		gt::log_to_console(std::format("`4venom:`` `oblocking client hack report`` `5(type {})``", packet->int3));
 		return;
 		break;
@@ -152,7 +158,9 @@ void hooks::process_tank_update_packet_hook(game_logic_component_t* _this, game_
 	switch (packet->type) {
 	case game_packet_type::call_function: {
 		variant_list_t var_list(packet->get_extra_data());
-		console::println(std::format("incoming call function '{}'", var_list.get(0).get_string()));
+
+		std::string func = var_list[0].get_string();
+		console::println(std::format("incoming call function '{}'", func));
 		break;
 	}
 
@@ -193,6 +201,13 @@ void hooks::process_tank_update_packet_hook(game_logic_component_t* _this, game_
 }
 
 void hooks::on_text_game_message_hook(game_logic_component_t* _this, const char* packet) {
+	text_scanner_t data(packet);
+
+	if (cheats::auto_reconnect && data.get("action") == "logon_fail") {
+		gt::send_generic_text(login_packet);
+		gt::log_to_console("`4venom:`` `ologging in again``");
+		return;
+	}
 
 	gt::on_text_game_message(_this, packet);
 }
@@ -336,6 +351,13 @@ void hooks::camera_on_update_hook(world_camera_t* _this, vec2f_t unk1, vec2f_t u
 		return;
 
 	gt::camera_on_update(_this, unk1, unk2);
+}
+
+void hooks::check_item_for_updates_hook(item_info_t* _this, std::vector<int/*file_update_t*/>* file_updates) {
+	if (cheats::skip_file_updates)
+		return;
+
+	gt::check_item_for_updates(_this, file_updates);
 }
 
 HRESULT hooks::end_scene_hook(IDirect3DDevice9* _this) {

@@ -12,6 +12,7 @@ namespace menu {
 	void render() noexcept;
 
 	void cheats_page() noexcept;
+	void entity_tree_page() noexcept;
 	void debug_page() noexcept;
 
 	inline bool show = true;
@@ -28,6 +29,7 @@ namespace cheats {
 	inline bool anti_zombie = false;
 	inline bool anti_ghost = false;
 	inline bool anti_knockback = false;
+	inline bool anti_freeze = false;
 
 	inline bool night_vision = false;
 	inline bool see_fruits = false;
@@ -44,6 +46,8 @@ namespace cheats {
 	inline bool block_ads = false;
 	inline bool touch_bypass = false;
 	inline bool enable_pasting = false;
+	inline bool auto_reconnect = false;
+	inline bool skip_file_updates = false;
 }
 
 namespace ImGui {

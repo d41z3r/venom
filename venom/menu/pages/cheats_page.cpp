@@ -14,6 +14,7 @@ void menu::cheats_page() noexcept {
 	ImGui::Checkbox("anti zombie", &cheats::anti_zombie);
 	ImGui::Checkbox("anti ghost", &cheats::anti_ghost);
 	ImGui::Checkbox("anti knockback", &cheats::anti_knockback);
+	ImGui::Checkbox("anti freeze", &cheats::anti_freeze);
 
 	ImGui::NextColumn();
 
@@ -34,6 +35,8 @@ void menu::cheats_page() noexcept {
 	ImGui::Checkbox("block ads", &cheats::block_ads);
 	ImGui::Checkbox("touch bypass", &cheats::touch_bypass, gt::touch_bypass_address, "eb", "72");
 	ImGui::Checkbox("enable pasting", &cheats::enable_pasting, gt::enable_pasting_address, "75", "74");
+	ImGui::Checkbox("auto reconnect", &cheats::auto_reconnect);
+	ImGui::Checkbox("skip file updates", &cheats::skip_file_updates);
 
 	ImGui::EndColumns();
 }

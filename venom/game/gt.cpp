@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <string>
 #include <format>
+#include <fstream>
 
 void patch_integrity_check() {
 	std::uintptr_t integrity_check = memory::find_pattern("00 3b c1 75 08 85 c9", 3);
@@ -52,6 +53,7 @@ void find_address(auto& dest, std::string_view pattern, find_mode mode, std::int
 void find_addresses() {
 	// globals
 	find_address(gt::get_app, "c3 e8 ? ? ? ? 48 8b c8 33 d2", find_mode::call, 1);
+	find_address(gt::get_entity_root, "90 e8 ? ? ? ? 48 8d 54 24 ? 48 8b c8", find_mode::call, 1);
 	find_address(gt::get_client, "75 ? e8 ? ? ? ? 48 83 b8", find_mode::call, 2);
 	find_address(gt::get_game_logic, "48 8b 80 ? ? ? ? eb", find_mode::function_start);
 	find_address(gt::get_item_info_manager, "e8 ? ? ? ? 48 8b c8 8b 57 ? e8 ? ? ? ? 33 f6", find_mode::call);
@@ -89,6 +91,7 @@ void find_addresses() {
 	find_address(gt::camera_on_update, "f3 0f 10 02 f3 41 0f 5e 00", find_mode::function_start);
 	find_address(gt::collide, "e8 ? ? ? ? 48 85 c0 74 ? 48 89 07 48 8b cb", find_mode::call);
 	find_address(gt::update_from_net_avatar, "e8 ? ? ? ? 49 8b ce e8 ? ? ? ? 48 8b d8", find_mode::call);
+	find_address(gt::check_item_for_updates, "48 8d 15 ? ? ? ? e8 ? ? ? ? ff c3 e8", find_mode::call, 7);
 
 	// just addresses
 	find_address(gt::anti_slide_address, "74 4d 48 8b 45 ? 0f b7 58", find_mode::normal);
@@ -170,4 +173,39 @@ void gt::process_game_packet(const game_packet_t& packet) noexcept {
 		return;
 
 	process_tank_update_packet(game_logic, const_cast<game_packet_t*>(&packet));
+}
+
+std::uint32_t gt::hash_data(std::uint8_t* data, std::size_t data_size) noexcept {
+	std::uint32_t hash = 0x55555555;
+
+	for (std::size_t i = 0; i < data_size; ++i)
+		hash = (hash >> 27) + (hash << 5) + static_cast<std::uint32_t>(*data++);
+
+	return hash;
+}
+
+std::uint32_t gt::hash_string(const std::string& str) noexcept {
+	return hash_data(
+		reinterpret_cast<std::uint8_t*>(const_cast<char*>(str.data())),
+		str.size()
+	);
+}
+
+std::uint32_t gt::get_file_hash(const std::string& filename) noexcept {
+	std::ifstream file(filename, std::ios::binary | std::ios::ate);
+	if (!file.is_open())
+		return 0;
+
+	std::size_t file_size = static_cast<std::size_t>(file.tellg());
+	file.seekg(0, std::ios::beg);
+
+	std::uint8_t* file_data = new std::uint8_t[file_size];
+	file.read(reinterpret_cast<char*>(file_data), file_size);
+	file.close();
+
+	std::uint32_t hash = hash_data(file_data, file_size);
+
+	delete[] file_data;
+
+	return hash;
 }

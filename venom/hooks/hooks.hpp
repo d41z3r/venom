@@ -29,6 +29,7 @@ namespace hooks {
 	bool is_checkpoint_hook(tile_t* _this);
 	void handle_touch_at_world_coordinates_hook(level_touch_component_t* _this, vec2f_t* pos, bool unk1);
 	void camera_on_update_hook(world_camera_t* _this, vec2f_t unk1, vec2f_t unk2);
+	void check_item_for_updates_hook(item_info_t* _this, std::vector<int/*file_update_t*/>* file_updates);
 
 	HRESULT end_scene_hook(IDirect3DDevice9* _this);
 	LRESULT wnd_proc_hook(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);

@@ -19,9 +19,13 @@ void hooks::app_update_hook(app_t* _this) {
 	if (cheats::unlimited_jumps)
 		local_player->can_jump = true;
 
+	if (cheats::anti_freeze)
+		memory::remove_flag(local_player->flags, player_flag::frozen);
+	else if (memory::has_flag(real_state::flags, player_flag::frozen))
+		memory::set_flag(local_player->flags, player_flag::frozen);
+
 	if (cheats::ghost_mode)
 		memory::set_flag(local_player->flags, player_flag::no_clip);
 	else if (!memory::has_flag(real_state::flags, player_flag::no_clip))
 		memory::remove_flag(local_player->flags, player_flag::no_clip);
-		
 }
