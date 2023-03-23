@@ -1,4 +1,5 @@
 #pragma once
+#include <game/utils/boost.hpp>
 #include <game/manager/variant_db.hpp>
 
 #include <cstdint>
@@ -13,7 +14,7 @@ public:
 	virtual void on_add(entity_t* entity);
 	virtual void on_remove();
 
-	std::uint8_t sig_trackable[16];
+	boost_trackable_signal_t trackable_signal;
 	std::string* name;
 	entity_t* parent;
 	variant_db_t shared_db;

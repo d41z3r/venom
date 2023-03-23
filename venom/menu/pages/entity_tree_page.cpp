@@ -5,6 +5,7 @@
 #include <format>
 
 entity_t* selected_entity = nullptr;
+bool selected_found = false;
 
 void imgui_entity(entity_t* entity) {
 	bool this_selected = selected_entity == entity;
@@ -33,6 +34,9 @@ void imgui_entity(entity_t* entity) {
 			ImGui::TreePop();
 		}
 	}
+
+	if (selected_entity == entity)
+		selected_found = true;
 }
 
 void imgui_variant_db(const variant_db_t& var_db) {
@@ -88,7 +92,11 @@ void imgui_variant_db(const variant_db_t& var_db) {
 void menu::entity_tree_page() noexcept {
 	ImGui::Columns(2, "entity columns", false);
 
+	selected_found = false;
 	imgui_entity(gt::get_entity_root());
+
+	if (!selected_found) // lazy fix
+		selected_entity = nullptr;
 
 	ImGui::NextColumn();
 
