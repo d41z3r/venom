@@ -20,7 +20,8 @@ growtopia internal
 ![image](https://user-images.githubusercontent.com/73388513/227361703-46fbc6aa-9959-4c47-b29b-e23aa8e853f8.png)
 
 ### entity tree
-![image](https://user-images.githubusercontent.com/73388513/227361444-a427aa8c-26af-43bc-acb9-8029cd954976.png)
+![227361444-a427aa8c-26af-43bc-acb9-8029cd954976](https://user-images.githubusercontent.com/73388513/227368577-d1eb9c66-bbc6-4813-a81c-518ac99815ca.png)
+
 
 ## external libraries
 * [imgui](https://github.com/ocornut/imgui)
