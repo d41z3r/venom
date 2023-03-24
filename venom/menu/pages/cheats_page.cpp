@@ -25,6 +25,7 @@ void menu::cheats_page() noexcept {
 	ImGui::Checkbox("fake lag", &cheats::fake_lag); // todo: make this show to our client aswell
 	ImGui::Checkbox("ghost mode", &cheats::ghost_mode);
 	ImGui::Checkbox("mod zoom", &cheats::mod_zoom);
+	ImGui::Checkbox("fast punch", &cheats::fast_punch);
 
 	ImGui::NextColumn();
 

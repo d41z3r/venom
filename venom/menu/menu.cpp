@@ -6,7 +6,7 @@ void menu::setup() {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 
-	ImGui_ImplDX9_Init(gt::renderer->device);
+	ImGui_ImplDX9_Init(gt::get_renderer()->device);
 	ImGui_ImplWin32_Init(gt::hwnd);
 
 	console::print_good("initialized imgui");

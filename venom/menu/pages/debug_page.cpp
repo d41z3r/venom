@@ -16,12 +16,16 @@ void debug_button(const char* name, auto address) {
 
 void menu::debug_page() noexcept {
 	app_t* app = gt::get_app();
+	renderer_context_d3d9_t* renderer = gt::get_renderer();
+	constants_t* constants = gt::get_constants();
 	entity_t* entity_root = gt::get_entity_root();
 	enet_client_t* client = gt::get_client();
 	item_info_manager_t* item_info_manager = gt::get_item_info_manager();
 	game_logic_component_t* game_logic = gt::get_game_logic();
 
 	debug_button("app", app);
+	debug_button("renderer", renderer);
+	debug_button("constants", constants);
 	debug_button("entity root", entity_root);
 	debug_button("enet client", client);
 	debug_button("item info manager", item_info_manager);

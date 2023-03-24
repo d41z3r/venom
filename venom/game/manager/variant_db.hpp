@@ -9,7 +9,8 @@ class variant_t;
 #pragma pack(push,1 )
 class variant_db_t {
 public:
-	void* vftable;
+	virtual ~variant_db_t();
+
 	stdext::hash_map<std::string, variant_t*> data;
 	std::uint8_t pad[64];
 	decltype(data)::iterator next_itor;

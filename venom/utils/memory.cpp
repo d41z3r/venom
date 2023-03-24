@@ -77,16 +77,16 @@ std::uintptr_t memory::get_address_from_call(std::uintptr_t address) noexcept {
 
 	std::int32_t relative_address = *reinterpret_cast<std::int32_t*>(address + 1);
 
-	return address + relative_address + 5;
+	return address + relative_address + sizeof(std::int32_t) + 1;
 }
 
 std::uintptr_t memory::get_address_from_load(std::uintptr_t address) noexcept {
 	if (address == 0)
 		return 0;
 	
-	std::int32_t relative_address = *reinterpret_cast<std::int32_t*>(address + 3);
+	std::int32_t relative_address = *reinterpret_cast<std::int32_t*>(address);
 
-	return *reinterpret_cast<std::uintptr_t*>(address + relative_address + 7);
+	return address + relative_address + sizeof(std::int32_t);
 }
 
 std::uintptr_t memory::find_function_start(std::uintptr_t address) noexcept {

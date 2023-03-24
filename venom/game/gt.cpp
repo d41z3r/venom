@@ -100,10 +100,11 @@ void find_addresses() {
 	find_address(gt::see_locked_doors_address, "40 84 ff 74 ? 4c 89 7d", find_mode::normal, 3);
 	find_address(gt::touch_bypass_address, "3d ? ? ? ? 72 ? c6 83", find_mode::normal, 5);
 	find_address(gt::enable_pasting_address, "74 ? 83 f9 ? 0f 85 ? ? ? ? 83 7f", find_mode::normal);
-	find_address(gt::renderer, "48 8b 05 ? ? ? ? 75 ? c6 43", find_mode::load);
+	find_address(gt::renderer, "48 8b 05 ? ? ? ? 75 ? c6 43", find_mode::load, 3);
+	find_address(gt::constants, "f3 44 0f 10 0d ? ? ? ? f3 44 0f 5c c9", find_mode::load, 5);
 
 	// get end_scene from d3d9 device's vftable
-	gt::end_scene = reinterpret_cast<decltype(gt::end_scene)>((*reinterpret_cast<void***>(gt::renderer->device_ex))[42]);
+	gt::end_scene = reinterpret_cast<decltype(gt::end_scene)>((*reinterpret_cast<void***>(gt::get_renderer()->device_ex))[42]);
 }
 
 void gt::setup() {
@@ -133,6 +134,14 @@ void gt::setup() {
 
 	set_fps_limit(get_app(), 0.f);
 	print_good("unlocked fps limit");
+}
+
+renderer_context_d3d9_t* gt::get_renderer() noexcept {
+	return *renderer;
+}
+
+constants_t* gt::get_constants() noexcept {
+	return constants;
 }
 
 void gt::send_generic_text(const std::string& packet) noexcept {
@@ -173,6 +182,31 @@ void gt::process_game_packet(const game_packet_t& packet) noexcept {
 		return;
 
 	process_tank_update_packet(game_logic, const_cast<game_packet_t*>(&packet));
+}
+
+void gt::process_call_function(const variant_list_t& var_list, std::int32_t net_id, std::int32_t delay) noexcept {
+	game_logic_component_t* game_logic = gt::get_game_logic();
+	if (game_logic == nullptr)
+		return;
+
+	std::uint32_t data_size = 0;
+	std::uint8_t* data = var_list.serialize_to_mem(&data_size);
+
+	game_packet_t* packet = static_cast<game_packet_t*>(std::malloc(sizeof(game_packet_t) + data_size));
+	std::memset(&*packet, 0, sizeof(game_packet_t) + data_size);
+
+	packet->type = game_packet_type::call_function;
+	packet->flags = 0x8; // game_packet_flag::extra_data
+	packet->int1 = net_id;
+	packet->int3 = delay;
+	packet->extra_data_size = data_size;
+
+	std::memcpy(packet->get_extra_data(), data, data_size);
+
+	process_tank_update_packet(game_logic, packet);
+
+	std::free(packet);
+	delete[] data;
 }
 
 std::uint32_t gt::hash_data(std::uint8_t* data, std::size_t data_size) noexcept {

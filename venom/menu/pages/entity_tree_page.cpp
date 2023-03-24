@@ -50,7 +50,7 @@ void imgui_variant_db(const variant_db_t& var_db) {
 
 			case variant_type::string: {
 				char* text = const_cast<char*>(variant->string_value.c_str());
-				ImGui::InputText("value", text, 256);
+				ImGui::InputText("value", text, 1024);
 				variant->string_value = text;
 				break;
 			}

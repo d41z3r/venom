@@ -254,5 +254,8 @@
     <ClInclude Include="game\manager\variant_db.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="game\app\constants.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

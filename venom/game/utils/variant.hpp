@@ -192,9 +192,93 @@ public:
 		}
 	}
 
-	// needed for gt::process_call_function, todo
-	std::uint8_t* serialize_to_mem(std::size_t* size_out) noexcept {
-		return nullptr;
+	std::uint8_t* serialize_to_mem(std::uint32_t* data_size) const noexcept {
+		using enum variant_type;
+		using namespace memory;
+
+		std::uint8_t variant_count = 0;
+
+		*data_size = 1; // variant count
+		for (std::uint8_t i = 0; i < 7; ++i) {
+			const variant_t& var = variants[i];
+			if (var.type == unused)
+				break;
+
+			variant_count++;
+			*data_size += 2; // index, type
+
+			switch (var.type) {
+			case float32:
+				*data_size += sizeof(float);
+				break;
+
+			case string:
+				*data_size += static_cast<std::uint32_t>(sizeof(std::uint32_t) + var.string_value.size());
+				break;
+
+			case vec2:
+				*data_size += sizeof(vec2f_t);
+				break;
+
+			case vec3:
+				*data_size += sizeof(vec3f_t);
+				break;
+
+			case uint32:
+				*data_size += sizeof(std::uint32_t);
+				break;
+
+			case int32:
+				*data_size += sizeof(std::int32_t);
+				break;
+
+			default:
+				break;
+			}
+		}
+
+		std::uint8_t* data = new std::uint8_t[*data_size];
+		std::uint8_t* data_start = data;
+
+		append_write(variant_count, data);
+
+		for (std::uint8_t i = 0; i < variant_count; ++i) {
+			const variant_t& var = variants[i];
+
+			append_write(i, data);
+			append_write(var.type, data);
+
+			switch (var.type) {
+			case float32:
+				append_write(var.float_value, data);
+				break;
+
+			case string:
+				append_write_string(var.string_value, data);
+				break;
+
+			case vec2:
+				append_write(var.vec2_value, data);
+				break;
+
+			case vec3:
+				append_write(var.vec3_value, data);
+				break;
+
+			case uint32:
+				append_write(var.uint_value, data);
+				break;
+
+			case int32:
+				append_write(var.int_value, data);
+				break;
+
+			default:
+				break;
+			}
+		}
+
+		return data_start;
 	}
 
 	inline variant_t& get(std::size_t index) noexcept { return variants[index]; }

@@ -199,6 +199,7 @@
     <ClInclude Include="external\minhook\src\trampoline.h" />
     <ClInclude Include="game\app\app.hpp" />
     <ClInclude Include="game\app\base_app.hpp" />
+    <ClInclude Include="game\app\constants.hpp" />
     <ClInclude Include="game\component\game_logic_component.hpp" />
     <ClInclude Include="game\component\level_touch_component.hpp" />
     <ClInclude Include="game\entity\component.hpp" />

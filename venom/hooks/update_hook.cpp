@@ -6,13 +6,13 @@ void hooks::app_update_hook(app_t* _this) {
 	gt::app_update(_this);
 
 	game_logic_component_t* game_logic = gt::get_game_logic();
-	if (game_logic == nullptr)
+	constants_t* constants = gt::get_constants();
+	if (game_logic == nullptr || constants == nullptr)
 		return;
 
 	net_avatar_t* local_player = game_logic->local_player;
 	if (local_player == nullptr)
 		return;
-
 
 	local_player->is_mod = cheats::mod_zoom;
 
@@ -28,4 +28,8 @@ void hooks::app_update_hook(app_t* _this) {
 		memory::set_flag(local_player->flags, player_flag::no_clip);
 	else if (!memory::has_flag(real_state::flags, player_flag::no_clip))
 		memory::remove_flag(local_player->flags, player_flag::no_clip);
+
+	(cheats::fast_punch) ?
+		constants->punch_reload_time.set(0.15f) :
+		constants->punch_reload_time.set(0.2f);
 }

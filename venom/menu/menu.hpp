@@ -38,6 +38,7 @@ namespace cheats {
 	inline bool fake_lag = false;
 	inline bool ghost_mode = false;
 	inline bool mod_zoom = false;
+	inline bool fast_punch = false;
 
 	inline bool click_tp = false;
 	inline bool walk_in_air = false;

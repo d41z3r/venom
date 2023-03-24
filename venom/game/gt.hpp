@@ -1,5 +1,6 @@
 #pragma once
 #include <game/app/app.hpp>
+#include <game/app/constants.hpp>
 #include <game/entity/entity.hpp>
 #include <game/entity/component.hpp>
 #include <game/network/enet_client.hpp>
@@ -26,13 +27,16 @@ namespace gt {
 	void setup();
 	void close_mutexes();
 
+	renderer_context_d3d9_t* get_renderer() noexcept;
+	constants_t* get_constants() noexcept;
+
 	void send_generic_text(const std::string& packet) noexcept;
 	void send_game_message(const std::string& packet) noexcept;
 	void send_game_packet(const game_packet_t& packet) noexcept;
 
 	void process_game_message(const std::string& packet) noexcept;
 	void process_game_packet(const game_packet_t& packet) noexcept;
-	//void process_call_function(const variant_list_t& var_list, std::int32_t net_id = -1, std::int32_t delay = 0) noexcept;
+	void process_call_function(const variant_list_t& var_list, std::int32_t net_id = -1, std::int32_t delay = 0) noexcept;
 	//void process_track_packet(const std::string& packet) noexcept;
 
 	std::uint32_t hash_data(std::uint8_t* data, std::size_t data_size) noexcept;
@@ -95,7 +99,8 @@ namespace gt {
 	inline std::uintptr_t see_locked_doors_address = 0;
 	inline std::uintptr_t touch_bypass_address = 0;
 	inline std::uintptr_t enable_pasting_address = 0;
-	inline renderer_context_d3d9_t* renderer = nullptr;
+	inline renderer_context_d3d9_t** renderer = nullptr;
+	inline constants_t* constants;
 }
 
 // this for storing the real values gt server sends us
