@@ -65,7 +65,7 @@ void hooks::send_packet_hook(net_message_type type, std::string packet, void* pe
 		text_scanner_t data(packet);
 
 		if (data.has("game_version")) { // todo: spoof login values
-			data.set("country", "ly");
+			data.set("country", "nr");
 
 			packet = data.build();
 			login_packet = packet; // for auto reconnect

@@ -14,6 +14,14 @@ public:
 	virtual void on_add(entity_t* entity);
 	virtual void on_remove();
 
+	variant_t* get_var(const std::string& key_name) noexcept {
+		return shared_db.get_var(key_name);
+	}
+
+	function_object_t* get_function(const std::string& key_name) noexcept {
+		return shared_db.get_function(key_name);
+	}
+
 	boost_trackable_signal_t trackable_signal;
 	std::string* name;
 	entity_t* parent;

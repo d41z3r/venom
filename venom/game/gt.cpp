@@ -1,6 +1,7 @@
 #include <game/gt.hpp>
 #include <utils/memory.hpp>
 #include <utils/console.hpp>
+#include <utils/random.hpp>
 
 #include <stdexcept>
 #include <string>
@@ -92,6 +93,7 @@ void find_addresses() {
 	find_address(gt::collide, "e8 ? ? ? ? 48 85 c0 74 ? 48 89 07 48 8b cb", find_mode::call);
 	find_address(gt::update_from_net_avatar, "e8 ? ? ? ? 49 8b ce e8 ? ? ? ? 48 8b d8", find_mode::call);
 	find_address(gt::check_item_for_updates, "48 8d 15 ? ? ? ? e8 ? ? ? ? ff c3 e8", find_mode::call, 7);
+	find_address(gt::create_text_label_entity, "48 8b cf e8 ? ? ? ? 48 8b d8 f3 0f 10 54 24", find_mode::call, 3);
 
 	// just addresses
 	find_address(gt::anti_slide_address, "74 4d 48 8b 45 ? 0f b7 58", find_mode::normal);
@@ -109,6 +111,7 @@ void find_addresses() {
 
 void gt::setup() {
 	using namespace console;
+	using namespace random;
 
 	MODULEINFO module_info = {};
 	if (!GetModuleInformation(GetCurrentProcess(), GetModuleHandle(nullptr), &module_info, sizeof(MODULEINFO)))
@@ -123,6 +126,13 @@ void gt::setup() {
 	if (hwnd == nullptr)
 		throw std::runtime_error("growtopia window not found");
 
+	RECT rect = {};
+	if (!GetWindowRect(gt::hwnd, &rect))
+		throw std::runtime_error("failed to get window size");
+
+	window_size.x = rect.left - rect.right;
+	window_size.y = rect.bottom - rect.top;
+
 	patch_integrity_check();
 	print_good("patched integrity check");
 
@@ -134,6 +144,21 @@ void gt::setup() {
 
 	set_fps_limit(get_app(), 0.f);
 	print_good("unlocked fps limit");
+
+	entity_t* watermark = create_text_label_entity(gt::get_entity_root(), "Watermark", 8.f, static_cast<float>(window_size.y - 85), "venom");
+
+	watermark->get_var("color")->set(
+		(random_num(0xff) << 24) | // blue
+		(random_num(0xff) << 16) | // green
+		(random_num(0xff) << 8 ) | // red
+		0xffu                      // alpha
+	); 
+
+	watermark->get_var("scale2d")->set(vec2f_t{ 0.5f, 0.5f });
+	watermark->get_component_by_name("TextRender")->get_var("font")->set(1u);
+	watermark->get_component_by_name("TextRender")->get_var("shadowColor")->set(150u);
+
+	print_good("created watermark");
 }
 
 renderer_context_d3d9_t* gt::get_renderer() noexcept {

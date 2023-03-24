@@ -48,6 +48,7 @@ namespace gt {
 	inline std::uintptr_t base_address = 0;
 	inline std::uintptr_t end_address = 0;
 	inline HWND hwnd = nullptr;
+	inline vec2i_t window_size = { 0, 0 };
 
 	// globals
 	inline app_t* (*get_app)() = nullptr;
@@ -90,7 +91,10 @@ namespace gt {
 	inline bool (*collide)(world_tile_map_t* _this, float unk1, float unk2, float unk3, float unk4, int unk5, bool unk6) = nullptr;
 	inline void (*update_from_net_avatar)(avatar_render_data_t* _this, net_avatar_t* net_avatar) = nullptr;
 	inline void (*check_item_for_updates)(item_info_t* _this, std::vector<int/*file_update_t*/>* file_updates) = nullptr;
-	inline HRESULT (*end_scene)(IDirect3DDevice9* _this) = nullptr;
+	inline entity_t* (*create_text_label_entity)(entity_t* parent, std::string name, float x, float y, std::string text) = nullptr;
+	
+	// menu
+	inline HRESULT(*end_scene)(IDirect3DDevice9* _this) = nullptr;
 
 	// just addresses
 	inline std::uintptr_t anti_slide_address = 0;
