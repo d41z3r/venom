@@ -178,6 +178,7 @@
     <ClCompile Include="menu\pages\debug_page.cpp" />
     <ClCompile Include="menu\pages\entity_tree_page.cpp" />
     <ClCompile Include="utils\memory.cpp" />
+    <ClCompile Include="utils\random.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="external\imgui\imconfig.h" />
@@ -236,6 +237,7 @@
     <ClInclude Include="menu\menu.hpp" />
     <ClInclude Include="utils\console.hpp" />
     <ClInclude Include="utils\memory.hpp" />
+    <ClInclude Include="utils\random.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

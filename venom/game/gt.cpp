@@ -145,7 +145,7 @@ void gt::setup() {
 	set_fps_limit(get_app(), 0.f);
 	print_good("unlocked fps limit");
 
-	entity_t* watermark = create_text_label_entity(gt::get_entity_root(), "Watermark", 8.f, static_cast<float>(window_size.y - 85), "venom");
+	entity_t* watermark = create_text_label_entity(get_entity_root(), "Watermark", 8.f, static_cast<float>(window_size.y - 85), "venom");
 
 	watermark->get_var("color")->set(
 		(random_num(0xff) << 24) | // blue
