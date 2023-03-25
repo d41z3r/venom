@@ -30,7 +30,7 @@ void menu::cheats_page() noexcept {
 	ImGui::NextColumn();
 
 	ImGui::Checkbox("click tp (CTRL)", &cheats::click_tp);
-	ImGui::Checkbox("walk in air", &cheats::walk_in_air); // todo: set save.dat move_down hotkeys on startup
+	ImGui::Checkbox("walk in air", &cheats::walk_in_air);
 	ImGui::Checkbox("unlimited jumps", &cheats::unlimited_jumps);
 	ImGui::Checkbox("super punch", &cheats::super_punch);
 	ImGui::Checkbox("block ads", &cheats::block_ads);

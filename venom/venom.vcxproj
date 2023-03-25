@@ -176,7 +176,7 @@
     <ClCompile Include="menu\menu.cpp" />
     <ClCompile Include="menu\pages\cheats_page.cpp" />
     <ClCompile Include="menu\pages\debug_page.cpp" />
-    <ClCompile Include="menu\pages\entity_tree_page.cpp" />
+    <ClCompile Include="menu\pages\game_page.cpp" />
     <ClCompile Include="utils\memory.cpp" />
     <ClCompile Include="utils\random.cpp" />
   </ItemGroup>
@@ -214,7 +214,10 @@
     <ClInclude Include="game\manager\net_object_manager.hpp" />
     <ClInclude Include="game\component\track_handler_component.hpp" />
     <ClInclude Include="game\gt.hpp" />
+    <ClInclude Include="game\manager\player_tribute_manager.hpp" />
+    <ClInclude Include="game\manager\resource_manager.hpp" />
     <ClInclude Include="game\manager\text_manager.hpp" />
+    <ClInclude Include="game\manager\tile_sheet_manager.hpp" />
     <ClInclude Include="game\manager\variant_db.hpp" />
     <ClInclude Include="game\network\enet_client.hpp" />
     <ClInclude Include="game\network\game_packet.hpp" />

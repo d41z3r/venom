@@ -109,7 +109,7 @@ void hooks::send_packet_raw_hook(net_message_type type, const void* data, std::i
 			memory::set_flag(packet->flags, visual_state::on_spawn);
 
 		if (cheats::super_punch && memory::has_flag(packet->flags, visual_state::on_punched))
-				memory::set_flag(packet->flags, visual_state::on_power_up_punch_end);
+			memory::set_flag(packet->flags, visual_state::on_power_up_punch_end);
 
 		// if you send walk packets in air you will get banned so lets set player velocity as 0 so server thinks we are not walking
 		if (cheats::walk_in_air)

@@ -101,45 +101,76 @@ void imgui_variant_db(const variant_db_t& var_db) {
 	}
 }
 
-// pretty messy and buggy atm, i will fix later
-void menu::entity_tree_page() noexcept {
-	ImGui::Columns(2, "entity columns", false);
+// messy and buggy atm, i will fix and clean later
+void menu::game_page() noexcept {
+	ImGui::BeginTabBar("game tabs");
 
-	selected_found = false;
-	imgui_entity(gt::get_entity_root());
-
-	if (!selected_found) // lazy fix
-		selected_entity = nullptr;
-
-	ImGui::NextColumn();
-
-	if (selected_entity != nullptr) {
-		ImGui::SeparatorText(selected_entity->name.c_str());
-
-		if (selected_entity->parent != nullptr)
-			ImGui::Text("parent: %s", selected_entity->parent->name.c_str());
-
-		imgui_variant_db(selected_entity->shared_db);
-
-		if (!selected_entity->components.empty()) {
-			if (ImGui::TreeNode("components")) {
-				for (entity_component_t* component : selected_entity->components) {
-					std::string text = std::format("{} (0x{:x})", component->name->c_str(), reinterpret_cast<std::uintptr_t>(component));
-					if (component->shared_db.data.empty() && component->shared_db.function_data.empty()) {
-						ImGui::BulletText(text.c_str());
-					}
-					else {
-						if (ImGui::TreeNode(text.c_str())) {
-							imgui_variant_db(component->shared_db);
-							ImGui::TreePop();
-						}
-					}
-				}
-				ImGui::TreePop();
-			}
-
-		}
+	if (ImGui::BeginTabItem("variant db")) {
+		ImGui::BeginChild("variant db");
+		imgui_variant_db(gt::get_app()->var_db);
+		ImGui::EndChild();
+		ImGui::EndTabItem();
 	}
 
-	ImGui::EndColumns();
+	if (ImGui::BeginTabItem("items")) { // todo: item search with icons and better filters
+		static char search[256];
+		ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+		ImGui::InputTextWithHint("##search", "search", search, IM_ARRAYSIZE(search));
+		ImGui::BeginChild("items");
+
+		for (const item_info_t& item : gt::get_item_info_manager()->items) {
+			if (std::strlen(search) == 0 || item.name.find(search) != std::string::npos) {
+				ImGui::Text("%d: %s", item.id, item.name.c_str());
+			}
+		}
+
+		ImGui::EndChild();
+		ImGui::EndTabItem();
+	}
+
+	if (ImGui::BeginTabItem("entity tree")) {
+		ImGui::BeginChild("entity tree");
+		ImGui::Columns(2, "entity columns", false);
+
+		selected_found = false;
+		imgui_entity(gt::get_entity_root());
+
+		if (!selected_found) // lazy fix
+			selected_entity = nullptr;
+
+		ImGui::NextColumn();
+
+		if (selected_entity != nullptr) {
+			ImGui::SeparatorText(selected_entity->name.c_str());
+
+			if (selected_entity->parent != nullptr)
+				ImGui::Text("parent: %s", selected_entity->parent->name.c_str());
+
+			imgui_variant_db(selected_entity->shared_db);
+
+			if (!selected_entity->components.empty()) {
+				if (ImGui::TreeNode("components")) {
+					for (entity_component_t* component : selected_entity->components) {
+						std::string text = std::format("{} (0x{:x})", component->name->c_str(), reinterpret_cast<std::uintptr_t>(component));
+						if (component->shared_db.data.empty() && component->shared_db.function_data.empty()) {
+							ImGui::BulletText(text.c_str());
+						}
+						else {
+							if (ImGui::TreeNode(text.c_str())) {
+								imgui_variant_db(component->shared_db);
+								ImGui::TreePop();
+							}
+						}
+					}
+					ImGui::TreePop();
+				}
+
+			}
+		}
+		ImGui::EndColumns();
+		ImGui::EndChild();
+		ImGui::EndTabItem();
+	}
+
+	ImGui::EndTabBar();
 }

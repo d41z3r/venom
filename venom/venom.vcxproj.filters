@@ -84,7 +84,7 @@
     <ClCompile Include="game\pathfinder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="menu\pages\entity_tree_page.cpp">
+    <ClCompile Include="menu\pages\game_page.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="utils\random.cpp">
@@ -261,6 +261,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utils\random.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\manager\resource_manager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\manager\tile_sheet_manager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\manager\player_tribute_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -37,7 +37,7 @@ namespace gt {
 	void process_game_message(const std::string& packet) noexcept;
 	void process_game_packet(const game_packet_t& packet) noexcept;
 	void process_call_function(const variant_list_t& var_list, std::int32_t net_id = -1, std::int32_t delay = 0) noexcept;
-	//void process_track_packet(const std::string& packet) noexcept;
+	void process_track_packet(const std::string& packet) noexcept;
 
 	std::uint32_t hash_data(std::uint8_t* data, std::size_t data_size) noexcept;
 	std::uint32_t hash_string(const std::string& str) noexcept;

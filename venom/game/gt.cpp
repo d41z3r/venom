@@ -109,9 +109,25 @@ void find_addresses() {
 	gt::end_scene = reinterpret_cast<decltype(gt::end_scene)>((*reinterpret_cast<void***>(gt::get_renderer()->device_ex))[42]);
 }
 
+void create_watermark() noexcept {
+	using namespace random;
+
+	entity_t* watermark = gt::create_text_label_entity(gt::get_entity_root(), "Watermark", 8.f, static_cast<float>(gt::window_size.y - 85), "venom");
+
+	watermark->get_var("color")->set(
+		(random_num(0xff) << 24) | // blue
+		(random_num(0xff) << 16) | // green
+		(random_num(0xff) << 8) | // red
+		0xffu                      // alpha
+	);
+
+	watermark->get_var("scale2d")->set(vec2f_t{ 0.5f, 0.5f });
+	watermark->get_component_by_name("TextRender")->get_var("font")->set(1u);
+	watermark->get_component_by_name("TextRender")->get_var("shadowColor")->set(150u);
+}
+
 void gt::setup() {
 	using namespace console;
-	using namespace random;
 
 	MODULEINFO module_info = {};
 	if (!GetModuleInformation(GetCurrentProcess(), GetModuleHandle(nullptr), &module_info, sizeof(MODULEINFO)))
@@ -145,20 +161,11 @@ void gt::setup() {
 	set_fps_limit(get_app(), 0.f);
 	print_good("unlocked fps limit");
 
-	entity_t* watermark = create_text_label_entity(get_entity_root(), "Watermark", 8.f, static_cast<float>(window_size.y - 85), "venom");
-
-	watermark->get_var("color")->set(
-		(random_num(0xff) << 24) | // blue
-		(random_num(0xff) << 16) | // green
-		(random_num(0xff) << 8 ) | // red
-		0xffu                      // alpha
-	); 
-
-	watermark->get_var("scale2d")->set(vec2f_t{ 0.5f, 0.5f });
-	watermark->get_component_by_name("TextRender")->get_var("font")->set(1u);
-	watermark->get_component_by_name("TextRender")->get_var("shadowColor")->set(150u);
-
+	create_watermark();
 	print_good("created watermark");
+
+	gt::get_app()->get_var("move_down_primary")->set(83u);   // S key
+	gt::get_app()->get_var("move_down_secondary")->set(40u); // arrow down key
 }
 
 renderer_context_d3d9_t* gt::get_renderer() noexcept {
@@ -232,6 +239,14 @@ void gt::process_call_function(const variant_list_t& var_list, std::int32_t net_
 
 	std::free(packet);
 	delete[] data;
+}
+
+void gt::process_track_packet(const std::string& packet) noexcept {
+	app_t* app = gt::get_app();
+	if (app == nullptr || app->track_handler == nullptr)
+		return;
+
+	handle_track_packet(app->track_handler, packet.c_str());
 }
 
 std::uint32_t gt::hash_data(std::uint8_t* data, std::size_t data_size) noexcept {

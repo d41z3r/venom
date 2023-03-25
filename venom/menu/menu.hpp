@@ -12,7 +12,7 @@ namespace menu {
 	void render() noexcept;
 
 	void cheats_page() noexcept;
-	void entity_tree_page() noexcept;
+	void game_page() noexcept;
 	void debug_page() noexcept;
 
 	inline bool show = true;

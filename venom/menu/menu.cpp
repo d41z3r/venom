@@ -24,6 +24,8 @@ void menu::render() noexcept {
 		ImGui::SetNextWindowSize({ 550.f, 350.f }, ImGuiCond_Once);
 		ImGui::Begin("venom", &show, ImGuiWindowFlags_NoCollapse);
 
+		// todo: better looking menu
+
 		ImGui::BeginTabBar("tabs");
 
 		if (ImGui::BeginTabItem("cheats")) {
@@ -31,8 +33,8 @@ void menu::render() noexcept {
 			ImGui::EndTabItem();
 		}
 
-		if (ImGui::BeginTabItem("entity tree")) {
-			entity_tree_page();
+		if (ImGui::BeginTabItem("game")) {
+			game_page();
 			ImGui::EndTabItem();
 		}
 
