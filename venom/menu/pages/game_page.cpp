@@ -172,5 +172,21 @@ void menu::game_page() noexcept {
 		ImGui::EndTabItem();
 	}
 
+
+	if (ImGui::BeginTabItem("textures")) {
+		ImGui::BeginChild("textures");
+
+		for (const auto& [name, resource] : gt::get_app()->resource_manager.data) {
+			if (ImGui::TreeNode(name.c_str())) {
+				const texture_d3d9_t& texture = gt::get_renderer()->textures[resource->surface->texture_id];
+				ImGui::Image(texture.ptr, { static_cast<float>(texture.width), static_cast<float>(texture.height) }, { 0.f, 1.f }, { 1.f, 0.f });
+				ImGui::TreePop();
+			}
+		}
+
+		ImGui::EndChild();
+		ImGui::EndTabItem();
+	}
+
 	ImGui::EndTabBar();
 }

@@ -15,6 +15,7 @@
 #include <game/utils/math.hpp>
 #include <game/utils/variant.hpp>
 #include <game/renderer/renderer_context.hpp>
+#include <game/renderer/surface.hpp>
 
 #include <cstdint>
 #include <string>
@@ -92,7 +93,9 @@ namespace gt {
 	inline void (*update_from_net_avatar)(avatar_render_data_t* _this, net_avatar_t* net_avatar) = nullptr;
 	inline void (*check_item_for_updates)(item_info_t* _this, std::vector<int/*file_update_t*/>* file_updates) = nullptr;
 	inline entity_t* (*create_text_label_entity)(entity_t* parent, std::string name, float x, float y, std::string text) = nullptr;
-	
+	inline entity_t* (*create_text_button_entity)(entity_t* parent, std::string name, float x, float y, std::string text, bool underline, std::uint32_t input_controls, std::string unk1, bool unk2, std::string unk3, bool unk4, bool unk5) = nullptr; // do something with this later, needs boost
+	inline surface_t* (*get_surface_anim)(resource_manager_t* _this, const std::string& filename, bool add_base_path) = nullptr; // for some reason freezing gt, fix
+
 	// menu
 	inline HRESULT(*end_scene)(IDirect3DDevice9* _this) = nullptr;
 

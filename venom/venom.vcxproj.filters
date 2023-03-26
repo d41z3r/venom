@@ -272,5 +272,8 @@
     <ClInclude Include="game\manager\player_tribute_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="game\renderer\surface.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

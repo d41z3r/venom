@@ -51,7 +51,7 @@ void find_address(auto& dest, std::string_view pattern, find_mode mode, std::int
 	dest = reinterpret_cast<decltype(dest)>(address);
 }
 
-void find_addresses() {
+void find_addresses() { // todo: actually make good patterns instead of just using sigmaker
 	// globals
 	find_address(gt::get_app, "c3 e8 ? ? ? ? 48 8b c8 33 d2", find_mode::call, 1);
 	find_address(gt::get_entity_root, "90 e8 ? ? ? ? 48 8d 54 24 ? 48 8b c8", find_mode::call, 1);
@@ -94,6 +94,8 @@ void find_addresses() {
 	find_address(gt::update_from_net_avatar, "e8 ? ? ? ? 49 8b ce e8 ? ? ? ? 48 8b d8", find_mode::call);
 	find_address(gt::check_item_for_updates, "48 8d 15 ? ? ? ? e8 ? ? ? ? ff c3 e8", find_mode::call, 7);
 	find_address(gt::create_text_label_entity, "48 8b cf e8 ? ? ? ? 48 8b d8 f3 0f 10 54 24", find_mode::call, 3);
+	find_address(gt::create_text_button_entity, "e8 ? ? ? ? 4c 8b f0 0f 57 c0 66 0f 7f 45", find_mode::call);
+	find_address(gt::get_surface_anim, "e8 ? ? ? ? 48 8b c8 48 85 c0 75 ? 48 8d 55", find_mode::call);
 
 	// just addresses
 	find_address(gt::anti_slide_address, "74 4d 48 8b 45 ? 0f b7 58", find_mode::normal);
@@ -117,7 +119,7 @@ void create_watermark() noexcept {
 	watermark->get_var("color")->set(
 		(random_num(0xff) << 24) | // blue
 		(random_num(0xff) << 16) | // green
-		(random_num(0xff) << 8) | // red
+		(random_num(0xff) << 8) |  // red
 		0xffu                      // alpha
 	);
 

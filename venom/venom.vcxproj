@@ -225,6 +225,7 @@
     <ClInclude Include="game\player\net_avatar.hpp" />
     <ClInclude Include="game\player\player_items.hpp" />
     <ClInclude Include="game\renderer\renderer_context.hpp" />
+    <ClInclude Include="game\renderer\surface.hpp" />
     <ClInclude Include="game\utils\boost.hpp" />
     <ClInclude Include="game\utils\lock_float.hpp" />
     <ClInclude Include="game\utils\math.hpp" />

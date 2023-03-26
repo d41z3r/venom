@@ -10,7 +10,7 @@ void menu::cheats_page() noexcept {
 	ImGui::Checkbox("anti checkpoint", &cheats::anti_checkpoint);
 	ImGui::Checkbox("anti portal", &cheats::anti_portal, gt::anti_portal_address, "eb", "74");
 	ImGui::Checkbox("anti slide", &cheats::anti_slide, gt::anti_slide_address, "90 90", "74 4d");
-	ImGui::Checkbox("anti water", &cheats::anti_water, gt::anti_water_address, "e9 e7 00 00 00 90", "0f 84 e6 00 00 00");
+	//ImGui::Checkbox("anti water", &cheats::anti_water, gt::anti_water_address, "e9 e7 00 00 00 90", "0f 84 e6 00 00 00"); // todo: fix autoban caused by this
 	ImGui::Checkbox("anti zombie", &cheats::anti_zombie);
 	ImGui::Checkbox("anti ghost", &cheats::anti_ghost);
 	ImGui::Checkbox("anti knockback", &cheats::anti_knockback);
