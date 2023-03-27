@@ -17,7 +17,7 @@ public:
 		return nullptr;
 	}
 
-	tile_t* get_tile(vec2i_t pos) noexcept {
+	tile_t* get_tile(const vec2i_t& pos) noexcept {
 		return get_tile(pos.x, pos.y);
 	}
 

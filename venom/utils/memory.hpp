@@ -21,7 +21,7 @@ namespace memory {
 	}
 
 	template <typename value_type, typename flag_type>
-	inline void set_flag(value_type& value, flag_type flag) noexcept {
+	inline void add_flag(value_type& value, flag_type flag) noexcept {
 		using type = get_underlying<flag_type>::type;
 		value = static_cast<value_type>(static_cast<type>(value) | (static_cast<type>(flag)));
 	}

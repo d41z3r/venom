@@ -26,7 +26,7 @@ std::uint32_t calculate_heuristic(vec2i_t pos, vec2i_t goal) noexcept {
 	return std::abs(pos.x - goal.x) + std::abs(pos.y - goal.y);
 }
 
-std::vector<vec2i_t> gt::find_path(vec2i_t start, vec2i_t goal) noexcept {
+std::vector<vec2i_t> gt::find_path(const vec2i_t& start, const vec2i_t& goal) noexcept {
 	if (start == goal)
 		return {};
 

@@ -175,7 +175,7 @@ enum class item_material_type : std::uint32_t {
 	metal = 3
 };
 
-enum class bodypart_type : std::uint32_t {
+enum class body_part_type : std::uint32_t {
 	hat = 0,
 	shirt = 1,
 	pants = 2,
@@ -239,7 +239,7 @@ enum class item_type : std::uint32_t {
 	toy_box,
 	mannequin,
 	camera,
-	magic_rgg,
+	magic_egg,
 	game_block,
 	game_generator,
 	cenonite,
@@ -356,7 +356,7 @@ public:
 	item_flag flags;
 	std::uint8_t pad4[68];
 	std::uint32_t heal_time;
-	bodypart_type bodypart;
+	body_part_type body_part;
 	std::uint8_t seed_base;
 	std::uint8_t seed_overlay;
 	std::uint8_t tree_base;
@@ -389,15 +389,15 @@ public:
 	std::uint8_t pad12[64];
 
 	struct extra_slots_t {
-		std::uint32_t bodypart1;
-		std::uint32_t bodypart2;
-		std::uint32_t bodypart3;
-		std::uint32_t bodypart4;
-		std::uint32_t bodypart5;
-		std::uint32_t bodypart6;
-		std::uint32_t bodypart7;
-		std::uint32_t bodypart8;
-		std::uint32_t bodypart9;
+		std::uint32_t body_part1;
+		std::uint32_t body_part2;
+		std::uint32_t body_part3;
+		std::uint32_t body_part4;
+		std::uint32_t body_part5;
+		std::uint32_t body_part6;
+		std::uint32_t body_part7;
+		std::uint32_t body_part8;
+		std::uint32_t body_part9;
 	} extra_slots;
 
 	std::uint32_t extra_slot_count;

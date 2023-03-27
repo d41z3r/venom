@@ -5,7 +5,7 @@
 
 enum class tile_flag : std::uint16_t {
 	none = 0x0,
-	tile_extra = 0x1,
+	extra_data = 0x1,
 	locked = 0x2,
 	// something
 	// something

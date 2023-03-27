@@ -44,7 +44,7 @@ namespace gt {
 	std::uint32_t hash_string(const std::string& str) noexcept;
 	std::uint32_t get_file_hash(const std::string& filename) noexcept;
 
-	std::vector<vec2i_t> find_path(vec2i_t start, vec2i_t goal) noexcept;
+	std::vector<vec2i_t> find_path(const vec2i_t& start, const vec2i_t& goal) noexcept;
 
 	inline std::uintptr_t base_address = 0;
 	inline std::uintptr_t end_address = 0;
