@@ -59,7 +59,7 @@ enum class fx_flag : std::uint32_t {
 	offset_up = 0x8,
 	dual_layer = 0x10,
 	multi_anim2_start = 0x20,
-	// something
+	unk_0x40 = 0x40,
 	use_skin_tint = 0x80,
 	seed_tint_layer1 = 0x100,
 	seed_tint_layer2 = 0x200,
@@ -72,7 +72,7 @@ enum class fx_flag : std::uint32_t {
 	slowfall_object = 0x10000,
 	replacement_sprite = 0x20000,
 	orb_float = 0x40000,
-	// something
+	unk_0x80000 = 0x80000,
 	render_fx_variant_version = 0x100000
 };
 
@@ -218,7 +218,7 @@ enum class item_type : std::uint32_t {
 	checkpoint,
 	musicnote,
 	ice,
-	unknown30,
+	unk_30,
 	switcheroo,
 	chest,
 	mailbox,
@@ -414,6 +414,13 @@ public:
 			return &items[item_id];
 
 		return nullptr;
+	}
+
+	std::string get_item_name(std::uint32_t item_id) noexcept {
+		if (item_info_t* item = get_item(item_id); item != nullptr)
+			return item->name;
+
+		return "(not found)";
 	}
 
 	void* vftable;

@@ -275,5 +275,8 @@
     <ClInclude Include="game\renderer\surface.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="game\world\tile_extra.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,35 +7,35 @@
 
 enum class visual_state : std::uint32_t {
 	none = 0x0,
-	// 0x1: unknown
-	// 0x2: unknown
-	on_spawn = 0x4, // (1 << 2)
-	// 0x8: unknown
-	flipped = 0x10, // (1 << 4)
-	on_solid = 0x20, // (1 << 5)
-	on_fire_damage = 0x40, // (1 << 6)
-	on_jump = 0x80, // (1 << 7)
-	on_killed = 0x100, // (1 << 8)
-	on_punched = 0x200, // (1 << 9)
-	on_placed = 0x400, // (1 << 10)
-	on_tile_change = 0x800, // (1 << 11)
-	on_got_punched = 0x1000, // (1 << 12)
-	on_respawned = 0x2000, // (1 << 13)
-	on_object_collected = 0x4000, // (1 << 14)
-	on_trampoline = 0x8000, // (1 << 15)
-	on_damage = 0x10000, // (1 << 16)
-	on_slide = 0x20000, // (1 << 17)
-	on_parasol = 0x40000, // (1 << 18)
-	// 0x80000: used in gravity() and OnJump(), some bcape jump stuff
-	on_swim = 0x100000, // (1 << 20)
-	on_wall_hang = 0x200000, // (1 << 21)
-	on_power_up_punch_start = 0x400000, // (1 << 22)
-	on_power_up_punch_end = 0x800000, // (1 << 23)
-	// 0x1000000: some tile change stuff
-	// 0x2000000: used in AnimatedCapeLogics::CheckHayCartConditions
-	// 0x4000000: more OnJump bcape things
-	// 0x8000000: unknown
-	on_acid_damage = 0x10000000, // (1 << 28)
+	unk_0x1 = 0x1,
+	unk_0x2 = 0x2,
+	on_spawn = 0x4,
+	unk_0x8 = 0x8,
+	flipped = 0x10,
+	on_solid = 0x20,
+	on_fire_damage = 0x40,
+	on_jump = 0x80, 
+	on_killed = 0x100,
+	on_punched = 0x200,
+	on_placed = 0x400,
+	on_tile_change = 0x800,
+	on_got_punched = 0x1000,
+	on_respawned = 0x2000,
+	on_object_collected = 0x4000,
+	on_trampoline = 0x8000,
+	on_damage = 0x10000,
+	on_slide = 0x20000,
+	on_parasol = 0x40000,
+	unk_0x80000 = 0x80000, // used in gravity() and OnJump(), some bcape jump stuff
+	on_swim = 0x100000,
+	on_wall_hang = 0x200000,
+	on_power_up_punch_start = 0x400000,
+	on_power_up_punch_end = 0x800000,
+	unk_0x1000000 = 0x1000000, // some tile change stuff
+	unk_0x2000000 = 0x2000000, // used in AnimatedCapeLogics::CheckHayCartConditions
+	unk_0x4000000 = 0x4000000, // more OnJump bcape things
+	unk_0x8000000 = 0x8000000,
+	on_acid_damage = 0x10000000,
 };
 
 enum class player_flag : std::uint32_t {
@@ -48,8 +48,8 @@ enum class player_flag : std::uint32_t {
 	no_body = 0x20,
 	devil_horns = 0x40,
 	golden_halo = 0x80,
-	// something
-	// something, got when consumed spike juice
+	unk_0x100,
+	unk_0x200, // got when consumed spike juice
 	spikeproof = 0x400,
 	frozen = 0x800,
 	cursed = 0x1000,
@@ -57,13 +57,13 @@ enum class player_flag : std::uint32_t {
 	bad_smell = 0x4000,
 	shiny = 0x8000,
 	zombie = 0x10000,
-	// something
+	unk_0x20000 = 0x20000,
 	shadows = 0x40000,
 	irradiated = 0x80000,
 	spotlight = 0x100000,
 	pineapple_skin_and_flag = 0x200000,
 	pineapple_flag = 0x400000,
-	// something
+	unk_0x800000 = 0x800000,
 	super_supporter = 0x1000000,
 	pineapple_aura = 0x2000000,
 	bubble = 0x4000000,

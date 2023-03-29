@@ -232,6 +232,7 @@
     <ClInclude Include="game\utils\text_scanner.hpp" />
     <ClInclude Include="game\utils\variant.hpp" />
     <ClInclude Include="game\world\tile.hpp" />
+    <ClInclude Include="game\world\tile_extra.hpp" />
     <ClInclude Include="game\world\world.hpp" />
     <ClInclude Include="game\world\world_camera.hpp" />
     <ClInclude Include="game\world\world_object_map.hpp" />

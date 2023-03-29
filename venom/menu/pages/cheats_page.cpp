@@ -30,6 +30,7 @@ void menu::cheats_page() noexcept {
 	ImGui::NextColumn();
 
 	ImGui::Checkbox("click tp (CTRL)", &cheats::click_tp);
+	ImGui::Checkbox("tile info (CTRL)", &cheats::tile_info); // hover mouse over a tile and press ctrl to see information about the tile
 	ImGui::Checkbox("walk in air", &cheats::walk_in_air);
 	ImGui::Checkbox("unlimited jumps", &cheats::unlimited_jumps);
 	ImGui::Checkbox("super punch", &cheats::super_punch);

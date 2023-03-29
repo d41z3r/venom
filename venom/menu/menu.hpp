@@ -10,6 +10,7 @@
 namespace menu {
 	void setup();
 	void render() noexcept;
+	void render_overlays() noexcept;
 
 	void cheats_page() noexcept;
 	void game_page() noexcept;
@@ -41,6 +42,7 @@ namespace cheats {
 	inline bool fast_punch = false;
 
 	inline bool click_tp = false;
+	inline bool tile_info = false;
 	inline bool walk_in_air = false;
 	inline bool unlimited_jumps = false;
 	inline bool super_punch = false;

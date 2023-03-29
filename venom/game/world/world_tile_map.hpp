@@ -21,6 +21,13 @@ public:
 		return get_tile(pos.x, pos.y);
 	}
 
+	tile_t* get_tile_at_world_pos(const vec2f_t& pos) noexcept {
+		return get_tile(
+			static_cast<std::int32_t>(pos.x / 32.f), 
+			static_cast<std::int32_t>(pos.y / 32.f)
+		);
+	}
+
 	void* vftable;
 	vec2i_t size;
 	std::uint8_t pad1[8];
