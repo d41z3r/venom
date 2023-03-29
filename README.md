@@ -25,6 +25,9 @@ growtopia internal
 ### variant db
 ![image](https://user-images.githubusercontent.com/73388513/227717924-33bb7145-d583-4dfb-8e7d-91ff35150b5b.png)
 
+### tile info
+![image](https://user-images.githubusercontent.com/73388513/228560452-1ca7b841-488f-4352-ac9a-f8757d211311.png)
+
 ## external libraries
 * [imgui](https://github.com/ocornut/imgui)
 * [minhook](https://github.com/TsudaKageyu/minhook)
