@@ -9,33 +9,33 @@ enum class visual_state : std::uint32_t {
 	none = 0x0,
 	unk_0x1 = 0x1,
 	unk_0x2 = 0x2,
-	on_spawn = 0x4,
+	spawn = 0x4,
 	unk_0x8 = 0x8,
 	flipped = 0x10,
-	on_solid = 0x20,
-	on_fire_damage = 0x40,
-	on_jump = 0x80, 
-	on_killed = 0x100,
-	on_punched = 0x200,
-	on_placed = 0x400,
-	on_tile_change = 0x800,
-	on_got_punched = 0x1000,
-	on_respawned = 0x2000,
-	on_object_collected = 0x4000,
-	on_trampoline = 0x8000,
-	on_damage = 0x10000,
-	on_slide = 0x20000,
-	on_parasol = 0x40000,
+	solid = 0x20,
+	fire_damage = 0x40,
+	jump = 0x80, 
+	killed = 0x100,
+	punched = 0x200,
+	placed = 0x400,
+	tile_change = 0x800,
+	got_punched = 0x1000,
+	respawned = 0x2000,
+	object_collected = 0x4000,
+	trampoline = 0x8000,
+	damage = 0x10000,
+	slide = 0x20000,
+	parasol = 0x40000,
 	unk_0x80000 = 0x80000, // used in gravity() and OnJump(), some bcape jump stuff
-	on_swim = 0x100000,
-	on_wall_hang = 0x200000,
-	on_power_up_punch_start = 0x400000,
-	on_power_up_punch_end = 0x800000,
+	swim = 0x100000,
+	wall_hang = 0x200000,
+	power_up_punch_start = 0x400000,
+	power_up_punch_end = 0x800000,
 	unk_0x1000000 = 0x1000000, // some tile change stuff
 	unk_0x2000000 = 0x2000000, // used in AnimatedCapeLogics::CheckHayCartConditions
 	unk_0x4000000 = 0x4000000, // more OnJump bcape things
 	unk_0x8000000 = 0x8000000,
-	on_acid_damage = 0x10000000,
+	acid_damage = 0x10000000,
 };
 
 enum class player_flag : std::uint32_t {
@@ -72,6 +72,10 @@ enum class player_flag : std::uint32_t {
 	mask2 = 0x20000000,
 	mask3 = 0x40000000,
 	mask4 = 0x80000000
+};
+
+enum class player_flags2 : std::uint32_t {
+
 };
 
 #pragma pack(push, 1)
