@@ -26,6 +26,7 @@ void menu::cheats_page() noexcept {
 	ImGui::Checkbox("ghost mode", &cheats::ghost_mode);
 	ImGui::Checkbox("mod zoom", &cheats::mod_zoom);
 	ImGui::Checkbox("fast punch", &cheats::fast_punch);
+	ImGui::Checkbox("show platform", &cheats::show_platform);
 
 	ImGui::NextColumn();
 

@@ -9,6 +9,17 @@
 
 #include <cstdint>
 
+enum class platform_id {
+	windows = 0,
+	iphone = 1,
+	mac = 2,
+	android = 4,
+	webos = 6,
+	nintendo_switch = 10,
+	ps4 = 11,
+	xbox = 12
+};
+
 #pragma pack(push, 1)
 class app_t : public base_app_t {
 public:

@@ -12,7 +12,7 @@ enum class tile_flag : std::uint16_t {
 	tree_will_drop_seed = 0x8,
 	tree = 0x10,
 	flipped = 0x20,
-	enabled = 0x40,
+	enabled = 0x40, // open for dgates, enabled for jammers etc.
 	public_ = 0x80,
 	extra_frame = 0x100,
 	silenced = 0x200,

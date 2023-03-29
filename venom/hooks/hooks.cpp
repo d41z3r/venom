@@ -9,6 +9,7 @@
 #include <stdexcept>
 #include <format>
 #include <sstream>
+#include <regex>
 
 void hook_function(auto& function, const auto& hook_function) {
 	void* address = function;
@@ -158,8 +159,38 @@ void hooks::process_tank_update_packet_hook(game_logic_component_t* _this, game_
 	switch (packet->type) {
 	case game_packet_type::call_function: {
 		variant_list_t var_list(packet->get_extra_data());
-
 		std::string func = var_list[0].get_string();
+
+		// very messy, todo: clean
+		if (cheats::show_platform && func == "OnTalkBubble") { // player names
+			net_avatar_t* player = gt::get_game_logic()->net_object_manager.players[var_list[1].get_int()];
+			if (player != nullptr) {
+				std::string content = var_list[2].get_string();
+				if (std::smatch matches; std::regex_search(content, matches, std::regex{ "PL:(\\d+)_" })) {
+					std::string text = std::format(" `4({})``", magic_enum::enum_name(static_cast<platform_id>(std::stoi(matches[1]))));
+					if (player->name.find(text) == std::string::npos)
+						player->name += text;
+				}
+			}
+		}
+		else if (cheats::show_platform && func == "OnConsoleMessage") {
+			std::string content = var_list[1].get_string();
+			if (std::smatch matches; std::regex_search(content, matches, std::regex{ "PL:(\\d+)_" })) {
+				if (std::size_t pos = content.find("```5) in "); pos != std::string::npos) { // broadcasts
+					content.insert(pos, std::format(" `4({})``", magic_enum::enum_name(static_cast<platform_id>(std::stoi(matches[1])))));
+					var_list[1].set(content);
+					gt::process_call_function(var_list);
+					return;
+				}
+				else if (std::size_t pos = content.find("``>`` `$"); pos != std::string::npos) { // world chat
+					content.insert(pos + 2, std::format(" `4({})``", magic_enum::enum_name(static_cast<platform_id>(std::stoi(matches[1])))));
+					var_list[1].set(content);
+					gt::process_call_function(var_list);
+					return;
+				}
+			}
+		}
+
 		console::println(std::format("incoming call function '{}'", func));
 		break;
 	}

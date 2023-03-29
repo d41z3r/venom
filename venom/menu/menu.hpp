@@ -40,6 +40,7 @@ namespace cheats {
 	inline bool ghost_mode = false;
 	inline bool mod_zoom = false;
 	inline bool fast_punch = false;
+	inline bool show_platform = false;
 
 	inline bool click_tp = false;
 	inline bool tile_info = false;
