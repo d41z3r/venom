@@ -103,13 +103,13 @@ void hooks::send_packet_raw_hook(net_message_type type, const void* data, std::i
 
 		// if u are standing on spike for too long u get ban, this bypasses it
 		if (cheats::anti_deadly)
-			memory::remove_flag(packet->flags, visual_state::on_solid);
+			memory::remove_flag(packet->flags, visual_state::standing);
 
 		if (cheats::fake_lag)
-			memory::add_flag(packet->flags, visual_state::on_spawn);
+			memory::add_flag(packet->flags, visual_state::spawn);
 
-		if (cheats::super_punch && memory::has_flag(packet->flags, visual_state::on_punched))
-			memory::add_flag(packet->flags, visual_state::on_power_up_punch_end);
+		if (cheats::super_punch && memory::has_flag(packet->flags, visual_state::punch))
+			memory::add_flag(packet->flags, visual_state::power_up_punch_end);
 
 		// if you send walk packets in air you will get banned so lets set player velocity as 0 so server thinks we are not walking
 		if (cheats::walk_in_air)
